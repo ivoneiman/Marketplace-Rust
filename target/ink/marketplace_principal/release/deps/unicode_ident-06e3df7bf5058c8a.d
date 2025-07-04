@@ -1,8 +1,0 @@
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/libunicode_ident-06e3df7bf5058c8a.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/tables.rs
-
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/libunicode_ident-06e3df7bf5058c8a.rlib: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/tables.rs
-
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/unicode_ident-06e3df7bf5058c8a.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/tables.rs
-
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/lib.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/unicode-ident-1.0.18/src/tables.rs:

@@ -1,9 +1,0 @@
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/libink_metadata-24707457732f9d8a.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/mod.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/validate.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/specs.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/utils.rs
-
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/ink_metadata-24707457732f9d8a.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/mod.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/validate.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/specs.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/utils.rs
-
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/lib.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/mod.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/layout/validate.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/specs.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ink_metadata-5.1.1/src/utils.rs:

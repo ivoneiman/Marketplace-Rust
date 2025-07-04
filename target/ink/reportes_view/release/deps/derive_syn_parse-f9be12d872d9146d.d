@@ -1,8 +1,0 @@
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/deps/libderive_syn_parse-f9be12d872d9146d.so: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/error_macros.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/fields.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/variants.rs
-
-/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/deps/derive_syn_parse-f9be12d872d9146d.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/error_macros.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/fields.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/variants.rs
-
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/lib.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/error_macros.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/fields.rs:
-/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive-syn-parse-0.2.0/src/variants.rs:
