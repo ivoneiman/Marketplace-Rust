@@ -1,0 +1,10 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/deps/libmerlin-b60d09fea372a1ef.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/constants.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/strobe.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/transcript.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/deps/libmerlin-b60d09fea372a1ef.rlib: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/constants.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/strobe.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/transcript.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/deps/merlin-b60d09fea372a1ef.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/constants.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/strobe.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/transcript.rs
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/constants.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/strobe.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/merlin-3.0.0/src/transcript.rs:

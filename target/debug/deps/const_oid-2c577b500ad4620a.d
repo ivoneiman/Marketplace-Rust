@@ -1,0 +1,11 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/libconst_oid-2c577b500ad4620a.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/checked.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/arcs.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/encoder.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/error.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/parser.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/../README.md
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/const_oid-2c577b500ad4620a.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/checked.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/arcs.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/encoder.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/error.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/parser.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/../README.md
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/checked.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/arcs.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/encoder.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/error.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/parser.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/const-oid-0.9.6/src/../README.md:

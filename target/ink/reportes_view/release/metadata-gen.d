@@ -1,0 +1,1 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/reportes_view/release/metadata-gen: /home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/reportes_view/lib.rs /tmp/cargo-contract_tZgf4k/reportes_view/.ink/metadata_gen/main.rs

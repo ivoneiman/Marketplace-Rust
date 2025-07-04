@@ -1,0 +1,10 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/libsecp256k1_sys-8f1e07c2c5139c59.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/macros.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/types.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/recovery.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/libsecp256k1_sys-8f1e07c2c5139c59.rlib: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/macros.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/types.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/recovery.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/ink/marketplace_principal/release/deps/secp256k1_sys-8f1e07c2c5139c59.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/macros.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/types.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/recovery.rs
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/macros.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/types.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/secp256k1-sys-0.9.2/src/recovery.rs:

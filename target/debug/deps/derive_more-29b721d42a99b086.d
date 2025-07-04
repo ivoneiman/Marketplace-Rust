@@ -1,0 +1,10 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/libderive_more-29b721d42a99b086.so: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/syn_compat.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/utils.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/display.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/from.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/parsing.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/derive_more-29b721d42a99b086.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/syn_compat.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/utils.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/display.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/from.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/parsing.rs
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/syn_compat.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/utils.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/display.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/from.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_more-0.99.20/src/parsing.rs:

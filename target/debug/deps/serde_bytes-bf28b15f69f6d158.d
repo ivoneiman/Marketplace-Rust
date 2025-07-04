@@ -1,0 +1,10 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/libserde_bytes-bf28b15f69f6d158.rmeta: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytearray.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytes.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/de.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/ser.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytebuf.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/serde_bytes-bf28b15f69f6d158.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytearray.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytes.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/de.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/ser.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytebuf.rs
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytearray.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytes.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/de.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/ser.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.17/src/bytebuf.rs:

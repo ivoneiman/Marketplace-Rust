@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "marketplace_principal",
+    "reportes_view"
+]
+
+resolver = "2"

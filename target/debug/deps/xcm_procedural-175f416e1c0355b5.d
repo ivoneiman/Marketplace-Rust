@@ -1,0 +1,10 @@
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/libxcm_procedural-175f416e1c0355b5.so: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/builder_pattern.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v2.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v3.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v4.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/weight_info.rs
+
+/home/nano-meynet/Repositorios/Facultad/Grupo2-Marketplace-con-Rust/target/debug/deps/xcm_procedural-175f416e1c0355b5.d: /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/lib.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/builder_pattern.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v2.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v3.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v4.rs /home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/weight_info.rs
+
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/lib.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/builder_pattern.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v2.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v3.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/v4.rs:
+/home/nano-meynet/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcm-procedural-8.0.0/src/weight_info.rs:
