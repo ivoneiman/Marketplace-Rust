@@ -22,8 +22,8 @@ mod marketplace_principal {
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum EstadoOrden {
         Pendiente,
-        Enviado,
-        Recibido,
+        Enviada,
+        Recibida,
         Cancelada,
     }
 
