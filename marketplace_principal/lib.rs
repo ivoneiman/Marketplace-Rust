@@ -2,140 +2,106 @@
 
 #[ink::contract]
 mod marketplace_principal {
+    use ink::prelude::string::String;
 
-    /// Defines the storage of your contract.
-    /// Add new fields to the below struct in order
-    /// to add new static storage fields to your contract.
+    use ink::prelude::vec::Vec;
+
+    use ink::storage::Mapping;
+
+    /// Rol de usuarios
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum RolUsuario {
+        Comprador,
+        Vendedor,
+        Ambos,
+    }
+
+    /// Posibles estados de de una orden
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum EstadoOrden {
+        Pendiente,
+        Enviado,
+        Recibido,
+        Cancelada,
+    }
+
+    /// Struct del usuario
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct Usuario {
+        pub direccion: AccountId,
+        pub rol: RolUsuario,
+        pub reputacion_como_comprador: u32,
+        pub reputacion_como_vendedor: u32,
+    }
+
+    /// Struct del producto
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct Producto {
+        pub id: u32,
+        pub nombre: String,
+        pub descripcion: String,
+        pub precio: Balance,
+        pub cantidad: u32,
+        pub categoria: String,
+        pub vendedor: AccountId,
+    }
+
+    /// Struct de una orden
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub struct Orden {
+        pub id: u32,
+        pub comprador: AccountId,
+        pub vendedor: AccountId,
+        pub producto_id: u32,
+        pub cantidad: u32,
+        pub estado: EstadoOrden,
+        pub comprador_califico: bool,
+        pub vendedor_califico: bool,
+    }
+
     #[ink(storage)]
+    // Struct de la plataforma principal
     pub struct MarketplacePrincipal {
-        /// Stores a single `bool` value on the storage.
-        value: bool,
+        usuarios: Mapping<AccountId, Usuario>,
+        productos: Vec<Producto>,
+        ordenes: Vec<Orden>,
     }
 
     impl MarketplacePrincipal {
-        /// Constructor that initializes the `bool` value to the given `init_value`.
         #[ink(constructor)]
-        pub fn new(init_value: bool) -> Self {
-            Self { value: init_value }
+        pub fn new() -> Self {
+            Self {
+                usuarios: Mapping::default(),
+                productos: Vec::new(),
+                ordenes: Vec::new(),
+            }
         }
 
-        /// Constructor that initializes the `bool` value to `false`.
-        ///
-        /// Constructors can delegate to other constructors.
-        #[ink(constructor)]
-        pub fn default() -> Self {
-            Self::new(Default::default())
-        }
-
-        /// A message that can be called on instantiated contracts.
-        /// This one flips the value of the stored `bool` from `true`
-        /// to `false` and vice versa.
         #[ink(message)]
-        pub fn flip(&mut self) {
-            self.value = !self.value;
+        pub fn registrar_usuario(&mut self, rol: RolUsuario) {
+            // FALTA IMPLEMENTAR 
         }
 
-        /// Simply returns the current value of our `bool`.
         #[ink(message)]
-        pub fn get(&self) -> bool {
-            self.value
-        }
-    }
-
-    /// Unit tests in Rust are normally defined within such a `#[cfg(test)]`
-    /// module and test functions are marked with a `#[test]` attribute.
-    /// The below code is technically just normal Rust code.
-    #[cfg(test)]
-    mod tests {
-        /// Imports all the definitions from the outer scope so we can use them here.
-        use super::*;
-
-        /// We test if the default constructor does its job.
-        #[ink::test]
-        fn default_works() {
-            let marketplace_principal = MarketplacePrincipal::default();
-            assert_eq!(marketplace_principal.get(), false);
+        pub fn publicar_producto(
+            &mut self,
+            nombre: String,
+            descripcion: String,
+            precio: Balance,
+            cantidad: u32,
+            categoria: String,
+        ) {
+            // FALTA IMPLEMENTAR lógica de publicación
         }
 
-        /// We test a simple use case of our contract.
-        #[ink::test]
-        fn it_works() {
-            let mut marketplace_principal = MarketplacePrincipal::new(false);
-            assert_eq!(marketplace_principal.get(), false);
-            marketplace_principal.flip();
-            assert_eq!(marketplace_principal.get(), true);
-        }
-    }
-
-
-    /// This is how you'd write end-to-end (E2E) or integration tests for ink! contracts.
-    ///
-    /// When running these you need to make sure that you:
-    /// - Compile the tests with the `e2e-tests` feature flag enabled (`--features e2e-tests`)
-    /// - Are running a Substrate node which contains `pallet-contracts` in the background
-    #[cfg(all(test, feature = "e2e-tests"))]
-    mod e2e_tests {
-        /// Imports all the definitions from the outer scope so we can use them here.
-        use super::*;
-
-        /// A helper function used for calling contract messages.
-        use ink_e2e::ContractsBackend;
-
-        /// The End-to-End test `Result` type.
-        type E2EResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-
-        /// We test that we can upload and instantiate the contract using its default constructor.
-        #[ink_e2e::test]
-        async fn default_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            // Given
-            let mut constructor = MarketplacePrincipalRef::default();
-
-            // When
-            let contract = client
-                .instantiate("marketplace_principal", &ink_e2e::alice(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed");
-            let call_builder = contract.call_builder::<MarketplacePrincipal>();
-
-            // Then
-            let get = call_builder.get();
-            let get_result = client.call(&ink_e2e::alice(), &get).dry_run().await?;
-            assert!(matches!(get_result.return_value(), false));
-
-            Ok(())
-        }
-
-        /// We test that we can read and write a value from the on-chain contract.
-        #[ink_e2e::test]
-        async fn it_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
-            // Given
-            let mut constructor = MarketplacePrincipalRef::new(false);
-            let contract = client
-                .instantiate("marketplace_principal", &ink_e2e::bob(), &mut constructor)
-                .submit()
-                .await
-                .expect("instantiate failed");
-            let mut call_builder = contract.call_builder::<MarketplacePrincipal>();
-
-            let get = call_builder.get();
-            let get_result = client.call(&ink_e2e::bob(), &get).dry_run().await?;
-            assert!(matches!(get_result.return_value(), false));
-
-            // When
-            let flip = call_builder.flip();
-            let _flip_result = client
-                .call(&ink_e2e::bob(), &flip)
-                .submit()
-                .await
-                .expect("flip failed");
-
-            // Then
-            let get = call_builder.get();
-            let get_result = client.call(&ink_e2e::bob(), &get).dry_run().await?;
-            assert!(matches!(get_result.return_value(), true));
-
-            Ok(())
+        #[ink(message)]
+        pub fn comprar_producto(&mut self, producto_id: u32, cantidad: u32) {
+            // FALTA IMPLEMENTAR la lógica de compra
         }
     }
 }
