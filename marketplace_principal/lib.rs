@@ -83,8 +83,24 @@ mod marketplace_principal {
         }
 
         #[ink(message)]
-        pub fn registrar_usuario(&mut self, rol: RolUsuario) {
-            // FALTA IMPLEMENTAR 
+        pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(),String>{
+            let usuario_llamador = self.env().caller(); // Devuelve AccountID
+            // Verifico si ya existe el usuario
+            if self.usuarios.contains(usuario_llamador){
+                Return Err("El usuario ya esta registrado".to_string());
+            }
+
+            // Si no, creamos un nuevo usuario
+            let nuevo_usuario = Usuario{
+                direccion: usuario_llamador,
+                rol,
+                reputacion_como_comprador: 0,
+                reputacion_como_vendedor: 0,
+            };
+
+            self.usuarios,insert(usuario_llamador,nuevo_usuario);
+
+            Ok(())
         }
 
         #[ink(message)]
