@@ -40,6 +40,35 @@ mod marketplace_principal {
 
     use ink::storage::Mapping;
 
+
+
+
+
+
+
+
+
+        //#[ink(message)]
+        pub enum SistemaError {
+            CantidadInsuficiente,
+            UsuarioNoRegistrado,
+            ProductosVacios,
+            NoEsRolCorrecto,
+        }
+        use std::fmt;
+        impl fmt::Display for SistemaError {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                match self {
+                    SistemaError::CantidadInsuficiente => write!(f, "Cantidad insuficiente"),
+                    SistemaError::UsuarioNoRegistrado => write!(f, "Usuario no registrado"),
+                    SistemaError::NoEsRolCorrecto => write!(f, "El usuario no es el rol correcto"),
+                    SistemaError::ProductosVacios => write!(f, "No se han seleccionado productos"),
+                }
+            }
+        }
+
+    
+
     /// Rol de usuarios
     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -116,6 +145,38 @@ mod marketplace_principal {
         pub comprador_califico: bool,
         pub vendedor_califico: bool,
     }
+    impl Orden {
+        pub fn new(
+            id: u32,
+            comprador: AccountId,
+            vendedor: AccountId,
+            producto_id: u32,
+            cantidad: u32,
+        ) -> Self {
+            Self {
+                id,
+                comprador,
+                vendedor,
+                producto_id,
+                cantidad,
+                estado: EstadoOrden::Pendiente,
+                comprador_califico: false,
+                vendedor_califico: false,
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     #[ink(storage)]
     // Struct de la plataforma principal
@@ -135,12 +196,26 @@ mod marketplace_principal {
             }
         }
 
+
+        
+
+
+
+
+
+
+        // Despues cuando nos pongamos de acuerdo si usar el error propio arreglo esto
         #[ink(message)]
         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(),String>{
+            self._registrar_usuario(rol);
+
+        }
+        fn _registrar_usuario(&mut self, rol: RolUsuario) -> Result<(),String>{
             let usuario_llamador = self.env().caller(); // Devuelve AccountID
+            
             // Verifico si ya existe el usuario
-            if self.usuarios.contains(usuario_llamador){
-                return Err("El usuario ya esta registrado".to_string());
+            if self.usuarios.contains_key(&usuario_llamador) {
+                return Err("El usuario se encuentra registrado".to_string());
             }
 
             // Si no, creamos un nuevo usuario
@@ -156,35 +231,13 @@ mod marketplace_principal {
             Ok(())
         }
 
-        // Errores personalizados para la publicación de productos
-        #[ink(message)]
-        pub enum ProductoError {
-            CantidadInsuficiente,
-            UsuarioNoRegistrado,
-            NoEsVendedor,
-        }
-        use std::fmt;
-        impl fmt::Display for ProductoError {
-            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-                match self {
-                    ProductoError::CantidadInsuficiente => write!(f, "Cantidad insuficiente"),
-                    ProductoError::UsuarioNoRegistrado => write!(f, "Usuario no registrado"),
-                    ProductoError::NoEsVendedor => write!(f, "El usuario no es un vendedor"),
-                }
-            }
-        }
+
+
+
 
         #[ink(message)]
-        pub fn publicar_producto(
-            &mut self,
-            nombre: String,
-            descripcion: String,
-            precio: Balance,
-            cantidad: u32,
-            categoria: String,
-        ) -> Result<(), ProductoError> {
-            _publicar_producto(
-                self,
+        pub fn publicar_producto(&mut self,nombre: String,descripcion: String,precio: Balance,cantidad: u32,categoria: String,) -> Result<(), SistemaError> {
+            self._publicar_producto(
                 nombre,
                 descripcion,
                 precio,
@@ -192,83 +245,21 @@ mod marketplace_principal {
                 categoria,
             )
         }
-            // FALTA IMPLEMENTAR lógica de publicación
-
-        fn _publicar_producto(&mut self,
-            nombre: String,
-            descripcion: String,
-            precio: Balance,
-            cantidad: u32,
-            categoria: String,
-        ) -> Result<(), ProductoError> {
+        fn _publicar_producto(&mut self,nombre: String,descripcion: String,precio: Balance,cantidad: u32,categoria: String,) -> Result<(), SistemaError> {
             let vendedor = self.env().caller();
             //Primero verifico si el usuario esta registrado en el sistema
-            esta_registrado(self, vendedor)?;
+            self.esta_registrado(vendedor)?;
             //Despues verifico si el usuario tiene el rol de vendedor
-            es_vendedor(self, vendedor, RolUsuario::Vendedor)?;
+            self.es_rol_correcto(vendedor, RolUsuario::Vendedor)?;
             // Verifico si la cantidad es mayor a 0
-            cant_suficiente(self, cantidad)?;
+            self.cant_suficiente(cantidad)?;
             // creo el producto
-            crear_producto(
-                self,
-                nombre,
-                descripcion,
-                precio,
-                cantidad,
-                categoria,
-                vendedor,
-            )?;
+            self.crear_producto(nombre,descripcion,precio,cantidad,categoria,vendedor,)?;
             Ok(())
         }
-        fn esta_registrado(&self, usuario: AccountId) -> Result<(), ProductoError> {
-            if self.usuarios.contains_key(&usuario) {
-                Ok(())
-            } else {
-                Err(ProductoError::UsuarioNoRegistrado)
-            }
-        }
-        fn es_vendedor(
-            &self,
-            usuario: AccountId,
-            rol: RolUsuario,
-        ) -> Result<(), ProductoError> {
-            let user = self.usuarios.get(&usuario);
-            if user.rol == rol || user.rol == RolUsuario::Ambos {
-                Ok(())
-            } else {
-                Err(ProductoError::NoEsVendedor)
-            }
-        }
-        fn cant_suficiente(&self, cantidad: u32) -> Result<(), ProductoError> {
-            if cantidad > 0 {
-                Ok(())
-            } else {
-                Err(ProductoError::CantidadInsuficiente)
-            }
-        }
-        fn crear_producto(
-            &mut self,
-            nombre: String,
-            descripcion: String,
-            precio: Balance,
-            cantidad: u32,
-            categoria: String,
-            vendedor: AccountId,
-        ) -> Result<(), ProductoError> {
-            let id = self.productos.len() as u32 + 1; // Genera un ID único para el producto
-            let nuevo_producto = Producto::new(
-                id,
-                nombre,
-                descripcion,
-                precio,
-                cantidad,
-                categoria,
-                vendedor,
-            );
-            // Agrega el nuevo producto al vector de productos
-            self.productos.push(nuevo_producto);
-            Ok(())
-        }
+        
+        // PREGUNTAR: si éste metodo está bien o deberíamos cambiar las estructuras para que cada usuario tenga un vec con los productos propios
+        // capz es más eficiente eso antes que filtar en el vec de toodos los productos.
         #[ink(message)]
         pub fn ver_productos_propios(&self) -> Vec<Producto> {
             _ver_productos_propios(self)
@@ -284,14 +275,154 @@ mod marketplace_principal {
         }
 
 
+
+
+
+
+        // new orden de compra
+
+        
+        pub fn crear_orden(&mut self, comprador: AccountId, productos: Vec<compra_por_producto>) -> Result<u32, SistemaError> {
+            let nuevo_id = self.ordenes.len() as u32;
+            
+
+            // Verificar si el comprador es un usuario registrado
+            self.esta_registrado(comprador)?;
+
+            // Verificar si el comprador es un Comprador
+            self.es_rol_correcto(comprador, RolUsuario::Comprador)?; // o ambos!
+            
+            // Verificar que hay productos  
+            if productos.is_empty() {
+                return Err(SistemaError::ProductosVacios);
+            }
+            
+            // Verificar stock de los productos -> Orden de compra es de 1 producto.
+            // La publicación debe tener stock, no el vendedor.
+            for compra in &productos {
+                if let Some(producto) = self.productos.iter().find(|p| p.id == compra.producto_id) {
+                    if producto.cantidad < compra.cantidad {
+                        return Err(SistemaError::CantidadInsuficiente);
+                    }
+                }
+            }
+
+
+            // El stock está OK, ahora actualizamos
+            for compra in &productos {
+                if let Some(index) = self.productos.iter().position(|p| p.id == compra.producto_id) {
+                    self.productos[index].cantidad -= compra.cantidad;
+                }
+            }
+            
+            // Crear y guardar la orden en la lista de órdenes
+            let nueva_orden = Orden {
+                id: nuevo_id,
+                comprador,
+                productos,
+                estado: EstadoOrden::Pendiente,
+                comprador_califico: false,
+                vendedor_califico: false,};
+            
+            self.ordenes.push(nueva_orden);
+            Ok(nuevo_id)
+        }
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
         #[ink(message)]
         pub fn comprar_producto(&mut self, producto_id: u32, cantidad: u32) {
             // FALTA IMPLEMENTAR la lógica de compra
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// funciones auxiliares privadas:
+
+        fn esta_registrado(&self, usuario: AccountId) -> Result<(), SistemaError> {
+            if self.usuarios.contains_key(&usuario) {
+                Ok(())
+            } else {
+                Err(SistemaError::UsuarioNoRegistrado)
+            }
+        }
+
+
+        // Siempre antes de invocar, preguntar si existe el usuario
+        fn es_rol_correcto(
+            &self,
+            usuario: AccountId,
+            rol: RolUsuario,
+        ) -> Result<(), SistemaError> {
+            let user = self.usuarios.get(&usuario);
+            if user.rol == rol || user.rol == RolUsuario::Ambos {
+                Ok(())
+            } else {
+                Err(SistemaError::NoEsVendedor)
+            }
+        }
+        fn cant_suficiente(&self, cantidad: u32) -> Result<(), SistemaError> {
+            if cantidad > 0 {
+                Ok(())
+            } else {
+                Err(SistemaError::CantidadInsuficiente)
+            }
+        }
+        fn crear_producto(
+            &mut self,
+            nombre: String,
+            descripcion: String,
+            precio: Balance,
+            cantidad: u32,
+            categoria: String,
+            vendedor: AccountId,
+        ) -> Result<(), SistemaError> {
+            let id = self.productos.len() as u32; // Genera un ID único para el producto
+            let nuevo_producto = Producto::new(
+                id,
+                nombre,
+                descripcion,
+                precio,
+                cantidad,
+                categoria,
+                vendedor,
+            );
+            // Agrega el nuevo producto al vector de productos
+            self.productos.push(nuevo_producto);
+            Ok(())
+        }
+
+        //fn tiene_rol_correcto(
+        
+        
     }
 
-    // LUEGO DE CADA MERGE EN DEV UBISCAR LOS TEST EN EL MOD CON LOS DEMAS
 
+
+    
+    // LUEGO DE CADA MERGE EN DEV UBISCAR LOS TEST EN EL MOD CON LOS DEMAS
     #[cfg(test)]
     mod test {
 
@@ -309,7 +440,7 @@ mod marketplace_principal {
             let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
 
             //Verificamos que devuelva OK
-            assert_eq!(resultado, Ok(()))
+            assert_eq!(resultado, Ok(()));
 
             //Obtenemos el usuario usando la dir del que llama
             let caller = contrato.env().caller(); //quien llama al contrato
@@ -328,7 +459,7 @@ mod marketplace_principal {
         }
 
         // Test para comprobar que el usuario no puede registrase 2 veces
-
+        #[ink::test]
         fn registrar_usuario_dos_veces() {
             let mut contrato = MarketplacePrincipal::new();
 
@@ -407,7 +538,7 @@ mod marketplace_principal {
         fn test_usuario_no_registrado() {
             let mut contrato = MarketplacePrincipal::new();
 
-            / Simulamos que quien llama es unm usuario no registrado
+            // Simulamos que quien llama es unm usuario no registrado
 
             let caller = AccountId::from([0x02; 32]);
             ink::env::test::set_caller::<ink::env::DefaultEnvironment>(caller);
@@ -424,7 +555,7 @@ mod marketplace_principal {
 
             // Debe fallar con error de usuario no registrado (Usamos el UsuarioNoRegistrado)
 
-            assert!(matches!(resultado, Err(ProductoError::UsuarioNoRegistrado)));
+            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
 
 
         } 
@@ -458,7 +589,7 @@ mod marketplace_principal {
                 "Otros".to_string(),
             );
 
-            assert!(matches!(resultado, Err(ProductoError::NoEsVendedor)));
+            assert!(matches!(resultado, Err(SistemaError::NoEsVendedor)));
 
 
         }
@@ -479,7 +610,7 @@ mod marketplace_principal {
             "Otros".to_string(),
         );
 
-        assert!(matches!(resultado, Err(ProductoError::CantidadInsuficiente)));
+        assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
 
 
         }
