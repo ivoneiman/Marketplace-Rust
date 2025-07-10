@@ -1,34 +1,3 @@
-/*El presente trabajo práctico final tiene como objetivo integrar los conocimientos adquiridos durante el cursado de la materia 
-Seminario de Lenguajes – Opción Rust, aplicando conceptos de programación en Rust orientados al desarrollo de contratos inteligentes 
-sobre la plataforma Substrate utilizando el framework Ink!.
-
-La consigna propone desarrollar una plataforma descentralizada de compra-venta de productos, inspirada en modelos como MercadoLibre, 
-pero ejecutada completamente en un entorno blockchain. El sistema deberá dividirse en dos contratos inteligentes: uno encargado de 
-gestionar la lógica principal del marketplace y otro destinado a la generación de reportes a partir de los datos públicos del primero.
-
-El proyecto busca que el estudiante no solo practique la sintaxis y semántica de Rust, sino que también comprenda el diseño modular de 
-contratos inteligentes, la separación de responsabilidades, la validación de roles y permisos, y la importancia de la transparencia, 
-trazabilidad y reputación en contextos descentralizados.
-
-Se espera que las entregas incluyan una implementación funcional, correctamente testeada, documentada y con una cobertura de pruebas mínima del 85%.
-
-Funcionalidades
-👤 Registro y gestión de usuarios
-Registro de usuario con rol: Comprador, Vendedor o ambos.
-Posibilidad de modificar roles posteriores.
-📦 Publicación de productos
-Publicar producto con nombre, descripción, precio, cantidad y categoría.
-Solo disponible para usuarios con rol Vendedor.
-Visualización de productos propios.
-🛒 Compra y órdenes
-Crear orden de compra (solo Compradores).
-Al comprar: se crea la orden y se descuenta stock.
-Estados de orden: pendiente, enviado, recibido, cancelada.
-Solo el Vendedor puede marcar como enviado.
-Solo el Comprador puede marcar como recibido o cancelada si aún está pendiente.
-Cancelación requiere consentimiento mutuo.*/
-
-
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
@@ -54,6 +23,8 @@ mod marketplace_principal {
             UsuarioNoRegistrado,
             ProductosVacios,
             NoEsRolCorrecto,
+            EstadoInvalido,
+            OrdenNoExiste,
         }
         use std::fmt;
         impl fmt::Display for SistemaError {
@@ -63,6 +34,8 @@ mod marketplace_principal {
                     SistemaError::UsuarioNoRegistrado => write!(f, "Usuario no registrado"),
                     SistemaError::NoEsRolCorrecto => write!(f, "El usuario no es el rol correcto"),
                     SistemaError::ProductosVacios => write!(f, "No se han seleccionado productos"),
+                    SistemaError::EstadoInvalido => write!(f, "El estado de la orden es inválido"),
+                    SistemaError::OrdenNoExiste => write!(f, "La orden no existe"),
                 }
             }
         }
@@ -281,52 +254,93 @@ mod marketplace_principal {
 
         // new orden de compra
 
-        
-        pub fn crear_orden(&mut self, comprador: AccountId, productos: Vec<compra_por_producto>) -> Result<u32, SistemaError> {
-            let nuevo_id = self.ordenes.len() as u32;
-            
+        #[ink(message)]
+        pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
+            let comprador = self.env().caller();
 
-            // Verificar si el comprador es un usuario registrado
+            // Verificamos si el usuario está registrado
             self.esta_registrado(comprador)?;
+            // Y si es el usuario es un comprador
+            self.es_rol_correcto(comprador, RolUsuario::Comprador)?;
 
-            // Verificar si el comprador es un Comprador
-            self.es_rol_correcto(comprador, RolUsuario::Comprador)?; // o ambos!
-            
-            // Verificar que hay productos  
-            if productos.is_empty() {
-                return Err(SistemaError::ProductosVacios);
-            }
-            
-            // Verificar stock de los productos -> Orden de compra es de 1 producto.
-            // La publicación debe tener stock, no el vendedor.
-            for compra in &productos {
-                if let Some(producto) = self.productos.iter().find(|p| p.id == compra.producto_id) {
-                    if producto.cantidad < compra.cantidad {
-                        return Err(SistemaError::CantidadInsuficiente);
-                    }
-                }
+            // Verificamos si hay productos disponibles
+            let index = self.productos.iter().position(|p| p.id == producto_id)
+                .ok_or(SistemaError::ProductosVacios)?;
+
+            if self.productos[index].cantidad < cantidad {
+                return Err(SistemaError::CantidadInsuficiente);
             }
 
+            // Si todo está bien, creamos la orden
+            let vendedor = self.productos[index].vendedor;
+            self.productos[index].cantidad -= cantidad;
 
-            // El stock está OK, ahora actualizamos
-            for compra in &productos {
-                if let Some(index) = self.productos.iter().position(|p| p.id == compra.producto_id) {
-                    self.productos[index].cantidad -= compra.cantidad;
-                }
-            }
-            
-            // Crear y guardar la orden en la lista de órdenes
-            let nueva_orden = Orden {
-                id: nuevo_id,
+            let orden_id = self.ordenes.len() as u32;
+            let orden = Orden {
+                id: orden_id,
                 comprador,
-                productos,
+                vendedor,
+                producto_id,
+                cantidad,
                 estado: EstadoOrden::Pendiente,
-                comprador_califico: false,
-                vendedor_califico: false,};
-            
-            self.ordenes.push(nueva_orden);
-            Ok(nuevo_id)
+                comprador_aprueba_cancelacion: false,
+                vendedor_aprueba_cancelacion: false,
+            };
+            self.ordenes.push(orden);
+
+            Ok(orden_id)
         }
+
+
+
+        #[ink(message)]
+        pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+        
+            // Verificamos si el usuario está registrado
+            self.esta_registrado(caller)?; 
+
+            // Verificamos si la orden y verificamos su estado
+            let orden = self.ordenes.get_mut(orden_id as usize)
+                .ok_or(SistemaError::OrdenNoExiste)?;
+
+            
+            if orden.vendedor != caller {
+                return Err(SistemaError::NoEsRolCorrecto);
+            }
+            if orden.estado != EstadoOrden::Pendiente {
+                return Err(SistemaError::EstadoInvalido);
+            }
+
+            orden.estado = EstadoOrden::Enviada;
+            Ok(())
+        }
+
+        #[ink(message)]
+        pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+
+            // Verificamos si el usuario está registrado
+            self.esta_registrado(caller)?;
+
+            // Verificamos si la orden existe y su estado
+            let orden = self.ordenes.get_mut(orden_id as usize)
+                .ok_or(SistemaError::OrdenNoExiste)?;
+
+            if orden.comprador != caller {
+                return Err(SistemaError::NoEsRolCorrecto);
+            }
+            if orden.estado != EstadoOrden::Enviada {
+                return Err(SistemaError::EstadoInvalido);
+            }
+
+            orden.estado = EstadoOrden::Recibida;
+            Ok(())
+        }
+
+
+                
+                    
 
 
 
