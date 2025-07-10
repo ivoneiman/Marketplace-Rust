@@ -2,6 +2,7 @@
 
 #[ink::contract]
 mod marketplace_principal {
+
     use ink::prelude::string::String;
 
     use ink::prelude::vec::Vec;
@@ -87,7 +88,7 @@ mod marketplace_principal {
             let usuario_llamador = self.env().caller(); // Devuelve AccountID
             // Verifico si ya existe el usuario
             if self.usuarios.contains(usuario_llamador){
-                Return Err("El usuario ya esta registrado".to_string());
+                return Err("El usuario ya esta registrado".to_string());
             }
 
             // Si no, creamos un nuevo usuario
@@ -98,7 +99,7 @@ mod marketplace_principal {
                 reputacion_como_vendedor: 0,
             };
 
-            self.usuarios,insert(usuario_llamador,nuevo_usuario);
+            self.usuarios.insert(usuario_llamador, &nuevo_usuario);
 
             Ok(())
         }
@@ -120,4 +121,58 @@ mod marketplace_principal {
             // FALTA IMPLEMENTAR la lógica de compra
         }
     }
+
+    #[cfg(test)]
+    mod test {
+
+        use super::*; // Importamos todo lo que esta definido en el contrato
+
+        // Test para comprobar el registro correcto de un usuario nuevo
+        
+        #[ink::test]
+        fn registrar_usuario_test_funcional() {
+
+            //Creamos una isntancia nueva del de contrato
+            let mut contrato = MarketplacePrincipal::new();
+
+            //Llamamos a la funcion registrar usuario con un rol
+            let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
+
+            //Verificamos que devuelva OK
+            assert_eq!(resultado, Ok(()))
+
+            //Obtenemos el usuario usando la dir del que llama
+            let caller = contrato.env().caller(); //quien llama al contrato
+            let usuario_registrado = contrato.usuarios.get(&caller);
+
+            //Confirmamos si se guardó el usuario
+            assert_eq!(usuario_registrado.is_some());
+
+            //Verificamos los datos
+            let usuario = usuario_registrado.unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Vendedor);
+            assert_eq!(usuario.reputacion_como_comprador, 0);
+            assert_eq!(usuario.reputacion_como_vendedor, 0);
+
+
+        }
+
+        // Test para comprobar que el usuario no puede registrase 2 veces
+
+        fn registrar_usuario_dos_veces() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            //Primer registro
+            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
+
+            //Segundo registro debería fallar porque ya esta registrado
+            let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
+            assert_eq!(resultado, Err("El usuario se encuentra regiistrado".to_string()));
+               
+
+        }
+    }
+
+
+
 }
