@@ -27,6 +27,9 @@ Estados de orden: pendiente, enviado, recibido, cancelada.
 Solo el Vendedor puede marcar como enviado.
 Solo el Comprador puede marcar como recibido o cancelada si aún está pendiente.
 Cancelación requiere consentimiento mutuo.*/
+
+
+
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[ink::contract]
@@ -136,8 +139,9 @@ mod marketplace_principal {
         pub fn registrar_usuario(&mut self, rol: RolUsuario) {
             // FALTA IMPLEMENTAR 
         }
-        #[ink(message)]
+
         // Errores personalizados para la publicación de productos
+        #[ink(message)]
         pub enum ProductoError {
             CantidadInsuficiente,
             UsuarioNoRegistrado,
@@ -268,4 +272,152 @@ mod marketplace_principal {
             // FALTA IMPLEMENTAR la lógica de compra
         }
     }
+
+
+    // LUEGO DEL MERGE EN DEV UBISCAR LOS TEST EN EL MODULO DE LOS DEMAS
+
+
+    // Esta función que prepararr un contrato con un usuario registrado como Vendedor
+    fn setup_contract_con_vendedor() -> MarketplacePrincipal {
+        let mut contrato = MarketplacePrincipal::new();
+
+        // Creamos una cuenta simulada con una dirección inventada
+        let caller = AccountId::from([0x01; 32]);
+
+        // Esta línea simula que "caller" es quien está invocando el contrato
+        ink::env::test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
+        // Registramos a este usuario en el sistema con rol de Vendedorr
+
+        let usuario = Usuario {
+            direccion: caller,
+            rol: RolUsuario::Vendedor,
+            reputacion_como_comprador: 0,
+            reputacion_como_vendedor: 0,
+        };
+
+        // Insertamos al usuario en la estructura de datos del contrato
+        contrato.usuarios.insert(caller, &usuario);
+
+        contrato
+
+
+
+    //  Test que verifica que se puede publicar un producto correctamente
+    #[ink::test]
+    fn test_publicar_producto_ok() {
+
+        // Preparamos un contrato con un vendedor válido
+
+        let mut contrato = setup_contract_con_vendedor();
+
+        // Llamamos a la función "publicar producto" con datos válidos
+        let resultado = contrato.publicar_producto(
+            "Celular".to_string(),
+            "Un buen celular".to_string(),
+            1000,
+            5,
+            "Tecnología".to_string(),
+        );
+
+        // Chequeamos que la operación fue exitosa
+
+        assert!(resultado.is_ok());
+
+        // Vemos si se agregó exactamente un productoo
+
+        assert_eq!(contrato.productos.len(), 1);
+
+        // Chequeamos los datos del producto publicado
+        let producto = &contrato.productos[0];
+        assert_eq!(producto.nombre, "Celular");
+        assert_eq!(producto.precio, 1000);
+
+
+    }
+
+
+
+    // Test falla si el usuario no está registrado
+    #[ink::test]
+    fn test_usuario_no_registrado() {
+        let mut contrato = MarketplacePrincipal::new();
+
+        // Simulamos que quien llama es unm usuario no registrado
+
+        let caller = AccountId::from([0x02; 32]);
+        ink::env::test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
+        // Intentamos publicar un producto sin estar registrado
+
+        let resultado = contrato.publicar_producto(
+            "Producto".to_string(),
+            "Sin registro".to_string(),
+            500,
+            1,
+            "Otros".to_string(),
+        );
+
+        // Debe fallar con error de usuario no registrado (Usamos el UsuarioNoRegistrado)
+
+        assert!(matches!(resultado, Err(ProductoError::UsuarioNoRegistrado)));
+
+
+    }
+
+    // Falla si el usuario está registrado pero no tiene el rol adecuado
+    #[ink::test]
+
+    fn test_usuario_no_es_vendedor() {
+
+
+        let mut contrato = MarketplacePrincipal::new();
+
+        // Simulamos "caller"
+        let caller = AccountId::from([0x03; 32]);
+        ink::env::test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
+        // Registramos al usuario como Comprador (no como Vendedor)
+        let usuario = Usuario {
+            direccion: caller,
+            rol: RolUsuario::Comprador, // Ponemos un Rol no válido para publicar productos 
+            reputacion_como_comprador: 0,
+            reputacion_como_vendedor: 0,
+        };
+        contrato.usuarios.insert(caller, &usuario);
+
+        let resultado = contrato.publicar_producto(
+            "Producto".to_string(),
+            "No autorizado".to_string(),
+            100,
+            2,
+            "Otros".to_string(),
+        );
+
+        assert!(matches!(resultado, Err(ProductoError::NoEsVendedor)));
+
+
+    }
+
+    // Falla si la cantidad del producto es 0
+    #[ink::test]
+    fn test_cantidad_insuficiente() {
+
+
+        let mut contrato = setup_contract_con_vendedor();
+
+        let resultado = contrato.publicar_producto(
+            "Producto".to_string(),
+            "Cantidad cero".to_string(),
+            100,
+            0, // Ponemos una cantidad inválidaa
+            "Otros".to_string(),
+        );
+
+        assert!(matches!(resultado, Err(ProductoError::CantidadInsuficiente)));
+
+
+    }
+
+
 }
