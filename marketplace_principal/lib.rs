@@ -49,7 +49,7 @@ mod marketplace_principal {
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum SistemaError {
         CantidadInsuficiente,
-        UsuarioNoRegistrado,
+        UsuarioRegistrado,
         ProductosVacios,
         NoEsRolCorrecto,
         EstadoInvalido,
@@ -60,7 +60,7 @@ mod marketplace_principal {
         fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             match self {
                 SistemaError::CantidadInsuficiente => write!(f, "Cantidad insuficiente"),
-                SistemaError::UsuarioNoRegistrado => write!(f, "Usuario no registrado"),
+                SistemaError::UsuarioRegistrado => write!(f, "El usuario se encuentra registrado"),
                 SistemaError::NoEsRolCorrecto => write!(f, "El usuario no es del rol correcto"),
                 SistemaError::ProductosVacios => write!(f, "No se encontraron productos"),
                 SistemaError::EstadoInvalido => write!(f, "El estado de la orden es inválido"),
@@ -218,7 +218,7 @@ impl MarketplacePrincipal {
     /// # Errores
     /// Retorna un error si el usuario ya estaba registrado.
     #[ink(message)]
-    pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), String> {
+    pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
         self.registrar_usuario_interno(rol)
     }
 
@@ -354,7 +354,7 @@ impl MarketplacePrincipal {
     /// Verifica que el usuario esté registrado.
     fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
         if !self.usuarios.contains_key(&usuario) {
-            Err(SistemaError::UsuarioNoRegistrado)
+            Err(SistemaError::UsuarioRegistrado)
         } else {
             Ok(())
         }
@@ -363,7 +363,7 @@ impl MarketplacePrincipal {
     /// Verifica que el usuario tenga el rol requerido.
     fn verificar_rol(&self, usuario: AccountId, rol_requerido: RolUsuario) -> Result<(), SistemaError> {
         let usuario_data = self.usuarios.get(&usuario)
-            .ok_or(SistemaError::UsuarioNoRegistrado)?;
+            .ok_or(SistemaError::UsuarioRegistrado)?;
 
         match (usuario_data.rol, rol_requerido) {
             (RolUsuario::Ambos, _) => Ok(()),
@@ -479,6 +479,8 @@ impl MarketplacePrincipal {
 
 
 
+
+
     
     // LUEGO DE CADA MERGE EN DEV UBISCAR LOS TEST EN EL MOD CON LOS DEMAS
     #[cfg(test)]
@@ -526,7 +528,7 @@ impl MarketplacePrincipal {
 
             //Segundo registro debería fallar porque ya esta registrado
             let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
-            assert_eq!(resultado, Err("El usuario se encuentra regiistrado".to_string()));
+            assert_eq!(resultado, Err(SistemaError::UsuarioRegistrado));
                
 
         }
@@ -611,9 +613,9 @@ impl MarketplacePrincipal {
                 "Otros".to_string(),
             )  ;
 
-            // Debe fallar con error de usuario no registrado (Usamos el UsuarioNoRegistrado)
+            // Debe fallar con error de usuario no registrado (Usamos el UsuarioRegistrado)
 
-            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
+            assert!(matches!(resultado, Err(SistemaError::UsuarioRegistrado)));
 
 
         } 
@@ -647,7 +649,7 @@ impl MarketplacePrincipal {
                 "Otros".to_string(),
             );
 
-            assert!(matches!(resultado, Err(SistemaError::NoEsVendedor)));
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
 
 
         }
