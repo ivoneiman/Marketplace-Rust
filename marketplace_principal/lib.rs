@@ -359,9 +359,9 @@ mod marketplace_principal {
         /// Verifica que el usuario esté registrado.
         fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
             if self.usuarios.contains_key(&usuario) {
-                Err(SistemaError::UsuarioNoRegistrado)
-            } else {
                 Ok(())
+            } else {
+                Err(SistemaError::UsuarioNoRegistrado)
             }
         }
 
@@ -555,7 +555,7 @@ mod marketplace_principal {
 
             //Segundo registro debería fallar porque ya esta registrado
             let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
-            assert_eq!(resultado, Err(SistemaError::UsuarioNoRegistrado));
+            assert_eq!(resultado, Err(SistemaError::UsuarioExistente));
                
 
         }
@@ -702,8 +702,90 @@ mod marketplace_principal {
 
         }
 
+        // Test que verifica la creación de una orden de compra exitosa
+        #[ink::test]
+        fn test_crear_orden_ok() {
+            let mut contrato = MarketplacePrincipal::new();
 
+            // Registrar vendedor y publicar producto
+            let vendedor = AccountId::from([0x10; 32]);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+            contrato.registrar_usuario(RolUsuario::Vendedor).unwrap();
+            contrato.publicar_producto("Libro".into(), "Rust".into(), 50, 10, "Libros".into()).unwrap();
 
+            // Registrar comprador
+            let comprador = AccountId::from([0x20; 32]);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(comprador);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            // Crear orden
+            let resultado = contrato.crear_orden(0, 2);
+            assert!(resultado.is_ok());
+            assert_eq!(contrato.productos[0].cantidad, 8);
+        }
+        // test  de error por stock insuficiente
+        #[ink::test]
+        fn test_crear_orden_stock_insuficiente() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Publicamos un producto con 5 unidades
+            contrato.publicar_producto("Zapatos".into(), "De cuero".into(), 200, 5, "Calzado".into()).unwrap();
+
+            // Simulamos un comprador
+            let comprador = AccountId::from([0x30; 32]);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(comprador);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            // Intentamos crear una orden de 10 unidades (más de lo que hay en stock)
+            let resultado = contrato.crear_orden(0, 10);
+            assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
+        }
+        // test que verifica que el vendedor pueda marcar una orden como enviada
+        #[ink::test]
+        fn test_marcar_orden_como_enviada() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Publicamos un producto
+            contrato.publicar_producto("Laptop".into(), "Portátil".into(), 1000, 5, "Tecnología".into()).unwrap();
+
+            // Simulamos un comprador
+            let comprador = AccountId::from([0x40; 32]);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(comprador);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            // Creamos una orden
+            let orden_id = contrato.crear_orden(0, 1).unwrap();
+
+            // Ahora el vendedor marca la orden como enviada
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(contrato.env().caller());
+            let resultado = contrato.marcar_orden_como_enviada(orden_id);
+            assert!(resultado.is_ok());
+
+            // Verificamos que el estado de la orden cambió a Enviada
+            assert_eq!(contrato.ordenes[0].estado, EstadoOrden::Enviada);
+        }
+        // Test de error al cambiar estado por usuario incorrecto
+        #[ink::test]
+        fn test_marcar_orden_como_enviada_usuario_incorrecto() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Publicamos un producto
+            contrato.publicar_producto("Tablet".into(), "Nueva".into(), 300, 10, "Tecnología".into()).unwrap();
+
+            // Simulamos un comprador
+            let comprador = AccountId::from([0x50; 32]);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(comprador);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            // Creamos una orden
+            let orden_id = contrato.crear_orden(0, 2).unwrap();
+
+            // Ahora intentamos que el comprador marque la orden como enviada (debería fallar)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(comprador);
+            let resultado = contrato.marcar_orden_como_enviada(orden_id);
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
     }
 
 }
+
