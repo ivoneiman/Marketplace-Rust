@@ -2,18 +2,24 @@
 
 #[ink::contract]
 mod marketplace_principal {
-    use ink::prelude::{string::String, vec::Vec};
-    use ink::storage::Mapping;
-    use ink::env::{Environment, DefaultEnvironment};
 
-    
+    use ink::prelude::string::String;
+
+    use ink::prelude::vec::Vec;
+
+    use ink::storage::Mapping;
+
+    use ink::env::AccountId;
+    use ink::env::Balance;
+    use ink::storage::traits::SpreadAllocate;
+
     // ────────────────
     // ENUMS
     // ────────────────
 
     /// Rol que puede tener un usuario dentro del sistema.
-    #[derive(Debug, scale::Encode, scale::Decode, Clone, Copy, PartialEq, Eq)]  
-    #[cfg_attr(feature = "std")]
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum RolUsuario {
         Comprador,
         Vendedor,
@@ -21,8 +27,8 @@ mod marketplace_principal {
     }
 
     /// Posibles estados que puede tener una orden de compra.
-    #[derive(Debug, scale::Encode, scale::Decode, Clone, Copy, PartialEq, Eq)]  
-    #[cfg_attr(feature = "std")]
+    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum EstadoOrden {
         Pendiente,
         Enviada,
@@ -36,8 +42,7 @@ mod marketplace_principal {
     // ────────────────
 
     /// Representa posibles errores que pueden surgir en el sistema.
-    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
-    #[cfg_attr(feature = "std")]
+
     pub enum SistemaError {
         CantidadInsuficiente,
         UsuarioNoRegistrado,
@@ -47,7 +52,6 @@ mod marketplace_principal {
         OrdenNoExiste,
         UsuarioExistente
     }
-    use std::fmt;
     impl core::fmt::Display for SistemaError {
         fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             match self {
@@ -71,7 +75,7 @@ mod marketplace_principal {
 
     /// Representa un usuario del marketplace.
     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
-    #[cfg_attr(feature = "std")]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub struct Usuario {
         /// Dirección de la cuenta del usuario.
         pub direccion: AccountId,
@@ -85,7 +89,7 @@ mod marketplace_principal {
 
     /// Representa un producto publicado en el marketplace.
     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
-    #[cfg_attr(feature = "std")]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub struct Producto {
         /// ID único del producto.
         pub id: u32,
@@ -115,7 +119,7 @@ mod marketplace_principal {
 
     /// Representa una orden de compra realizada por un usuario.
     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
-    #[cfg_attr(feature = "std")]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub struct Orden {
         /// ID único de la orden.
         pub id: u32,
@@ -183,7 +187,7 @@ mod marketplace_principal {
         /// Retorna un error si el usuario ya estaba registrado.
         #[ink(message)]
         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
-            self.registrar_usuario_interno(rol)
+            Self::registrar_usuario_interno(rol)
         }
 
         /// Permite a un vendedor publicar un nuevo producto en el marketplace.
@@ -207,7 +211,7 @@ mod marketplace_principal {
             cantidad: u32,
             categoria: String,
         ) -> Result<(), SistemaError> {
-            self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
+            Self::crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
         }
 
         /// Permite a un comprador crear una nueva orden para un producto publicado.
@@ -224,7 +228,7 @@ mod marketplace_principal {
         /// el producto no existe o no hay suficiente cantidad.
         #[ink(message)]
         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
-            self.crear_nueva_orden(producto_id, cantidad)
+            Self::crear_nueva_orden(producto_id, cantidad)
         }
 
         /// Permite al vendedor marcar una orden como enviada.
@@ -236,7 +240,7 @@ mod marketplace_principal {
         /// Retorna un error si el estado no puede cambiarse o el usuario no tiene permiso.
         #[ink(message)]
         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
-            self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
+            Self::actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
         }
 
         /// Permite al comprador marcar una orden como recibida.
@@ -248,7 +252,7 @@ mod marketplace_principal {
         /// Retorna un error si el estado no puede cambiarse o el usuario no tiene permiso.
         #[ink(message)]
         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
-            self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
+            Self::actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
         }
 
         // --- Funciones internas ---
@@ -266,7 +270,7 @@ mod marketplace_principal {
                 reputacion_como_comprador: 0,
                 reputacion_como_vendedor: 0,
             };
-            self.usuarios.insert(usuario_llamador, &nuevo_usuario);
+            Self::usuarios.insert(usuario_llamador, &nuevo_usuario);
             Ok(())
         }
 
@@ -281,21 +285,21 @@ mod marketplace_principal {
         ) -> Result<(), SistemaError> {
             let vendedor = Self::env().caller();
             // Verifica que el vendedor esté registrado y tenga el rol adecuado
-            self.verificar_registro(vendedor)?;
-            self.verificar_rol(vendedor, RolUsuario::Vendedor)?;
+            Self::verificar_registro(vendedor)?;
+            Self::verificar_rol(vendedor, RolUsuario::Vendedor)?;
             // Verifica que la cantidad sea válida
-            self.verificar_cantidad(cantidad)?;
+            Self::verificar_cantidad(cantidad)?;
             // Agrega el producto al marketplace
-            self.agregar_producto(nombre, descripcion, precio, cantidad, categoria, vendedor)
+            Self::agregar_producto(nombre, descripcion, precio, cantidad, categoria, vendedor)
         }
 
         /// Crea una nueva orden de compra para un producto existente.
         fn crear_nueva_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             let comprador = Self::env().caller();
-            self.verificar_registro(comprador)?;
-            self.verificar_rol(comprador, RolUsuario::Comprador)?;
+            Self::verificar_registro(comprador)?;
+            Self::verificar_rol(comprador, RolUsuario::Comprador)?;
 
-            let producto = self.obtener_producto_mut(producto_id)?;
+            let producto = Self::obtener_producto_mut(producto_id)?;
             if producto.cantidad < cantidad {
                 return Err(SistemaError::CantidadInsuficiente);
             }
@@ -308,10 +312,10 @@ mod marketplace_principal {
         fn actualizar_estado_orden(&mut self, orden_id: u32, nuevo_estado: EstadoOrden) -> Result<(), SistemaError> {
             let caller = Self::env().caller();
             // Tiene que estar registrado
-            self.verificar_registro(caller)?;
+            Self::verificar_registro(caller)?;
 
-            let mut orden = self.obtener_orden_mut(orden_id)?;
-            self.verificar_permiso_orden(caller, orden, nuevo_estado)?;
+            let orden = Self::obtener_orden_mut(orden_id)?;
+            Self::verificar_permiso_orden(caller, orden, nuevo_estado)?;
 
             let _estado_anterior = orden.estado;
             orden.estado = nuevo_estado;
@@ -324,7 +328,7 @@ mod marketplace_principal {
 
         /// Verifica que el usuario esté registrado.
         fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
-            if !self.usuarios.contains_key(&usuario) {
+            if !Self::usuarios.contains_key(&usuario) {
                 Err(SistemaError::UsuarioNoRegistrado)
             } else {
                 Ok(())
@@ -333,7 +337,7 @@ mod marketplace_principal {
 
         /// Verifica que el usuario no esté ya registrado.
         fn verificar_usuario_existente(&self, usuario: AccountId) -> Result<(), SistemaError> {
-            if self.usuarios.contains_key(&usuario) {
+            if Self::usuarios.contains_key(&usuario) {
                 Err(SistemaError::UsuarioExistente)
             } else {
                 Ok(())
@@ -342,7 +346,7 @@ mod marketplace_principal {
 
         /// Verifica que el usuario tenga el rol requerido.
         fn verificar_rol(&self, usuario: AccountId, rol_requerido: RolUsuario) -> Result<(), SistemaError> {
-            let usuario_data = self.usuarios.get(&usuario)
+            let usuario_data = Self::usuarios.get(&usuario)
                 .ok_or(SistemaError::UsuarioNoRegistrado)?;
 
             match (usuario_data.rol, rol_requerido) {
@@ -371,15 +375,15 @@ mod marketplace_principal {
             categoria: String,
             vendedor: AccountId,
         ) -> Result<(), SistemaError> {
-            let id = self.productos.len() as u32;
+            let id = Self::productos.len() as u32;
             let nuevo_producto = Producto::new(id, nombre, descripcion, precio, cantidad, categoria, vendedor);
-            self.productos.push(nuevo_producto);
+            Self::productos.push(nuevo_producto);
             Ok(())
         }
 
         /// Devuelve una referencia mutable a un producto dado su ID.
         fn obtener_producto_mut(&mut self, id: u32) -> Result<&mut Producto, SistemaError> {
-            self.productos
+            Self::productos
                 .iter_mut()
                 .find(|p| p.id == id)
                 .ok_or(SistemaError::ProductosVacios)
@@ -393,16 +397,16 @@ mod marketplace_principal {
             producto_id: u32,
             cantidad: u32
         ) -> Result<u32, SistemaError> {
-            let id = self.ordenes.len() as u32;
+            let id = Self::ordenes.len() as u32;
             let nueva_orden = Orden::new(id, comprador, vendedor, producto_id, cantidad);
-            self.ordenes.push(nueva_orden.clone());
-            // self.emitir_evento_creacion(nueva_orden);
+            Self::ordenes.push(nueva_orden.clone());
+            // Self::emitir_evento_creacion(nueva_orden);
             Ok(id)
         }
 
         /// Devuelve una referencia mutable a una orden dada su ID.
         fn obtener_orden_mut(&mut self, id: u32) -> Result<&mut Orden, SistemaError> {
-            self.ordenes
+            Self::ordenes
                 .get_mut(id as usize)
                 .ok_or(SistemaError::OrdenNoExiste)
         }
@@ -417,7 +421,7 @@ mod marketplace_principal {
             match nuevo_estado {
                 EstadoOrden::Enviada if caller != orden.vendedor => Err(SistemaError::NoEsRolCorrecto),
                 EstadoOrden::Recibida if caller != orden.comprador => Err(SistemaError::NoEsRolCorrecto),
-                _ => self.verificar_transicion_estado(orden.estado, nuevo_estado),
+                _ => Self::verificar_transicion_estado(orden.estado, nuevo_estado),
             }
         }
 
