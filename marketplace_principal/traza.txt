@@ -1,119 +1,119 @@
  [==] Checking clippy linting rules
        Fresh unicode-ident v1.0.18
-       Fresh proc-macro2 v1.0.95
        Fresh equivalent v1.0.2
        Fresh hashbrown v0.15.4
-       Fresh winnow v0.7.11
        Fresh toml_write v0.1.2
+       Fresh winnow v0.7.11
+       Fresh proc-macro2 v1.0.95
+       Fresh indexmap v2.10.0
        Fresh unicode-xid v0.2.6
        Fresh quote v1.0.40
-       Fresh indexmap v2.10.0
-       Fresh version_check v0.9.5
-       Fresh syn v2.0.104
        Fresh rustversion v1.0.21
+       Fresh version_check v0.9.5
+       Fresh once_cell v1.21.3
+       Fresh syn v2.0.104
        Fresh const_format_proc_macros v0.2.34
-       Fresh serde_derive v1.0.219
-       Fresh impl-trait-for-tuples v0.2.3
        Fresh syn v1.0.109
+       Fresh fnv v1.0.7
        Fresh ident_case v1.0.1
        Fresh strsim v0.10.0
-       Fresh once_cell v1.21.3
-       Fresh fnv v1.0.7
-       Fresh serde v1.0.219
-       Fresh darling_core v0.14.4
+       Fresh serde_derive v1.0.219
+       Fresh impl-trait-for-tuples v0.2.3
        Fresh derive_more-impl v1.0.0
+       Fresh darling_core v0.14.4
+       Fresh serde v1.0.219
+       Fresh darling_macro v0.14.4
        Fresh toml_datetime v0.6.11
        Fresh serde_spanned v0.6.9
-       Fresh darling_macro v0.14.4
-       Fresh toml_edit v0.22.27
        Fresh darling v0.14.4
        Fresh winnow v0.5.40
        Fresh derive_more v0.99.20
        Fresh serde_derive_internals v0.29.1
-       Fresh proc-macro-crate v3.3.0
-       Fresh windows_x86_64_msvc v0.52.6
+       Fresh toml_edit v0.22.27
        Fresh toml_edit v0.19.15
+       Fresh windows_x86_64_msvc v0.52.6
        Fresh memchr v2.7.5
        Fresh schemars_derive v0.8.22
+       Fresh proc-macro-crate v3.3.0
+       Fresh windows-targets v0.52.6
+       Fresh proc-macro-crate v1.3.1
+       Fresh dyn-clone v1.0.19
        Fresh parity-scale-codec-derive v3.7.5
        Fresh scale-info-derive v2.11.6
-       Fresh proc-macro-crate v1.3.1
-       Fresh windows-targets v0.52.6
-       Fresh dyn-clone v1.0.19
-       Fresh windows-sys v0.59.0
-       Fresh schemars v0.8.22
        Fresh scale-encode-derive v0.6.0
+       Fresh schemars v0.8.22
+       Fresh windows-sys v0.59.0
        Fresh scale-decode-derive v0.11.1
        Fresh aho-corasick v1.1.3
        Fresh regex-syntax v0.8.5
-       Fresh regex-automata v0.4.9
        Fresh winapi-util v0.1.9
+       Fresh regex-automata v0.4.9
        Fresh autocfg v1.5.0
-       Fresh regex v1.11.1
        Fresh same-file v1.0.6
+       Fresh regex v1.11.1
        Fresh const_format v0.2.34
        Fresh typenum v1.18.0
        Fresh getrandom v0.2.16
        Fresh shlex v1.3.0
-       Fresh byte-slice-cast v1.2.3
        Fresh arrayvec v0.7.6
-       Fresh semver v1.0.26
-       Fresh generic-array v0.14.7
-       Fresh cc v1.2.29
-       Fresh rand_core v0.6.4
+       Fresh byte-slice-cast v1.2.3
        Fresh zerocopy v0.8.26
-       Fresh parity-scale-codec v3.7.5
+       Fresh generic-array v0.14.7
+       Fresh rand_core v0.6.4
+       Fresh cc v1.2.29
        Fresh walkdir v2.5.0
+       Fresh parity-scale-codec v3.7.5
+       Fresh semver v1.0.26
        Fresh termcolor v1.4.1
        Fresh toml v0.8.23
        Fresh derive-syn-parse v0.2.0
        Fresh common-path v1.0.0
        Fresh smallvec v1.15.1
-       Fresh ppv-lite86 v0.2.21
-       Fresh docify_macros v0.2.9
-       Fresh scale-type-resolver v0.1.1
        Fresh rustc_version v0.4.1
+       Fresh docify_macros v0.2.9
        Fresh num-traits v0.2.19
+       Fresh ppv-lite86 v0.2.21
+       Fresh scale-type-resolver v0.1.1
        Fresh zeroize_derive v1.4.2
-       Fresh cpufeatures v0.2.17
        Fresh keccak v0.1.5
+       Fresh cpufeatures v0.2.17
        Fresh cfg-if v1.0.1
        Fresh zeroize v1.8.1
        Fresh docify v0.2.9
-       Fresh integer-sqrt v0.1.5
        Fresh linkme-impl v0.3.33
+       Fresh integer-sqrt v0.1.5
        Fresh rand_chacha v0.3.1
        Fresh block-buffer v0.10.4
        Fresh crypto-common v0.1.6
+       Fresh lazy_static v1.5.0
+       Fresh log v0.4.27
        Fresh static_assertions v1.1.0
        Fresh subtle v2.6.1
-       Fresh log v0.4.27
-       Fresh lazy_static v1.5.0
+       Fresh rand v0.8.5
+       Fresh Inflector v0.11.4
+       Fresh digest v0.10.7
+       Fresh bounded-collections v0.2.4
+       Fresh sp-arithmetic v26.1.0
+       Fresh secp256k1-sys v0.9.2
        Fresh linkme v0.3.33
        Fresh paste v1.0.15
-       Fresh sp-arithmetic v26.1.0
-       Fresh digest v0.10.7
-       Fresh Inflector v0.11.4
-       Fresh bounded-collections v0.2.4
-       Fresh rand v0.8.5
-       Fresh secp256k1-sys v0.9.2
        Fresh ink_prelude v5.1.1
-       Fresh sha2 v0.10.9
        Fresh scale-bits v0.5.0
+       Fresh sha2 v0.10.9
        Fresh derive_more v1.0.0
-       Fresh sp-debug-derive v14.0.0
        Fresh curve25519-dalek-derive v0.1.1
+       Fresh sp-debug-derive v14.0.0
+       Fresh byteorder v1.5.0
        Fresh either v1.15.0
        Fresh bitflags v1.3.2
-       Fresh byteorder v1.5.0
-       Fresh ink_metadata v5.1.1
-       Fresh sp-weights v31.1.0
-       Fresh scale-decode v0.11.1
-       Fresh curve25519-dalek v4.1.3
-       Fresh pallet-contracts-uapi v9.0.0
-       Fresh itertools v0.12.1
        Fresh scale-info v2.11.6
+       Fresh sp-weights v31.1.0
+       Fresh curve25519-dalek v4.1.3
+       Fresh ink_metadata v5.1.1
+       Fresh scale-decode v0.11.1
+       Fresh itertools v0.12.1
        Fresh merlin v3.0.0
+       Fresh pallet-contracts-uapi v9.0.0
        Fresh secp256k1 v0.28.2
        Fresh getrandom_or_panic v0.0.3
        Fresh xcm-procedural v8.0.0
@@ -122,146 +122,152 @@
        Fresh blake2 v0.10.6
        Fresh serde_bytes v0.11.17
        Fresh impl-serde v0.4.0
-       Fresh derivative v2.2.0
        Fresh const_env_impl v0.1.2
-       Fresh ryu v1.0.20
-       Fresh xxhash-rust v0.8.15
-       Fresh itoa v1.0.15
+       Fresh derivative v2.2.0
        Fresh arrayref v0.3.9
+       Fresh xxhash-rust v0.8.15
        Fresh array-bytes v6.2.3
+       Fresh itoa v1.0.15
+       Fresh ryu v1.0.20
        Fresh environmental v1.1.4
-       Fresh schnorrkel v0.11.4
-       Fresh serde_json v1.0.140
-       Fresh ink_primitives v5.1.1
-       Fresh ink_ir v5.1.1
        Fresh const_env v0.1.2
-       Fresh ink_engine v5.1.1
+       Fresh schnorrkel v0.11.4
+       Fresh ink_ir v5.1.1
+       Fresh ink_primitives v5.1.1
        Fresh staging-xcm v11.0.0
+       Fresh serde_json v1.0.140
+       Fresh ink_engine v5.1.1
        Fresh ink_storage_traits v5.1.1
        Fresh ink_allocator v5.1.1
        Fresh heck v0.5.0
        Fresh synstructure v0.13.2
        Fresh array-init v2.1.0
-       Fresh base64ct v1.6.0
        Fresh ink_codegen v5.1.1
        Fresh ink_env v5.1.1
+       Fresh base64ct v1.6.0
        Fresh ink_storage v5.1.1
        Fresh ink_macro v5.1.1
        Fresh ink v5.1.1
     Checking marketplace_principal v0.1.0 (C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\marketplace_principal)
      Running `C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\bin\clippy-driver.exe C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\bin\rustc.exe --crate-name marketplace_principal --edition=2021 marketplace_principal\lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --cfg "feature=\"default\"" --cfg "feature=\"e2e-tests\"" --cfg "feature=\"ink-as-dependency\"" --cfg "feature=\"std\"" --check-cfg cfg(docsrs) --check-cfg "cfg(feature, values(\"default\", \"e2e-tests\", \"ink-as-dependency\", \"std\"))" -C metadata=26a7b82557cb922c -C extra-filename=-26a7b82557cb922c --out-dir C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps -C incremental=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\incremental -L dependency=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps --extern base64ct=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\libbase64ct-8ef80c2db85f3974.rmeta --extern ink=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\libink-bc22a143cea9c8ae.rmeta -L "native=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.43.34808\atlmfc\lib\x64" -L native=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\build\secp256k1-sys-e9a46947639bb5e4\out`
-error[E0432]: unresolved import `ink::env::AccountId`
-  --> marketplace_principal\lib.rs:12:9
-   |
-12 |     use ink::env::AccountId;
-   |         ^^^^^^^^^^---------
-   |         |         |
-   |         |         help: a similar name exists in the module: `account_id`
-   |         no `AccountId` in the root
-
-error[E0432]: unresolved import `ink::env::Balance`
-  --> marketplace_principal\lib.rs:13:9
-   |
-13 |     use ink::env::Balance;
-   |         ^^^^^^^^^^-------
-   |         |         |
-   |         |         help: a similar name exists in the module: `balance`
-   |         no `Balance` in the root
-
 error[E0432]: unresolved import `scale`
  --> marketplace_principal\lib.rs:7:9
   |
 7 |     use scale::{Encode, Decode};
   |         ^^^^^ help: a similar path exists: `ink::scale`
 
-error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-  --> marketplace_principal\lib.rs:21:40
-   |
-21 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-   |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
-
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:29:21
+  --> marketplace_principal\lib.rs:16:21
    |
-29 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+16 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                     ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:29:36
+  --> marketplace_principal\lib.rs:16:36
    |
-29 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+16 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                                    ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-  --> marketplace_principal\lib.rs:30:40
+  --> marketplace_principal\lib.rs:17:40
    |
-30 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-   |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
-
-error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-  --> marketplace_principal\lib.rs:46:40
-   |
-46 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+17 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
    |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:78:21
+  --> marketplace_principal\lib.rs:25:21
    |
-78 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+25 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                     ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:78:36
+  --> marketplace_principal\lib.rs:25:36
    |
-78 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+25 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                                    ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-  --> marketplace_principal\lib.rs:79:40
+  --> marketplace_principal\lib.rs:26:40
    |
-79 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+26 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
    |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:92:21
+  --> marketplace_principal\lib.rs:41:21
    |
-92 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+41 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                     ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-  --> marketplace_principal\lib.rs:92:36
+  --> marketplace_principal\lib.rs:41:36
    |
-92 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+41 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
    |                                    ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-  --> marketplace_principal\lib.rs:93:40
+  --> marketplace_principal\lib.rs:42:40
    |
-93 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+42 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
    |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-   --> marketplace_principal\lib.rs:122:21
+  --> marketplace_principal\lib.rs:74:21
+   |
+74 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+   |                     ^^^^^ use of undeclared crate or module `scale`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale`
+  --> marketplace_principal\lib.rs:74:36
+   |
+74 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+   |                                    ^^^^^ use of undeclared crate or module `scale`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
+  --> marketplace_principal\lib.rs:75:40
+   |
+75 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+   |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale`
+  --> marketplace_principal\lib.rs:88:21
+   |
+88 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+   |                     ^^^^^ use of undeclared crate or module `scale`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale`
+  --> marketplace_principal\lib.rs:88:36
+   |
+88 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+   |                                    ^^^^^ use of undeclared crate or module `scale`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
+  --> marketplace_principal\lib.rs:89:40
+   |
+89 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+   |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `scale`
+   --> marketplace_principal\lib.rs:118:21
     |
-122 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+118 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
     |                     ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale`
-   --> marketplace_principal\lib.rs:122:36
+   --> marketplace_principal\lib.rs:118:36
     |
-122 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
+118 |     #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
     |                                    ^^^^^ use of undeclared crate or module `scale`
 
 error[E0433]: failed to resolve: use of undeclared crate or module `scale_info`
-   --> marketplace_principal\lib.rs:123:40
+   --> marketplace_principal\lib.rs:119:40
     |
-123 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+119 |     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     |                                        ^^^^^^^^^^ use of undeclared crate or module `scale_info`
 
 error[E0277]: the trait bound `marketplace_principal::Usuario: ink::parity_scale_codec::WrapperTypeDecode` is not satisfied
-   --> marketplace_principal\lib.rs:166:19
+   --> marketplace_principal\lib.rs:162:19
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeDecode` is not implemented for `marketplace_principal::Usuario`, which is required by `marketplace_principal::Usuario: ink::storage::traits::Packed`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeDecode`:
@@ -277,9 +283,9 @@ note: required by a bound in `ink::storage::Mapping`
     |                          ^^^^^^ required by this bound in `Mapping`
 
 error[E0277]: the trait bound `marketplace_principal::Usuario: ink::parity_scale_codec::WrapperTypeEncode` is not satisfied
-   --> marketplace_principal\lib.rs:166:19
+   --> marketplace_principal\lib.rs:162:19
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeEncode` is not implemented for `marketplace_principal::Usuario`, which is required by `marketplace_principal::Usuario: ink::storage::traits::Packed`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeEncode`:
@@ -301,27 +307,27 @@ note: required by a bound in `ink::storage::Mapping`
     |                          ^^^^^^ required by this bound in `Mapping`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:166:19
+   --> marketplace_principal\lib.rs:162:19
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:166:19
+   --> marketplace_principal\lib.rs:162:19
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |                    ^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -330,9 +336,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |                  ^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -341,9 +347,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |                    ^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -355,9 +361,9 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |                  ^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -369,9 +375,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -379,9 +385,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::storage::traits::StorableHint::Type`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage_traits-5.1.1\src\storage.rs:110:5
@@ -390,9 +396,9 @@ note: required by a bound in `ink::storage::traits::StorableHint::Type`
     |     ^^^^^^^^^^^^^^^^^^^^ required by this bound in `StorableHint::Type`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -403,9 +409,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::storage::traits::StorableHint::Type`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage_traits-5.1.1\src\storage.rs:110:5
@@ -414,9 +420,9 @@ note: required by a bound in `ink::storage::traits::StorableHint::Type`
     |     ^^^^^^^^^^^^^^^^^^^^ required by this bound in `StorableHint::Type`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -424,9 +430,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::storage::traits::Storable`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage_traits-5.1.1\src\storage.rs:22:21
@@ -435,9 +441,9 @@ note: required by a bound in `ink::storage::traits::Storable`
     |                     ^^^^^ required by this bound in `Storable`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -448,9 +454,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::storage::traits::Storable`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage_traits-5.1.1\src\storage.rs:22:21
@@ -459,9 +465,9 @@ note: required by a bound in `ink::storage::traits::Storable`
     |                     ^^^^^ required by this bound in `Storable`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:174:25
+   --> marketplace_principal\lib.rs:170:25
     |
-174 |         pub fn new() -> Self {
+170 |         pub fn new() -> Self {
     |                         ^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -469,9 +475,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Output`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:197:5
@@ -480,9 +486,9 @@ note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Output`
     |     ^^^^^^^^^^^^ required by this bound in `DispatchableConstructorInfo::Output`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:174:25
+   --> marketplace_principal\lib.rs:170:25
     |
-174 |         pub fn new() -> Self {
+170 |         pub fn new() -> Self {
     |                         ^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -493,9 +499,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Output`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:197:5
@@ -504,9 +510,9 @@ note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Output`
     |     ^^^^^^^^^^^^ required by this bound in `DispatchableConstructorInfo::Output`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -514,9 +520,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:195:5
@@ -525,9 +531,9 @@ note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Storage
     |     ^^^^^^^^^^^^^ required by this bound in `DispatchableConstructorInfo::Storage`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -538,9 +544,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:195:5
@@ -549,15 +555,15 @@ note: required by a bound in `ink::reflect::DispatchableConstructorInfo::Storage
     |     ^^^^^^^^^^^^^ required by this bound in `DispatchableConstructorInfo::Storage`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `ink::reflect::ConstructorOutputValue<marketplace_principal::MarketplacePrincipal>: ink::reflect::ConstructorOutput<marketplace_principal::MarketplacePrincipal>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -565,22 +571,22 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: required for `ink::reflect::ConstructorOutputValue<marketplace_principal::MarketplacePrincipal>` to implement `ink::reflect::ConstructorOutput<marketplace_principal::MarketplacePrincipal>`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `ink::reflect::ConstructorOutputValue<marketplace_principal::MarketplacePrincipal>: ink::reflect::ConstructorOutput<marketplace_principal::MarketplacePrincipal>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -591,16 +597,16 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: required for `ink::reflect::ConstructorOutputValue<marketplace_principal::MarketplacePrincipal>` to implement `ink::reflect::ConstructorOutput<marketplace_principal::MarketplacePrincipal>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -608,9 +614,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableMessageInfo::Storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:103:5
@@ -619,9 +625,9 @@ note: required by a bound in `ink::reflect::DispatchableMessageInfo::Storage`
     |     ^^^^^^^^^^^^^ required by this bound in `DispatchableMessageInfo::Storage`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -632,9 +638,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::DispatchableMessageInfo::Storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:103:5
@@ -643,9 +649,9 @@ note: required by a bound in `ink::reflect::DispatchableMessageInfo::Storage`
     |     ^^^^^^^^^^^^^ required by this bound in `DispatchableMessageInfo::Storage`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:171:10
+   --> marketplace_principal\lib.rs:167:10
     |
-171 |     impl MarketplacePrincipal {
+167 |     impl MarketplacePrincipal {
     |          ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -653,9 +659,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::codegen::utils::same_type::IsSameType`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\codegen\utils\same_type.rs:34:23
@@ -664,9 +670,9 @@ note: required by an implicit `Sized` bound in `ink::codegen::utils::same_type::
     |                       ^ required by the implicit `Sized` requirement on this type parameter in `IsSameType`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:171:10
+   --> marketplace_principal\lib.rs:167:10
     |
-171 |     impl MarketplacePrincipal {
+167 |     impl MarketplacePrincipal {
     |          ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -677,9 +683,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::codegen::utils::same_type::IsSameType`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\codegen\utils\same_type.rs:34:23
@@ -688,18 +694,18 @@ note: required by an implicit `Sized` bound in `ink::codegen::utils::same_type::
     |                       ^ required by the implicit `Sized` requirement on this type parameter in `IsSameType`
 
 error[E0599]: the function or associated item `new` exists for struct `IsSameType<MarketplacePrincipal>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:171:10
+   --> marketplace_principal\lib.rs:167:10
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-164 | |     #[ink(storage)]
-165 | |     pub struct MarketplacePrincipal {
+160 | |     #[ink(storage)]
+161 | |     pub struct MarketplacePrincipal {
     | |___________________________________- doesn't satisfy `_: Sized`
 ...
-171 |       impl MarketplacePrincipal {
+167 |       impl MarketplacePrincipal {
     |            ^^^^^^^^^^^^^^^^^^^^ function or associated item cannot be called on `IsSameType<MarketplacePrincipal>` due to unsatisfied trait bounds
     |
    ::: C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\alloc\src\vec\mod.rs:398:1
@@ -719,9 +725,9 @@ note: if you're trying to build a new `ink::codegen::utils::same_type::IsSameTyp
             which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
 
 error[E0277]: the trait bound `marketplace_principal::RolUsuario: ink::parity_scale_codec::WrapperTypeDecode` is not satisfied
-   --> marketplace_principal\lib.rs:190:45
+   --> marketplace_principal\lib.rs:186:45
     |
-190 |         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
+186 |         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
     |                                             ^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeDecode` is not implemented for `marketplace_principal::RolUsuario`, which is required by `marketplace_principal::RolUsuario: ink::parity_scale_codec::Decode`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeDecode`:
@@ -739,9 +745,9 @@ note: required by a bound in `ink::codegen::DispatchInput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchInput`
 
 error[E0277]: the trait bound `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:190:65
+   --> marketplace_principal\lib.rs:186:65
     |
-190 |         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
+186 |         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
     |                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<(), marketplace_principal::SistemaError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -755,9 +761,9 @@ note: required by a bound in `ink::codegen::DispatchOutput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchOutput`
 
 error[E0277]: the trait bound `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:214:14
+   --> marketplace_principal\lib.rs:210:14
     |
-214 |         ) -> Result<(), SistemaError> {
+210 |         ) -> Result<(), SistemaError> {
     |              ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<(), marketplace_principal::SistemaError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -771,9 +777,9 @@ note: required by a bound in `ink::codegen::DispatchOutput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchOutput`
 
 error[E0277]: the trait bound `std::result::Result<u32, marketplace_principal::SistemaError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:231:75
+   --> marketplace_principal\lib.rs:227:75
     |
-231 |         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
+227 |         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
     |                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<u32, marketplace_principal::SistemaError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -787,9 +793,9 @@ note: required by a bound in `ink::codegen::DispatchOutput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchOutput`
 
 error[E0277]: the trait bound `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:243:71
+   --> marketplace_principal\lib.rs:239:71
     |
-243 |         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+239 |         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
     |                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<(), marketplace_principal::SistemaError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -803,9 +809,9 @@ note: required by a bound in `ink::codegen::DispatchOutput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchOutput`
 
 error[E0277]: the trait bound `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:255:66
+   --> marketplace_principal\lib.rs:251:66
     |
-255 |         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+251 |         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
     |                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<(), marketplace_principal::SistemaError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -819,15 +825,15 @@ note: required by a bound in `ink::codegen::DispatchOutput`
     |        ^^^^^^^^^^^^^ required by this bound in `DispatchOutput`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -835,9 +841,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `std::result::Result`
    --> C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:17
@@ -846,15 +852,15 @@ note: required by an implicit `Sized` bound in `std::result::Result`
     |                 ^ required by the implicit `Sized` requirement on this type parameter in `Result`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -865,9 +871,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `std::result::Result`
    --> C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:17
@@ -876,15 +882,15 @@ note: required by an implicit `Sized` bound in `std::result::Result`
     |                 ^ required by the implicit `Sized` requirement on this type parameter in `Result`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -892,9 +898,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `std::result::Result`
    --> C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:17
@@ -904,15 +910,15 @@ note: required by an implicit `Sized` bound in `std::result::Result`
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -923,9 +929,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `std::result::Result`
    --> C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:17
@@ -935,15 +941,15 @@ note: required by an implicit `Sized` bound in `std::result::Result`
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -951,9 +957,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::reflect::ConstructorOutputValue`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:263:35
@@ -962,15 +968,15 @@ note: required by an implicit `Sized` bound in `ink::reflect::ConstructorOutputV
     |                                   ^ required by the implicit `Sized` requirement on this type parameter in `ConstructorOutputValue`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -981,9 +987,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::reflect::ConstructorOutputValue`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:263:35
@@ -992,36 +998,36 @@ note: required by an implicit `Sized` bound in `ink::reflect::ConstructorOutputV
     |                                   ^ required by the implicit `Sized` requirement on this type parameter in `ConstructorOutputValue`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:166:9
+   --> marketplace_principal\lib.rs:162:9
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:166:9
+   --> marketplace_principal\lib.rs:162:9
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>` is not satisfied
-   --> marketplace_principal\lib.rs:166:19
+   --> marketplace_principal\lib.rs:162:19
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:166:45
+   --> marketplace_principal\lib.rs:162:45
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                                             ^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `std::result::Result<marketplace_principal::MarketplacePrincipal, ink::parity_scale_codec::Error>: std::ops::FromResidual<std::result::Result<std::convert::Infallible, ink::parity_scale_codec::Error>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1029,16 +1035,16 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: required for `std::result::Result<marketplace_principal::MarketplacePrincipal, ink::parity_scale_codec::Error>` to implement `std::ops::FromResidual<std::result::Result<std::convert::Infallible, ink::parity_scale_codec::Error>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:166:45
+   --> marketplace_principal\lib.rs:162:45
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |                                             ^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `std::result::Result<marketplace_principal::MarketplacePrincipal, ink::parity_scale_codec::Error>: std::ops::FromResidual<std::result::Result<std::convert::Infallible, ink::parity_scale_codec::Error>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1049,16 +1055,16 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: required for `std::result::Result<marketplace_principal::MarketplacePrincipal, ink::parity_scale_codec::Error>` to implement `std::ops::FromResidual<std::result::Result<std::convert::Infallible, ink::parity_scale_codec::Error>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:167:9
+   --> marketplace_principal\lib.rs:163:9
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1067,9 +1073,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:167:9
+   --> marketplace_principal\lib.rs:163:9
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1081,9 +1087,9 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:166:9
+   --> marketplace_principal\lib.rs:162:9
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
@@ -1091,9 +1097,9 @@ error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::Accoun
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:166:9
+   --> marketplace_principal\lib.rs:162:9
     |
-166 |         usuarios: Mapping<AccountId, Usuario>,
+162 |         usuarios: Mapping<AccountId, Usuario>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
@@ -1101,9 +1107,9 @@ error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::Accoun
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:167:9
+   --> marketplace_principal\lib.rs:163:9
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1113,9 +1119,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:168:9
+   --> marketplace_principal\lib.rs:164:9
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |         ^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1125,9 +1131,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:167:9
+   --> marketplace_principal\lib.rs:163:9
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |         ^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1140,9 +1146,9 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:168:9
+   --> marketplace_principal\lib.rs:164:9
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |         ^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1155,17 +1161,17 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: this error originates in the derive macro `::ink::storage::traits::Storable` which comes from the expansion of the attribute macro `::ink::storage_item` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `marketplace_principal::Producto: ink::ink_metadata::TypeInfo` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-167 | |         productos: Vec<Producto>,
+163 | |         productos: Vec<Producto>,
     | |                    ^^^^^^^^^^^^^ the trait `ink::ink_metadata::TypeInfo` is not implemented for `marketplace_principal::Producto`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::ink_metadata::TypeInfo`
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____- required by a bound introduced by this call
     |
     = help: the following other types implement trait `ink::ink_metadata::TypeInfo`:
@@ -1189,16 +1195,16 @@ note: required by a bound in `ink::scale_info::build::FieldBuilder::<ink::scale_
     |             ^^^^^^^^ required by this bound in `FieldBuilder::<MetaForm, N>::ty`
 
 error[E0277]: the trait bound `marketplace_principal::Orden: ink::ink_metadata::TypeInfo` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
+164 | |         ordenes: Vec<Orden>,
     | |                  ^^^^^^^^^^ the trait `ink::ink_metadata::TypeInfo` is not implemented for `marketplace_principal::Orden`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::ink_metadata::TypeInfo`
-169 | |     }
+165 | |     }
     | |_____- required by a bound introduced by this call
     |
     = help: the following other types implement trait `ink::ink_metadata::TypeInfo`:
@@ -1222,9 +1228,9 @@ note: required by a bound in `ink::scale_info::build::FieldBuilder::<ink::scale_
     |             ^^^^^^^^ required by this bound in `FieldBuilder::<MetaForm, N>::ty`
 
 error[E0277]: the trait bound `marketplace_principal::Producto: ink::ink_metadata::TypeInfo` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |                    ^^^^^^^^^^^^^ the trait `ink::ink_metadata::TypeInfo` is not implemented for `marketplace_principal::Producto`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::ink_metadata::TypeInfo`:
@@ -1240,9 +1246,9 @@ error[E0277]: the trait bound `marketplace_principal::Producto: ink::ink_metadat
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `marketplace_principal::Producto: ink::parity_scale_codec::WrapperTypeDecode` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |                    ^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeDecode` is not implemented for `marketplace_principal::Producto`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeDecode`:
@@ -1254,9 +1260,9 @@ error[E0277]: the trait bound `marketplace_principal::Producto: ink::parity_scal
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `marketplace_principal::Producto: ink::parity_scale_codec::WrapperTypeEncode` is not satisfied
-   --> marketplace_principal\lib.rs:167:20
+   --> marketplace_principal\lib.rs:163:20
     |
-167 |         productos: Vec<Producto>,
+163 |         productos: Vec<Producto>,
     |                    ^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeEncode` is not implemented for `marketplace_principal::Producto`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeEncode`:
@@ -1274,9 +1280,9 @@ error[E0277]: the trait bound `marketplace_principal::Producto: ink::parity_scal
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `marketplace_principal::Orden: ink::ink_metadata::TypeInfo` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |                  ^^^^^^^^^^ the trait `ink::ink_metadata::TypeInfo` is not implemented for `marketplace_principal::Orden`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::ink_metadata::TypeInfo`:
@@ -1292,9 +1298,9 @@ error[E0277]: the trait bound `marketplace_principal::Orden: ink::ink_metadata::
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `marketplace_principal::Orden: ink::parity_scale_codec::WrapperTypeDecode` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |                  ^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeDecode` is not implemented for `marketplace_principal::Orden`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeDecode`:
@@ -1306,9 +1312,9 @@ error[E0277]: the trait bound `marketplace_principal::Orden: ink::parity_scale_c
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `marketplace_principal::Orden: ink::parity_scale_codec::WrapperTypeEncode` is not satisfied
-   --> marketplace_principal\lib.rs:168:18
+   --> marketplace_principal\lib.rs:164:18
     |
-168 |         ordenes: Vec<Orden>,
+164 |         ordenes: Vec<Orden>,
     |                  ^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeEncode` is not implemented for `marketplace_principal::Orden`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::StorageLayout`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::WrapperTypeEncode`:
@@ -1326,9 +1332,9 @@ error[E0277]: the trait bound `marketplace_principal::Orden: ink::parity_scale_c
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorageLayout`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1336,9 +1342,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::ConstructorOutput::IS_RESULT`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:232:29
@@ -1350,9 +1356,9 @@ note: required by a bound in `ink::reflect::ConstructorOutput::IS_RESULT`
     |           --------- required by a bound in this associated constant
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1363,9 +1369,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by a bound in `ink::reflect::ConstructorOutput::IS_RESULT`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink-5.1.1\src\reflect\dispatch.rs:232:29
@@ -1377,15 +1383,15 @@ note: required by a bound in `ink::reflect::ConstructorOutput::IS_RESULT`
     |           --------- required by a bound in this associated constant
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1393,22 +1399,22 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: the return type of a function must have a statically known size
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1419,22 +1425,22 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: the return type of a function must have a statically known size
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1442,27 +1448,27 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: all local variables must have a statically known size
     = help: unsized locals are gated as an unstable feature
 help: consider borrowing here
     |
-172 |         &/// Crea una nueva instancia vac├¡a del marketplace.
+168 |         &/// Crea una nueva instancia vac├¡a del marketplace.
     |         +
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:172:9
+   --> marketplace_principal\lib.rs:168:9
     |
-172 | /         /// Crea una nueva instancia vac├¡a del marketplace.
-173 | |         #[ink(constructor)]
-174 | |         pub fn new() -> Self {
-175 | |             Self {
+168 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+169 | |         #[ink(constructor)]
+170 | |         pub fn new() -> Self {
+171 | |             Self {
 ...   |
-179 | |             }
-180 | |         }
+175 | |             }
+176 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1473,27 +1479,27 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: all local variables must have a statically known size
     = help: unsized locals are gated as an unstable feature
 help: consider borrowing here
     |
-172 |         &/// Crea una nueva instancia vac├¡a del marketplace.
+168 |         &/// Crea una nueva instancia vac├¡a del marketplace.
     |         +
 
 error[E0277]: the trait bound `marketplace_principal::RolUsuario: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:182:9
+   --> marketplace_principal\lib.rs:178:9
     |
-182 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
-183 | |         ///
-184 | |         /// # Par├ímetros
-185 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
+178 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
+179 | |         ///
+180 | |         /// # Par├ímetros
+181 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
 ...   |
-191 | |             self.registrar_usuario_interno(rol)
-192 | |         }
+187 | |             self.registrar_usuario_interno(rol)
+188 | |         }
     | |_________^ the trait `ink::parity_scale_codec::WrapperTypeDecode` is not implemented for `marketplace_principal::RolUsuario`, which is required by `marketplace_principal::RolUsuario: ink::parity_scale_codec::Decode`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Decode`:
@@ -1509,9 +1515,9 @@ error[E0277]: the trait bound `marketplace_principal::RolUsuario: ink::parity_sc
     = note: required for `marketplace_principal::RolUsuario` to implement `ink::parity_scale_codec::Decode`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1519,9 +1525,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::ink_env::set_contract_storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_env-5.1.1\src\api.rs:198:32
@@ -1530,9 +1536,9 @@ note: required by an implicit `Sized` bound in `ink::ink_env::set_contract_stora
     |                                ^ required by the implicit `Sized` requirement on this type parameter in `set_contract_storage`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1543,9 +1549,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
 note: required by an implicit `Sized` bound in `ink::ink_env::set_contract_storage`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_env-5.1.1\src\api.rs:198:32
@@ -1554,15 +1560,15 @@ note: required by an implicit `Sized` bound in `ink::ink_env::set_contract_stora
     |                                ^ required by the implicit `Sized` requirement on this type parameter in `set_contract_storage`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1570,23 +1576,23 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: all local variables must have a statically known size
     = help: unsized locals are gated as an unstable feature
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:157:5
+   --> marketplace_principal\lib.rs:153:5
     |
-157 | /     /// Contrato principal del marketplace.
-158 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
-159 | |     /// 
-160 | |     /// Almacena:
+153 | /     /// Contrato principal del marketplace.
+154 | |     /// Permite registrar usuarios, publicar productos y gestionar ├│rdenes.
+155 | |     /// 
+156 | |     /// Almacena:
 ...   |
-168 | |         ordenes: Vec<Orden>,
-169 | |     }
+164 | |         ordenes: Vec<Orden>,
+165 | |     }
     | |_____^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1597,23 +1603,23 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: all local variables must have a statically known size
     = help: unsized locals are gated as an unstable feature
 
 error[E0277]: the trait bound `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:182:9
+   --> marketplace_principal\lib.rs:178:9
     |
-182 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
-183 | |         ///
-184 | |         /// # Par├ímetros
-185 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
+178 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
+179 | |         ///
+180 | |         /// # Par├ímetros
+181 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
 ...   |
-191 | |             self.registrar_usuario_interno(rol)
-192 | |         }
+187 | |             self.registrar_usuario_interno(rol)
+188 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -1627,15 +1633,15 @@ note: required by a bound in `ink::ink_env::return_value`
     |        ^^^^^^^^^^^^^ required by this bound in `return_value`
 
 error[E0277]: the trait bound `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:194:9
+   --> marketplace_principal\lib.rs:190:9
     |
-194 | /         /// Permite a un vendedor publicar un nuevo producto en el marketplace.
-195 | |         ///
-196 | |         /// # Par├ímetros
-197 | |         /// - `nombre`: Nombre del producto.
+190 | /         /// Permite a un vendedor publicar un nuevo producto en el marketplace.
+191 | |         ///
+192 | |         /// # Par├ímetros
+193 | |         /// - `nombre`: Nombre del producto.
 ...   |
-215 | |             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
-216 | |         }
+211 | |             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
+212 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -1649,15 +1655,15 @@ note: required by a bound in `ink::ink_env::return_value`
     |        ^^^^^^^^^^^^^ required by this bound in `return_value`
 
 error[E0277]: the trait bound `std::result::Result<std::result::Result<u32, marketplace_principal::SistemaError>, ink::LangError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:218:9
+   --> marketplace_principal\lib.rs:214:9
     |
-218 | /         /// Permite a un comprador crear una nueva orden para un producto publicado.
-219 | |         ///
-220 | |         /// # Par├ímetros
-221 | |         /// - `producto_id`: ID del producto.
+214 | /         /// Permite a un comprador crear una nueva orden para un producto publicado.
+215 | |         ///
+216 | |         /// # Par├ímetros
+217 | |         /// - `producto_id`: ID del producto.
 ...   |
-232 | |             self.crear_nueva_orden(producto_id, cantidad)
-233 | |         }
+228 | |             self.crear_nueva_orden(producto_id, cantidad)
+229 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<std::result::Result<u32, marketplace_principal::SistemaError>, ink::LangError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -1671,15 +1677,15 @@ note: required by a bound in `ink::ink_env::return_value`
     |        ^^^^^^^^^^^^^ required by this bound in `return_value`
 
 error[E0277]: the trait bound `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:235:9
+   --> marketplace_principal\lib.rs:231:9
     |
-235 | /         /// Permite al vendedor marcar una orden como enviada.
-236 | |         ///
-237 | |         /// # Par├ímetros
-238 | |         /// - `orden_id`: ID de la orden.
+231 | /         /// Permite al vendedor marcar una orden como enviada.
+232 | |         ///
+233 | |         /// # Par├ímetros
+234 | |         /// - `orden_id`: ID de la orden.
 ...   |
-244 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
-245 | |         }
+240 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
+241 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -1693,15 +1699,15 @@ note: required by a bound in `ink::ink_env::return_value`
     |        ^^^^^^^^^^^^^ required by this bound in `return_value`
 
 error[E0277]: the trait bound `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:247:9
+   --> marketplace_principal\lib.rs:243:9
     |
-247 | /         /// Permite al comprador marcar una orden como recibida.
-248 | |         ///
-249 | |         /// # Par├ímetros
-250 | |         /// - `orden_id`: ID de la orden.
+243 | /         /// Permite al comprador marcar una orden como recibida.
+244 | |         ///
+245 | |         /// # Par├ímetros
+246 | |         /// - `orden_id`: ID de la orden.
 ...   |
-256 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
-257 | |         }
+252 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
+253 | |         }
     | |_________^ the trait `ink::parity_scale_codec::Encode` is not implemented for `std::result::Result<std::result::Result<(), marketplace_principal::SistemaError>, ink::LangError>`
     |
     = help: the trait `ink::parity_scale_codec::Encode` is implemented for `std::result::Result<T, E>`
@@ -1715,27 +1721,27 @@ note: required by a bound in `ink::ink_env::return_value`
     |        ^^^^^^^^^^^^^ required by this bound in `return_value`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:176:17
+   --> marketplace_principal\lib.rs:172:17
     |
-176 |                 usuarios: Mapping::default(),
+172 |                 usuarios: Mapping::default(),
     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:176:17
+   --> marketplace_principal\lib.rs:172:17
     |
-176 |                 usuarios: Mapping::default(),
+172 |                 usuarios: Mapping::default(),
     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::parity_scale_codec::Decode` is not satisfied
-   --> marketplace_principal\lib.rs:174:25
+   --> marketplace_principal\lib.rs:170:25
     |
-174 |         pub fn new() -> Self {
+170 |         pub fn new() -> Self {
     |                         ^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1743,16 +1749,16 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: the return type of a function must have a statically known size
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:174:25
+   --> marketplace_principal\lib.rs:170:25
     |
-174 |         pub fn new() -> Self {
+170 |         pub fn new() -> Self {
     |                         ^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `marketplace_principal::MarketplacePrincipal: std::marker::Sized`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1763,16 +1769,16 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::StorableHint<()>`
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 note: required because it appears within the type `marketplace_principal::MarketplacePrincipal`
-   --> marketplace_principal\lib.rs:165:16
+   --> marketplace_principal\lib.rs:161:16
     |
-165 |     pub struct MarketplacePrincipal {
+161 |     pub struct MarketplacePrincipal {
     |                ^^^^^^^^^^^^^^^^^^^^
     = note: the return type of a function must have a statically known size
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:177:17
+   --> marketplace_principal\lib.rs:173:17
     |
-177 |                 productos: Vec::new(),
+173 |                 productos: Vec::new(),
     |                 ^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1781,9 +1787,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:177:17
+   --> marketplace_principal\lib.rs:173:17
     |
-177 |                 productos: Vec::new(),
+173 |                 productos: Vec::new(),
     |                 ^^^^^^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1795,81 +1801,81 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:274:13
+   --> marketplace_principal\lib.rs:270:13
     |
-274 |             self.usuarios.insert(usuario_llamador, &nuevo_usuario);
+270 |             self.usuarios.insert(usuario_llamador, &nuevo_usuario);
     |             ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:274:13
+   --> marketplace_principal\lib.rs:270:13
     |
-274 |             self.usuarios.insert(usuario_llamador, &nuevo_usuario);
+270 |             self.usuarios.insert(usuario_llamador, &nuevo_usuario);
     |             ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:332:17
+   --> marketplace_principal\lib.rs:328:17
     |
-332 |             if !self.usuarios.contains_key(&usuario) {
+328 |             if !self.usuarios.contains_key(&usuario) {
     |                 ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:332:17
+   --> marketplace_principal\lib.rs:328:17
     |
-332 |             if !self.usuarios.contains_key(&usuario) {
+328 |             if !self.usuarios.contains_key(&usuario) {
     |                 ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:341:16
+   --> marketplace_principal\lib.rs:337:16
     |
-341 |             if self.usuarios.contains_key(&usuario) {
+337 |             if self.usuarios.contains_key(&usuario) {
     |                ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:341:16
+   --> marketplace_principal\lib.rs:337:16
     |
-341 |             if self.usuarios.contains_key(&usuario) {
+337 |             if self.usuarios.contains_key(&usuario) {
     |                ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<()>` is not satisfied
-   --> marketplace_principal\lib.rs:350:32
+   --> marketplace_principal\lib.rs:346:32
     |
-350 |             let usuario_data = self.usuarios.get(&usuario)
+346 |             let usuario_data = self.usuarios.get(&usuario)
     |                                ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<()>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not satisfied
-   --> marketplace_principal\lib.rs:350:32
+   --> marketplace_principal\lib.rs:346:32
     |
-350 |             let usuario_data = self.usuarios.get(&usuario)
+346 |             let usuario_data = self.usuarios.get(&usuario)
     |                                ^^^^^^^^^^^^^ the trait `ink::storage::traits::StorableHint<ink::storage::traits::ResolverKey<_, ink::storage::traits::ManualKey<56488838>>>` is not implemented for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>`, which is required by `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
     |
     = help: the trait `ink::storage::traits::StorableHint<Key>` is implemented for `ink::storage::Mapping<K, V, InnerKey>`
     = note: required for `ink::storage::Mapping<ink::ink_primitives::AccountId, marketplace_principal::Usuario>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<56488838>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:379:22
+   --> marketplace_principal\lib.rs:375:22
     |
-379 |             let id = self.productos.len() as u32;
+375 |             let id = self.productos.len() as u32;
     |                      ^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1878,9 +1884,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:379:22
+   --> marketplace_principal\lib.rs:375:22
     |
-379 |             let id = self.productos.len() as u32;
+375 |             let id = self.productos.len() as u32;
     |                      ^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1892,9 +1898,9 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:387:13
+   --> marketplace_principal\lib.rs:383:13
     |
-387 |             self.productos
+383 |             self.productos
     |             ^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Producto>`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1903,9 +1909,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Producto>: i
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:387:13
+   --> marketplace_principal\lib.rs:383:13
     |
-387 |             self.productos
+383 |             self.productos
     |             ^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Producto]`, which is required by `std::vec::Vec<marketplace_principal::Producto>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1917,9 +1923,9 @@ error[E0277]: the trait bound `[marketplace_principal::Producto]: ink::parity_sc
     = note: required for `std::vec::Vec<marketplace_principal::Producto>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<1183515474>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:401:22
+   --> marketplace_principal\lib.rs:397:22
     |
-401 |             let id = self.ordenes.len() as u32;
+397 |             let id = self.ordenes.len() as u32;
     |                      ^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1928,9 +1934,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:401:22
+   --> marketplace_principal\lib.rs:397:22
     |
-401 |             let id = self.ordenes.len() as u32;
+397 |             let id = self.ordenes.len() as u32;
     |                      ^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1942,9 +1948,9 @@ error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 
 error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::Packed` is not satisfied
-   --> marketplace_principal\lib.rs:410:13
+   --> marketplace_principal\lib.rs:406:13
     |
-410 |             self.ordenes
+406 |             self.ordenes
     |             ^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Decode` is not implemented for `std::vec::Vec<marketplace_principal::Orden>`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the trait `ink::parity_scale_codec::Decode` is implemented for `std::vec::Vec<T>`
@@ -1953,9 +1959,9 @@ error[E0277]: the trait bound `std::vec::Vec<marketplace_principal::Orden>: ink:
     = note: required for `std::vec::Vec<marketplace_principal::Orden>` to implement `ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
 
 error[E0277]: the trait bound `[marketplace_principal::Orden]: ink::parity_scale_codec::Encode` is not satisfied
-   --> marketplace_principal\lib.rs:410:13
+   --> marketplace_principal\lib.rs:406:13
     |
-410 |             self.ordenes
+406 |             self.ordenes
     |             ^^^^^^^^^^^^ the trait `ink::parity_scale_codec::Encode` is not implemented for `[marketplace_principal::Orden]`, which is required by `std::vec::Vec<marketplace_principal::Orden>: ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>`
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -1972,13 +1978,13 @@ error[E0277]: the trait bound `marketplace_principal::RolUsuario: ink::parity_sc
 3   |   #[ink::contract]
     |   ^^^^^^^^^^^^^^^^ the trait `ink::parity_scale_codec::WrapperTypeEncode` is not implemented for `marketplace_principal::RolUsuario`, which is required by `marketplace_principal::RolUsuario: ink::parity_scale_codec::Encode`
 ...
-182 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
-183 | |         ///
-184 | |         /// # Par├ímetros
-185 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
+178 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
+179 | |         ///
+180 | |         /// # Par├ímetros
+181 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
 ...   |
-191 | |             self.registrar_usuario_interno(rol)
-192 | |         }
+187 | |             self.registrar_usuario_interno(rol)
+188 | |         }
     | |_________- required by a bound introduced by this call
     |
     = help: the following other types implement trait `ink::parity_scale_codec::Encode`:
@@ -2002,15 +2008,15 @@ note: required by a bound in `ink::ink_env::call::ExecutionInput::<ink::ink_env:
     |            ^^^^^^^^^^^^^ required by this bound in `ExecutionInput::<ArgumentList<ArgumentListEnd, ArgumentListEnd>>::push_arg`
 
 error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvironment, Set<Call<DefaultEnvironment>>, Set<ExecutionInput<...>>, ...>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:182:9
+   --> marketplace_principal\lib.rs:178:9
     |
-182 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
-183 | |         ///
-184 | |         /// # Par├ímetros
-185 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
+178 | /         /// Registra al usuario que invoca el contrato con el rol indicado.
+179 | |         ///
+180 | |         /// # Par├ímetros
+181 | |         /// - `rol`: Rol que tendr├í el usuario (Comprador, Vendedor o Ambos).
 ...   |
-191 | |             self.registrar_usuario_interno(rol)
-192 | |         }
+187 | |             self.registrar_usuario_interno(rol)
+188 | |         }
     | |_________^
     |
    ::: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_env-5.1.1\src\call\execution.rs:136:1
@@ -2023,22 +2029,22 @@ error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvi
 506 |   pub enum Result<T, E> {
     |   --------------------- doesn't satisfy `_: Decode`
     |
-    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-14666940461870083086.txt'
+    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-2715271124003576571.txt'
     = note: consider using `--verbose` to print the full type name to the console
     = note: the following trait bounds were not satisfied:
             `ink::ink_env::call::utils::ArgumentList<ink::ink_env::call::utils::Argument<marketplace_principal::RolUsuario>, ink::ink_env::call::utils::ArgumentList<ink::ink_env::call::utils::ArgumentListEnd, ink::ink_env::call::utils::ArgumentListEnd>>: ink::parity_scale_codec::Encode`
             `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Decode`
 
 error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvironment, Set<Call<DefaultEnvironment>>, Set<ExecutionInput<...>>, ...>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:194:9
+   --> marketplace_principal\lib.rs:190:9
     |
-194 | /         /// Permite a un vendedor publicar un nuevo producto en el marketplace.
-195 | |         ///
-196 | |         /// # Par├ímetros
-197 | |         /// - `nombre`: Nombre del producto.
+190 | /         /// Permite a un vendedor publicar un nuevo producto en el marketplace.
+191 | |         ///
+192 | |         /// # Par├ímetros
+193 | |         /// - `nombre`: Nombre del producto.
 ...   |
-215 | |             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
-216 | |         }
+211 | |             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
+212 | |         }
     | |_________^
     |
    ::: C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:1
@@ -2046,21 +2052,21 @@ error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvi
 506 |   pub enum Result<T, E> {
     |   --------------------- doesn't satisfy `_: Decode`
     |
-    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-3297681434617287029.txt'
+    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-4839705223023822583.txt'
     = note: consider using `--verbose` to print the full type name to the console
     = note: the following trait bounds were not satisfied:
             `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Decode`
 
 error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvironment, Set<Call<DefaultEnvironment>>, Set<ExecutionInput<...>>, ...>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:218:9
+   --> marketplace_principal\lib.rs:214:9
     |
-218 | /         /// Permite a un comprador crear una nueva orden para un producto publicado.
-219 | |         ///
-220 | |         /// # Par├ímetros
-221 | |         /// - `producto_id`: ID del producto.
+214 | /         /// Permite a un comprador crear una nueva orden para un producto publicado.
+215 | |         ///
+216 | |         /// # Par├ímetros
+217 | |         /// - `producto_id`: ID del producto.
 ...   |
-232 | |             self.crear_nueva_orden(producto_id, cantidad)
-233 | |         }
+228 | |             self.crear_nueva_orden(producto_id, cantidad)
+229 | |         }
     | |_________^
     |
    ::: C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:1
@@ -2068,21 +2074,21 @@ error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvi
 506 |   pub enum Result<T, E> {
     |   --------------------- doesn't satisfy `_: Decode`
     |
-    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-14083960363636786701.txt'
+    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-16469692164672682843.txt'
     = note: consider using `--verbose` to print the full type name to the console
     = note: the following trait bounds were not satisfied:
             `std::result::Result<u32, marketplace_principal::SistemaError>: ink::parity_scale_codec::Decode`
 
 error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvironment, Set<Call<DefaultEnvironment>>, Set<ExecutionInput<...>>, ...>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:235:9
+   --> marketplace_principal\lib.rs:231:9
     |
-235 | /         /// Permite al vendedor marcar una orden como enviada.
-236 | |         ///
-237 | |         /// # Par├ímetros
-238 | |         /// - `orden_id`: ID de la orden.
+231 | /         /// Permite al vendedor marcar una orden como enviada.
+232 | |         ///
+233 | |         /// # Par├ímetros
+234 | |         /// - `orden_id`: ID de la orden.
 ...   |
-244 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
-245 | |         }
+240 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
+241 | |         }
     | |_________^
     |
    ::: C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:1
@@ -2090,21 +2096,21 @@ error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvi
 506 |   pub enum Result<T, E> {
     |   --------------------- doesn't satisfy `_: Decode`
     |
-    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-9038313917351425884.txt'
+    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-4782499444957841114.txt'
     = note: consider using `--verbose` to print the full type name to the console
     = note: the following trait bounds were not satisfied:
             `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Decode`
 
 error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvironment, Set<Call<DefaultEnvironment>>, Set<ExecutionInput<...>>, ...>`, but its trait bounds were not satisfied
-   --> marketplace_principal\lib.rs:247:9
+   --> marketplace_principal\lib.rs:243:9
     |
-247 | /         /// Permite al comprador marcar una orden como recibida.
-248 | |         ///
-249 | |         /// # Par├ímetros
-250 | |         /// - `orden_id`: ID de la orden.
+243 | /         /// Permite al comprador marcar una orden como recibida.
+244 | |         ///
+245 | |         /// # Par├ímetros
+246 | |         /// - `orden_id`: ID de la orden.
 ...   |
-256 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
-257 | |         }
+252 | |             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
+253 | |         }
     | |_________^
     |
    ::: C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\result.rs:506:1
@@ -2112,84 +2118,84 @@ error[E0599]: the method `try_invoke` exists for struct `CallBuilder<DefaultEnvi
 506 |   pub enum Result<T, E> {
     |   --------------------- doesn't satisfy `_: Decode`
     |
-    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-9038313917351425884.txt'
+    = note: the full type name has been written to 'C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\marketplace_principal-26a7b82557cb922c.long-type-4782499444957841114.txt'
     = note: consider using `--verbose` to print the full type name to the console
     = note: the following trait bounds were not satisfied:
             `std::result::Result<(), marketplace_principal::SistemaError>: ink::parity_scale_codec::Decode`
 
 error[E0499]: cannot borrow `*self` as mutable more than once at a time
-   --> marketplace_principal\lib.rs:309:13
+   --> marketplace_principal\lib.rs:305:13
     |
-303 |             let producto = self.obtener_producto_mut(producto_id)?;
+299 |             let producto = self.obtener_producto_mut(producto_id)?;
     |                            ---- first mutable borrow occurs here
 ...
-309 |             self.crear_y_emitir_orden(comprador, producto.vendedor, producto_id, cantidad)
+305 |             self.crear_y_emitir_orden(comprador, producto.vendedor, producto_id, cantidad)
     |             ^^^^                                 ----------------- first borrow later used here
     |             |
     |             second mutable borrow occurs here
 
 error[E0502]: cannot borrow `*self` as immutable because it is also borrowed as mutable
-   --> marketplace_principal\lib.rs:319:13
+   --> marketplace_principal\lib.rs:315:13
     |
-318 |             let orden = self.obtener_orden_mut(orden_id)?;
+314 |             let orden = self.obtener_orden_mut(orden_id)?;
     |                         ---- mutable borrow occurs here
-319 |             self.verificar_permiso_orden(caller, orden, nuevo_estado)?;
+315 |             self.verificar_permiso_orden(caller, orden, nuevo_estado)?;
     |             ^^^^ immutable borrow occurs here    ----- mutable borrow later used here
 
 error[E0507]: cannot move out of `orden.estado` which is behind a mutable reference
-   --> marketplace_principal\lib.rs:321:36
+   --> marketplace_principal\lib.rs:317:36
     |
-321 |             let _estado_anterior = orden.estado;
+317 |             let _estado_anterior = orden.estado;
     |                                    ^^^^^^^^^^^^ move occurs because `orden.estado` has type `marketplace_principal::EstadoOrden`, which does not implement the `Copy` trait
     |
 help: consider borrowing here
     |
-321 |             let _estado_anterior = &orden.estado;
+317 |             let _estado_anterior = &orden.estado;
     |                                    +
 help: consider cloning the value if the performance cost is acceptable
     |
-321 |             let _estado_anterior = orden.estado.clone();
+317 |             let _estado_anterior = orden.estado.clone();
     |                                                ++++++++
 
 error[E0382]: use of moved value: `nuevo_estado`
-   --> marketplace_principal\lib.rs:322:28
+   --> marketplace_principal\lib.rs:318:28
     |
-313 |         fn actualizar_estado_orden(&mut self, orden_id: u32, nuevo_estado: EstadoOrden) -> Result<(), SistemaError> {
+309 |         fn actualizar_estado_orden(&mut self, orden_id: u32, nuevo_estado: EstadoOrden) -> Result<(), SistemaError> {
     |                                                              ------------ move occurs because `nuevo_estado` has type `marketplace_principal::EstadoOrden`, which does not implement the `Copy` trait
 ...
-319 |             self.verificar_permiso_orden(caller, orden, nuevo_estado)?;
+315 |             self.verificar_permiso_orden(caller, orden, nuevo_estado)?;
     |                                                         ------------ value moved here
 ...
-322 |             orden.estado = nuevo_estado;
+318 |             orden.estado = nuevo_estado;
     |                            ^^^^^^^^^^^^ value used here after move
     |
 note: consider changing this parameter type in method `verificar_permiso_orden` to borrow instead if owning the value isn't necessary
-   --> marketplace_principal\lib.rs:420:27
+   --> marketplace_principal\lib.rs:416:27
     |
-416 |         fn verificar_permiso_orden(
+412 |         fn verificar_permiso_orden(
     |            ----------------------- in this method
 ...
-420 |             nuevo_estado: EstadoOrden
+416 |             nuevo_estado: EstadoOrden
     |                           ^^^^^^^^^^^ this parameter takes ownership of the value
 help: consider cloning the value if the performance cost is acceptable
     |
-319 |             self.verificar_permiso_orden(caller, orden, nuevo_estado.clone())?;
+315 |             self.verificar_permiso_orden(caller, orden, nuevo_estado.clone())?;
     |                                                                     ++++++++
 
 error[E0507]: cannot move out of `orden.estado` which is behind a shared reference
-   --> marketplace_principal\lib.rs:425:55
+   --> marketplace_principal\lib.rs:421:55
     |
-425 |                 _ => self.verificar_transicion_estado(orden.estado, nuevo_estado),
+421 |                 _ => self.verificar_transicion_estado(orden.estado, nuevo_estado),
     |                                                       ^^^^^^^^^^^^ move occurs because `orden.estado` has type `marketplace_principal::EstadoOrden`, which does not implement the `Copy` trait
     |
 help: consider cloning the value if the performance cost is acceptable
     |
-425 |                 _ => self.verificar_transicion_estado(orden.estado.clone(), nuevo_estado),
+421 |                 _ => self.verificar_transicion_estado(orden.estado.clone(), nuevo_estado),
     |                                                                   ++++++++
 
 Some errors have detailed explanations: E0277, E0382, E0432, E0433, E0499, E0502, E0507, E0599.
 For more information about an error, try `rustc --explain E0277`.
-error: could not compile `marketplace_principal` (lib) due to 154 previous errors
+error: could not compile `marketplace_principal` (lib) due to 156 previous errors
 
 Caused by:
   process didn't exit successfully: `C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\bin\clippy-driver.exe C:\Users\ASUS\.rustup\toolchains\nightly-2024-05-20-x86_64-pc-windows-msvc\bin\rustc.exe --crate-name marketplace_principal --edition=2021 marketplace_principal\lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --cfg "feature=\"default\"" --cfg "feature=\"e2e-tests\"" --cfg "feature=\"ink-as-dependency\"" --cfg "feature=\"std\"" --check-cfg cfg(docsrs) --check-cfg "cfg(feature, values(\"default\", \"e2e-tests\", \"ink-as-dependency\", \"std\"))" -C metadata=26a7b82557cb922c -C extra-filename=-26a7b82557cb922c --out-dir C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps -C incremental=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\incremental -L dependency=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps --extern base64ct=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\libbase64ct-8ef80c2db85f3974.rmeta --extern ink=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\deps\libink-bc22a143cea9c8ae.rmeta -L "native=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.43.34808\atlmfc\lib\x64" -L native=C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\Grupo2-Marketplace-con-Rust\target\debug\build\secp256k1-sys-e9a46947639bb5e4\out` (exit code: 1)
