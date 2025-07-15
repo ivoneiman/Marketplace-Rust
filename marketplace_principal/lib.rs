@@ -147,40 +147,6 @@ mod marketplace_principal {
     }
 
 
-    // ────────────────
-    // EVENTOS
-    // ────────────────
-
-    /// Evento emitido cuando se crea una nueva orden.
-    #[ink(event)]
-    pub struct OrdenCreada {
-        /// ID de la orden.
-        #[ink(topic)]
-        id: u32,
-        /// Cuenta del comprador.
-        #[ink(topic)]
-        comprador: AccountId,
-        /// Cuenta del vendedor.
-        vendedor: AccountId,
-        /// ID del producto solicitado.
-        producto_id: u32,
-        /// Cantidad comprada.
-        cantidad: u32,
-    }
-
-    /// Evento emitido cuando cambia el estado de una orden.
-    #[ink(event)]
-    pub struct EstadoOrdenCambiado {
-        /// ID de la orden.
-        #[ink(topic)]
-        id: u32,
-        /// Cuenta del comprador (para tracking).
-        #[ink(topic)]
-        comprador: AccountId,
-        /// Nuevo estado de la orden.
-        nuevo_estado: EstadoOrden,
-    }
-
 
         
     /// Contrato principal del marketplace.
@@ -350,7 +316,7 @@ mod marketplace_principal {
             let _estado_anterior = orden.estado;
             orden.estado = nuevo_estado;
 
-            Self::emitir_evento_estado(orden_id, orden.comprador, nuevo_estado);
+            // Self::emitir_evento_estado(orden_id, orden.comprador, nuevo_estado);
             Ok(())
         }
 
@@ -358,7 +324,7 @@ mod marketplace_principal {
 
         /// Verifica que el usuario esté registrado.
         fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
-            if self.usuarios.contains_key(&usuario) {
+            if !self.usuarios.contains_key(&usuario) {
                 Err(SistemaError::UsuarioNoRegistrado)
             } else {
                 Ok(())
@@ -430,7 +396,7 @@ mod marketplace_principal {
             let id = self.ordenes.len() as u32;
             let nueva_orden = Orden::new(id, comprador, vendedor, producto_id, cantidad);
             self.ordenes.push(nueva_orden.clone());
-            self.emitir_evento_creacion(nueva_orden);
+            // self.emitir_evento_creacion(nueva_orden);
             Ok(id)
         }
 
@@ -466,27 +432,6 @@ mod marketplace_principal {
                 (EstadoOrden::Enviada, EstadoOrden::Recibida) => Ok(()),
                 _ => Err(SistemaError::EstadoInvalido),
             }
-        }
-
-        // --- Eventos ---
-
-        /// Emite un evento indicando la creación de una nueva orden.
-        fn emitir_evento_creacion(&self, orden: Orden) {
-                self.env().emit_event(OrdenCreada {
-                    id: orden.id,
-                    comprador: orden.comprador,
-                    vendedor: orden.vendedor,
-                    producto_id: orden.producto_id,
-                    cantidad: orden.cantidad,
-                });
-            }
-
-        fn emitir_evento_estado(&self, id: u32, comprador: AccountId, estado: EstadoOrden) {
-            self.env().emit_event(EstadoOrdenCambiado {
-                id,
-                comprador,
-                nuevo_estado: estado,
-            });
         }
     }
 
