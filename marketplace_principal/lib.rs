@@ -10,8 +10,7 @@ mod marketplace_principal {
     use ink::storage::traits::Packed;
     use ink::storage::traits::StorableHint;
     use ink::storage::traits::AutoStorableHint;
-    use  ink::parity_scale_codec::Encode;
-    use  ink::parity_scale_codec::Decode;
+    use parity_scale_codec::{Encode, Decode};
     use ink::parity_scale_codec::WrapperTypeDecode;
 
 
