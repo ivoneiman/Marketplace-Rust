@@ -1,0 +1,10 @@
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libsecp256k1_sys-7edc16793b3b0e60.rmeta: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\macros.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\types.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\recovery.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libsecp256k1_sys-7edc16793b3b0e60.rlib: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\macros.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\types.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\recovery.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\secp256k1_sys-7edc16793b3b0e60.d: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\macros.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\types.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\recovery.rs
+
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\lib.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\macros.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\types.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.9.2\src\recovery.rs:

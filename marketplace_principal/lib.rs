@@ -410,83 +410,82 @@ mod marketplace_principal {
             contrato
         }
 
-        // #[ink::test]
-        // fn test_publicar_producto_ok() {
-        //     let mut contrato = setup_contract_con_vendedor();
+         #[ink::test]
+         fn test_publicar_producto_ok() {
+             let mut contrato = setup_contract_con_vendedor();
 
-        //     let resultado = contrato.publicar_producto(
-        //         "Celular".to_string(),
-        //         "Un buen celular".to_string(),
-        //         1000,
-        //         5,
-        //         "Tecnología".to_string(),
-        //     );
+             let resultado = contrato.publicar_producto(
+                 "Celular".to_string(),
+                 "Un buen celular".to_string(),
+                 1000,
+                 5,
+                 "Tecnología".to_string(),
+             );
 
-        //     assert!(resultado.is_ok());
-        //     assert_eq!(contrato.productos.len(), 1);
+             assert!(resultado.is_ok());
+             assert_eq!(contrato.productos.len(), 1);
 
-        //     let producto = &contrato.productos[0];
-        //     assert_eq!(producto.nombre, "Celular");
-        //     assert_eq!(producto.precio, 1000);
-        // }
+             let producto = &contrato.productos[0];
+             assert_eq!(producto.nombre, "Celular");
+             assert_eq!(producto.precio, 1000);
+         }
 
-        // #[ink::test]
-        // fn test_usuario_no_registrado() {
-        //     let mut contrato = MarketplacePrincipal::new();
+         #[ink::test]
+         fn test_usuario_no_registrado() {
+             let mut contrato = MarketplacePrincipal::new();
+             let caller = AccountId::from([0x02; 32]);
+             test::set_caller::<ink::env::DefaultEnvironment>(caller);
 
-        //     let caller = AccountId::from([0x02; 32]);
-        //     test::set_caller::<ink::env::DefaultEnvironment>(caller);
+             let resultado = contrato.publicar_producto(
+                 "Producto".to_string(),
+                 "Sin registro".to_string(),
+                 500,
+                 1,
+                 "Otros".to_string(),
+             );
 
-        //     let resultado = contrato.publicar_producto(
-        //         "Producto".to_string(),
-        //         "Sin registro".to_string(),
-        //         500,
-        //         1,
-        //         "Otros".to_string(),
-        //     );
+             assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
+         }
 
-        //     assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
-        // }
+         #[ink::test]
+         fn test_usuario_no_es_vendedor() {
+             let mut contrato = MarketplacePrincipal::new();
 
-        // #[ink::test]
-        // fn test_usuario_no_es_vendedor() {
-        //     let mut contrato = MarketplacePrincipal::new();
+             let caller = AccountId::from([0x03; 32]);
+             test::set_caller::<ink::env::DefaultEnvironment>(caller);
 
-        //     let caller = AccountId::from([0x03; 32]);
-        //     test::set_caller::<ink::env::DefaultEnvironment>(caller);
+             let usuario = Usuario {
+                 direccion: caller,
+                 rol: RolUsuario::Comprador, // Rol no válido para publicar productos
+                 reputacion_como_comprador: 0,
+                 reputacion_como_vendedor: 0,
+             };
+             contrato.usuarios.insert(caller, &usuario);
 
-        //     let usuario = Usuario {
-        //         direccion: caller,
-        //         rol: RolUsuario::Comprador, // Rol no válido para publicar productos
-        //         reputacion_como_comprador: 0,
-        //         reputacion_como_vendedor: 0,
-        //     };
-        //     contrato.usuarios.insert(caller, &usuario);
+             let resultado = contrato.publicar_producto(
+                 "Producto".to_string(),
+                 "No autorizado".to_string(),
+                 100,
+                 2,
+                 "Otros".to_string(),
+             );
 
-        //     let resultado = contrato.publicar_producto(
-        //         "Producto".to_string(),
-        //         "No autorizado".to_string(),
-        //         100,
-        //         2,
-        //         "Otros".to_string(),
-        //     );
+             assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+         }
 
-        //     assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-        // }
+         #[ink::test]
+         fn test_cantidad_insuficiente() {
+             let mut contrato = setup_contract_con_vendedor();
 
-        // #[ink::test]
-        // fn test_cantidad_insuficiente() {
-        //     let mut contrato = setup_contract_con_vendedor();
+             let resultado = contrato.publicar_producto(
+                 "Producto".to_string(),
+                 "Cantidad cero".to_string(),
+                 100,
+                 0, // Cantidad inválida
+                 "Otros".to_string(),
+             );
 
-        //     let resultado = contrato.publicar_producto(
-        //         "Producto".to_string(),
-        //         "Cantidad cero".to_string(),
-        //         100,
-        //         0, // Cantidad inválida
-        //         "Otros".to_string(),
-        //     );
-
-        //     assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
-        // }
+             assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
+         }
     } // <-- cierre del mod tests
 } // <-- cierre del mod marketplace_principal
