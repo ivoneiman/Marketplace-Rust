@@ -1,3 +1,86 @@
+/*
+Trabajo Práctico Final – Marketplace Descentralizado tipo MercadoLibre
+Materia: Seminario de Lenguajes – Opción Rust
+Tecnología: Rust + Ink! + Substrate
+Cobertura de tests requerida: ≥ 85%
+Entregas:
+
+⭕ Primera entrega obligatoria: 18 de julio
+✅ Entrega final completa: Antes de finalizar 2025
+📜 Introducción
+El presente trabajo práctico final tiene como objetivo integrar los conocimientos adquiridos durante el cursado de la materia Seminario de Lenguajes – Opción Rust, aplicando conceptos de programación en Rust orientados al desarrollo de contratos inteligentes sobre la plataforma Substrate utilizando el framework Ink!.
+
+La consigna propone desarrollar una plataforma descentralizada de compra-venta de productos, inspirada en modelos como MercadoLibre, pero ejecutada completamente en un entorno blockchain. El sistema deberá dividirse en dos contratos inteligentes: uno encargado de gestionar la lógica principal del marketplace y otro destinado a la generación de reportes a partir de los datos públicos del primero.
+
+El proyecto busca que el estudiante no solo practique la sintaxis y semántica de Rust, sino que también comprenda el diseño modular de contratos inteligentes, la separación de responsabilidades, la validación de roles y permisos, y la importancia de la transparencia, trazabilidad y reputación en contextos descentralizados.
+
+Se espera que las entregas incluyan una implementación funcional, correctamente testeada, documentada y con una cobertura de pruebas mínima del 85%.
+
+Contrato 1 – MarketplacePrincipal (Core funcional + reputación)
+Funcionalidades
+👤 Registro y gestión de usuarios
+Registro de usuario con rol: Comprador, Vendedor o ambos.
+Posibilidad de modificar roles posteriores.
+📦 Publicación de productos
+Publicar producto con nombre, descripción, precio, cantidad y categoría.
+Solo disponible para usuarios con rol Vendedor.
+Visualización de productos propios.
+🛒 Compra y órdenes
+Crear orden de compra (solo Compradores).
+Al comprar: se crea la orden y se descuenta stock.
+Estados de orden: pendiente, enviado, recibido, cancelada.
+Solo el Vendedor puede marcar como enviado.
+Solo el Comprador puede marcar como recibido o cancelada si aún está pendiente.
+Cancelación requiere consentimiento mutuo.
+⭐ Reputación bidireccional
+Cuando la orden esté recibida, ambas partes pueden calificar:
+El Comprador califica al Vendedor.
+El Vendedor califica al Comprador.
+Calificación: entero del 1 al 5.
+Solo una calificación por parte y por orden.
+Reputación acumulada pública:
+reputacion_como_comprador
+reputacion_como_vendedor
+Contrato 2 – ReportesView (solo lectura)
+Funcionalidades
+Consultar top 5 vendedores con mejor reputación.
+Consultar top 5 compradores con mejor reputación.
+Ver productos más vendidos.
+Estadísticas por categoría: total de ventas, calificación promedio.
+Cantidad de órdenes por usuario.
+Nota: este contrato solo puede leer datos del contrato 1. No puede emitir calificaciones, modificar órdenes ni publicar productos.
+
+📊 Requisitos generales
+✅ Cobertura de tests ≥ 85% entre ambos contratos.
+✅ Tests deben contemplar:
+Flujos completos de compra y calificación.
+Validaciones y errores esperados.
+Permisos por rol.
+✅ Código comentado y bien estructurado.
+🔺 Entrega Mínima – 18 de julio
+Incluye:
+
+Contrato 1 con:
+Registro de usuarios.
+Publicación de productos.
+Compra de productos.
+Gestión básica de órdenes (pendiente, enviado, recibido).
+Todo documentado segun lo visto en clase de como documentar en Rust
+Tests con cobertura ≥ 85%.
+Address del contrato desplegado en Shibuya Testnet.
+🌟 Entrega Final – Fin de año
+Incluye:
+
+Toda la funcionalidad de ambos contratos.
+Reputación completa bidireccional.
+Reportes por lectura (contrato 2).
+Tests con cobertura ≥ 85%.
+Documentación técnica clara.
+Bonus (hasta +20%):
+Sistema de disputas.
+Simulación de pagos.
+*/
+
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[ink::contract]
@@ -10,15 +93,19 @@ mod marketplace_principal {
     use ink::prelude::string::String;
     use ink::prelude::vec::Vec;
 
+    /// Estructura principal del contrato Marketplace.
     #[ink(storage)]
     pub struct MarketplacePrincipal {
+        /// Mapeo de usuarios registrados (por dirección).
         usuarios: Mapping<AccountId, Usuario>,
+        /// Lista de productos publicados.
         productos: Vec<Producto>,
+        /// Lista de órdenes generadas.
         ordenes: Vec<Orden>,
     }
 
     impl MarketplacePrincipal {
-        // Crea una nueva instancia vacía del marketplace.
+        /// Crea una nueva instancia vacía del marketplace.
         #[ink(constructor)]
         pub fn new() -> Self {
             Self {
@@ -28,11 +115,16 @@ mod marketplace_principal {
             }
         }
 
+        /// Registra un usuario con un rol específico (Comprador, Vendedor o Ambos).
+        ///
+        /// # Errores
+        /// - Retorna `UsuarioExistente` si la dirección ya está registrada.
         #[ink(message)]
         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
             self.registrar_usuario_interno(rol)
         }
 
+        /// Lógica interna para registrar un usuario.
         fn registrar_usuario_interno(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
             let usuario_llamador = self.env().caller();
             // Verifica si el usuario es existente
@@ -50,6 +142,12 @@ mod marketplace_principal {
             Ok(())
         }
 
+        /// Permite a un usuario con rol de Vendedor publicar un producto.
+        ///
+        /// # Errores
+        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
+        /// - `NoEsRolCorrecto` si el usuario no es vendedor.
+        /// - `CantidadInsuficiente` si la cantidad es 0.
         #[ink(message)]
         pub fn publicar_producto(
             &mut self,
@@ -62,6 +160,7 @@ mod marketplace_principal {
             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
         }
 
+        /// Lógica interna para validar y agregar un producto.
         fn crear_producto_seguro(
             &mut self,
             nombre: String,
@@ -80,12 +179,19 @@ mod marketplace_principal {
             self.agregar_producto(nombre, descripcion, precio, cantidad, categoria, vendedor)
         }
 
+        /// Permite a un usuario con rol de Comprador crear una orden de compra.
+        ///
+        /// # Errores
+        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
+        /// - `NoEsRolCorrecto` si el usuario no es comprador.
+        /// - `ProductosVacios` si el producto no existe.
+        /// - `CantidadInsuficiente` si no hay suficiente stock.
         #[ink(message)]
         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             self.crear_nueva_orden(producto_id, cantidad)
         }
         
-        /// Crea una nueva orden de compra para un producto existente.
+        /// Lógica interna para crear una nueva orden de compra.
         fn crear_nueva_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             let comprador = self.env().caller();
             self.verificar_registro(comprador)?;
@@ -100,20 +206,32 @@ mod marketplace_principal {
             if producto.cantidad < cantidad {
                 return Err(SistemaError::CantidadInsuficiente);
             }
-            producto.cantidad -= cantidad;
+            // Usa saturating_sub para evitar efectos secundarios inesperados
+            producto.cantidad = producto.cantidad.saturating_sub(cantidad);
             self.crear_y_emitir_orden(comprador, vendedor, producto_id, cantidad)
         }
 
+        /// Permite al vendedor marcar una orden como enviada.
+        ///
+        /// # Errores
+        /// - `NoEsRolCorrecto` si el caller no es el vendedor de la orden.
+        /// - `EstadoInvalido` si la transición de estado no es válida.
         #[ink(message)]
         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
         }
 
+        /// Permite al comprador marcar una orden como recibida.
+        ///
+        /// # Errores
+        /// - `NoEsRolCorrecto` si el caller no es el comprador de la orden.
+        /// - `EstadoInvalido` si la transición de estado no es válida.
         #[ink(message)]
         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
         }
 
+        /// Lógica interna para actualizar el estado de una orden.
         fn actualizar_estado_orden(&mut self, orden_id: u32, nuevo_estado: EstadoOrden) -> Result<(), SistemaError> {
             let caller = self.env().caller();
             self.verificar_registro(caller)?;
@@ -132,7 +250,7 @@ mod marketplace_principal {
 
         // --- Funciones auxiliares ---
 
-
+        /// Verifica si un usuario está registrado.
         fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
             if !self.usuarios.contains(&usuario) { // Cambia contains_key por contains
                 Err(SistemaError::UsuarioNoRegistrado)
@@ -141,6 +259,7 @@ mod marketplace_principal {
             }
         }
 
+        /// Verifica si un usuario ya existe.
         fn verificar_usuario_existente(&self, usuario: AccountId) -> Result<(), SistemaError> {
             if self.usuarios.contains(&usuario) { // Cambia contains_key por contains
                 Err(SistemaError::UsuarioExistente)
@@ -149,6 +268,7 @@ mod marketplace_principal {
             }
         }
 
+        /// Verifica si el usuario tiene el rol requerido.
         fn verificar_rol(&self, usuario: AccountId, rol_requerido: RolUsuario) -> Result<(), SistemaError> {
             let usuario_data = self.usuarios.get(&usuario)
                 .ok_or(SistemaError::UsuarioNoRegistrado)?;
@@ -160,14 +280,16 @@ mod marketplace_principal {
             }
         }
 
+        /// Verifica que la cantidad sea mayor a cero.
         fn verificar_cantidad(&self, cantidad: u32) -> Result<(), SistemaError> {
-            if cantidad <= 0 {
+            if cantidad == 0 {
                 Err(SistemaError::CantidadInsuficiente)
             } else {
                 Ok(())
             }
       }
 
+        /// Agrega un producto a la lista de productos.
         fn agregar_producto(
             &mut self,
             nombre: String,
@@ -182,6 +304,7 @@ mod marketplace_principal {
             self.productos.push(nuevo_producto);
             Ok(())
         }
+        /// Obtiene un producto mutable por su id.
         fn obtener_producto_mut(&mut self, id: u32) -> Result<&mut Producto, SistemaError> {
             self.productos
                 .iter_mut()
@@ -189,6 +312,7 @@ mod marketplace_principal {
                 .ok_or(SistemaError::ProductosVacios)
         }
 
+        /// Crea y almacena una nueva orden.
         fn crear_y_emitir_orden(
             &mut self,
             comprador: AccountId,
@@ -203,11 +327,13 @@ mod marketplace_principal {
             Ok(id)
         }
 
+        /// Obtiene una orden mutable por su id.
         fn obtener_orden_mut(&mut self, id: u32) -> Result<&mut Orden, SistemaError> {
             self.ordenes
                 .get_mut(id as usize)
                 .ok_or(SistemaError::OrdenNoExiste)
         }
+        /// Verifica si el caller tiene permiso para cambiar el estado de la orden.
         fn verificar_permiso_orden(
             &self,
             caller: AccountId,
@@ -221,6 +347,7 @@ mod marketplace_principal {
             }
         }
 
+        /// Verifica que la transición de estado de la orden sea válida.
         fn verificar_transicion_estado(
             &self,
             actual: &EstadoOrden,
@@ -238,6 +365,7 @@ mod marketplace_principal {
     // ENUMS
     // ────────────────
 
+    /// Enum para los roles posibles de un usuario.
     #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
     pub enum RolUsuario {
         Comprador,
@@ -245,6 +373,7 @@ mod marketplace_principal {
         Ambos,
     }
 
+    /// Enum para los posibles estados de una orden.
     #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub enum EstadoOrden {
         Pendiente,
@@ -253,12 +382,11 @@ mod marketplace_principal {
         Cancelada,
     }
 
-    
     // ────────────────
     // ERRORES DEL SISTEMA
     // ────────────────
 
-
+    /// Enum para los posibles errores del sistema.
     #[derive(Debug, Encode, Decode, Clone, PartialEq, Eq, TypeInfo)]
     pub enum SistemaError {
         CantidadInsuficiente,
@@ -283,33 +411,43 @@ mod marketplace_principal {
         }
     }
 
-
-
     // ────────────────
     // ESTRUCTURAS PRINCIPALES
     // ────────────────
 
-
+    /// Representa un usuario del marketplace.
     #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
     pub struct Usuario {
+        /// Dirección de la cuenta del usuario.
         pub direccion: AccountId,
+        /// Rol asignado al usuario.
         pub rol: RolUsuario,
+        /// Reputación como comprador.
         pub reputacion_como_comprador: u32,
+        /// Reputación como vendedor.
         pub reputacion_como_vendedor: u32,
     }
 
- 
+    /// Representa un producto publicado en el marketplace.
     #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub struct Producto {
+        /// Identificador único del producto.
         pub id: u32,
+        /// Nombre del producto.
         pub nombre: String,
+        /// Descripción del producto.
         pub descripcion: String,
+        /// Precio del producto.
         pub precio: Balance,
+        /// Cantidad disponible.
         pub cantidad: u32,
+        /// Categoría del producto.
         pub categoria: String,
+        /// Dirección del vendedor.
         pub vendedor: AccountId,
     }
     impl Producto {
+        /// Crea una nueva instancia de Producto.
         pub fn new(id: u32, nombre: String, descripcion: String, precio: Balance, cantidad: u32, categoria: String, vendedor: AccountId) -> Self {
             Self {
                 id,
@@ -323,18 +461,28 @@ mod marketplace_principal {
         }
     }
 
+    /// Representa una orden de compra.
     #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub struct Orden {
+        /// Identificador único de la orden.
         pub id: u32,
+        /// Dirección del comprador.
         pub comprador: AccountId,
+        /// Dirección del vendedor.
         pub vendedor: AccountId,
+        /// Identificador del producto comprado.
         pub producto_id: u32,
+        /// Cantidad comprada.
         pub cantidad: u32,
+        /// Estado actual de la orden.
         pub estado: EstadoOrden,
+        /// Indica si el comprador calificó.
         pub comprador_califico: bool,
+        /// Indica si el vendedor calificó.
         pub vendedor_califico: bool,
     }
     impl Orden {
+        /// Crea una nueva instancia de Orden.
         pub fn new(id: u32, comprador: AccountId, vendedor: AccountId, producto_id: u32, cantidad: u32) -> Self {
             Self {
                 id,
@@ -354,16 +502,17 @@ mod marketplace_principal {
         use super::*;
         use ink::env::test;
 
+        // --- Registro de usuarios ---
         #[ink::test]
-        fn registrar_usuario_test_funcional() {
+        fn registrar_usuario_comprador_ok() {
             let mut contrato = MarketplacePrincipal::new();
 
             // Simulamos que el caller es "Alice"
             let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
             test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
 
-            // Llamamos a la función registrar_usuario con un rol
-            let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
+            // Llamamos a la función registrar_usuario con el rol de comprador
+            let resultado = contrato.registrar_usuario(RolUsuario::Comprador);
 
             // Verificamos que devuelva OK
             assert_eq!(resultado, Ok(()));
@@ -376,13 +525,67 @@ mod marketplace_principal {
 
             // Verificamos los datos
             let usuario = usuario_registrado.unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Comprador);
+            assert_eq!(usuario.reputacion_como_comprador, 0);
+            assert_eq!(usuario.reputacion_como_vendedor, 0);
+        }
+
+        #[ink::test]
+        fn registrar_usuario_vendedor_ok() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            // Simulamos que el caller es "Bob"
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+
+            // Llamamos a la función registrar_usuario con el rol de vendedor
+            let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
+
+            // Verificamos que devuelva OK
+            assert_eq!(resultado, Ok(()));
+
+            // Obtenemos el usuario usando la dirección del caller
+            let usuario_registrado = contrato.usuarios.get(&accounts.bob);
+
+            // Confirmamos si se guardó el usuario
+            assert!(usuario_registrado.is_some());
+
+            // Verificamos los datos
+            let usuario = usuario_registrado.unwrap();
             assert_eq!(usuario.rol, RolUsuario::Vendedor);
             assert_eq!(usuario.reputacion_como_comprador, 0);
             assert_eq!(usuario.reputacion_como_vendedor, 0);
         }
 
         #[ink::test]
-        fn registrar_usuario_dos_veces() {
+        fn registrar_usuario_ambos_ok() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            // Simulamos que el caller es "Charlie"
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.charlie);
+
+            // Llamamos a la función registrar_usuario con el rol de ambos
+            let resultado = contrato.registrar_usuario(RolUsuario::Ambos);
+
+            // Verificamos que devuelva OK
+            assert_eq!(resultado, Ok(()));
+
+            // Obtenemos el usuario usando la dirección del caller
+            let usuario_registrado = contrato.usuarios.get(&accounts.charlie);
+
+            // Confirmamos si se guardó el usuario
+            assert!(usuario_registrado.is_some());
+
+            // Verificamos los datos
+            let usuario = usuario_registrado.unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Ambos);
+            assert_eq!(usuario.reputacion_como_comprador, 0);
+            assert_eq!(usuario.reputacion_como_vendedor, 0);
+        }
+
+        #[ink::test]
+        fn registrar_usuario_duplicado_falla() {
             let mut contrato = MarketplacePrincipal::new();
 
             let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
@@ -396,96 +599,291 @@ mod marketplace_principal {
             assert_eq!(resultado, Err(SistemaError::UsuarioExistente));
         }
 
-        fn setup_contract_con_vendedor() -> MarketplacePrincipal {
+        // --- Publicación de productos ---
+        #[ink::test]
+        fn publicar_producto_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            let resultado = contrato.publicar_producto(
+                "Celular".to_string(),
+                "Un buen celular".to_string(),
+                1000,
+                5,
+                "Tecnología".to_string(),
+            );
+
+            assert!(resultado.is_ok());
+            assert_eq!(contrato.productos.len(), 1);
+
+            let producto = &contrato.productos[0];
+            assert_eq!(producto.nombre, "Celular");
+            assert_eq!(producto.precio, 1000);
+        }
+
+        #[ink::test]
+        fn publicar_producto_no_registrado_falla() {
             let mut contrato = MarketplacePrincipal::new();
-            let caller = AccountId::from([0x01; 32]);
+
+            let caller = AccountId::from([0x02; 32]);
             test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
+            let resultado = contrato.publicar_producto(
+                "Producto".to_string(),
+                "Sin registro".to_string(),
+                500,
+                1,
+                "Otros".to_string(),
+            );
+
+            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
+        }
+
+        #[ink::test]
+        fn publicar_producto_no_es_vendedor_falla() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            let caller = AccountId::from([0x03; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
             let usuario = Usuario {
                 direccion: caller,
-                rol: RolUsuario::Vendedor,
+                rol: RolUsuario::Comprador, // Rol no válido para publicar productos
                 reputacion_como_comprador: 0,
                 reputacion_como_vendedor: 0,
             };
             contrato.usuarios.insert(caller, &usuario);
-            contrato
+
+            let resultado = contrato.publicar_producto(
+                "Producto".to_string(),
+                "No autorizado".to_string(),
+                100,
+                2,
+                "Otros".to_string(),
+            );
+
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
         }
 
-         #[ink::test]
-         fn test_publicar_producto_ok() {
-             let mut contrato = setup_contract_con_vendedor();
+        #[ink::test]
+        fn publicar_producto_cantidad_cero_falla() {
+            let mut contrato = setup_contract_con_vendedor();
 
-             let resultado = contrato.publicar_producto(
-                 "Celular".to_string(),
-                 "Un buen celular".to_string(),
-                 1000,
-                 5,
-                 "Tecnología".to_string(),
-             );
+            let resultado = contrato.publicar_producto(
+                "Producto".to_string(),
+                "Cantidad cero".to_string(),
+                100,
+                0, // Cantidad inválida
+                "Otros".to_string(),
+            );
 
-             assert!(resultado.is_ok());
-             assert_eq!(contrato.productos.len(), 1);
+            assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
+        }
 
-             let producto = &contrato.productos[0];
-             assert_eq!(producto.nombre, "Celular");
-             assert_eq!(producto.precio, 1000);
-         }
+        // --- Compra y órdenes ---
+        #[ink::test]
+        fn crear_orden_ok() {
+            let mut contrato = setup_contract_con_vendedor();
 
-         #[ink::test]
-         fn test_usuario_no_registrado() {
-             let mut contrato = MarketplacePrincipal::new();
-             let caller = AccountId::from([0x02; 32]);
-             test::set_caller::<ink::env::DefaultEnvironment>(caller);
+            // Primero, publica un producto para poder comprarlo
+            let _ = contrato.publicar_producto(
+                "Laptop".to_string(),
+                "Una laptop potente".to_string(),
+                2000,
+                10,
+                "Tecnología".to_string(),
+            );
 
-             let resultado = contrato.publicar_producto(
-                 "Producto".to_string(),
-                 "Sin registro".to_string(),
-                 500,
-                 1,
-                 "Otros".to_string(),
-             );
+            let resultado = contrato.crear_orden(0, 2);
 
-             assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
-         }
+            assert!(resultado.is_ok());
+            let orden_id = resultado.unwrap();
+            assert_eq!(contrato.ordenes.len(), 1);
 
-         #[ink::test]
-         fn test_usuario_no_es_vendedor() {
-             let mut contrato = MarketplacePrincipal::new();
+            let orden = &contrato.ordenes[0];
+            assert_eq!(orden.id, orden_id);
+            assert_eq!(orden.cantidad, 2);
+            assert_eq!(orden.estado, EstadoOrden::Pendiente);
+        }
 
-             let caller = AccountId::from([0x03; 32]);
-             test::set_caller::<ink::env::DefaultEnvironment>(caller);
+        #[ink::test]
+        fn crear_orden_no_registrado_falla() {
+            let mut contrato = MarketplacePrincipal::new();
 
-             let usuario = Usuario {
-                 direccion: caller,
-                 rol: RolUsuario::Comprador, // Rol no válido para publicar productos
-                 reputacion_como_comprador: 0,
-                 reputacion_como_vendedor: 0,
-             };
-             contrato.usuarios.insert(caller, &usuario);
+            let caller = AccountId::from([0x04; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(caller);
 
-             let resultado = contrato.publicar_producto(
-                 "Producto".to_string(),
-                 "No autorizado".to_string(),
-                 100,
-                 2,
-                 "Otros".to_string(),
-             );
+            let resultado = contrato.crear_orden(0, 1);
 
-             assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-         }
+            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
+        }
 
-         #[ink::test]
-         fn test_cantidad_insuficiente() {
-             let mut contrato = setup_contract_con_vendedor();
+        #[ink::test]
+        fn crear_orden_no_es_comprador_falla() {
+            let mut contrato = MarketplacePrincipal::new();
 
-             let resultado = contrato.publicar_producto(
-                 "Producto".to_string(),
-                 "Cantidad cero".to_string(),
-                 100,
-                 0, // Cantidad inválida
-                 "Otros".to_string(),
-             );
+            let caller = AccountId::from([0x05; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(caller);
 
-             assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
-         }
+            let usuario = Usuario {
+                direccion: caller,
+                rol: RolUsuario::Vendedor, // Rol no válido para crear órdenes
+                reputacion_como_comprador: 0,
+                reputacion_como_vendedor: 0,
+            };
+            contrato.usuarios.insert(caller, &usuario);
+
+            // Primero, publica un producto para poder comprarlo
+            let _ = contrato.publicar_producto(
+                "Tablet".to_string(),
+                "Una tablet versátil".to_string(),
+                1500,
+                7,
+                "Tecnología".to_string(),
+            );
+
+            let resultado = contrato.crear_orden(1, 1);
+
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn crear_orden_cantidad_insuficiente_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, publica un producto con poca cantidad
+            let _ = contrato.publicar_producto(
+                "Cámara".to_string(),
+                "Cámara réflex de 35mm".to_string(),
+                2500,
+                1, // Solo 1 disponible
+                "Fotografía".to_string(),
+            );
+
+            let resultado = contrato.crear_orden(2, 2); // Intento de comprar 2
+
+            assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
+        }
+
+        #[ink::test]
+        fn crear_orden_descuenta_stock() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, publica un producto con suficiente cantidad
+            let _ = contrato.publicar_producto(
+                "Impresora".to_string(),
+                "Impresora 3D".to_string(),
+                3000,
+                5,
+                "Tecnología".to_string(),
+            );
+
+            // Crea una orden
+            let _ = contrato.crear_orden(3, 2);
+
+            // Verifica que el stock se haya descontado
+            let producto = contrato.productos.iter().find(|p| p.id == 3).unwrap();
+            assert_eq!(producto.cantidad, 3); // Quedan 3 unidades
+        }
+
+        // --- Gestión de órdenes ---
+        #[ink::test]
+        fn marcar_orden_como_enviada_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, crea una orden
+            let _ = contrato.crear_orden(0, 1);
+
+            let resultado = contrato.marcar_orden_como_enviada(0);
+
+            assert!(resultado.is_ok());
+            let orden = &contrato.ordenes[0];
+            assert_eq!(orden.estado, EstadoOrden::Enviada);
+        }
+
+        #[ink::test]
+        fn marcar_orden_como_enviada_usuario_incorrecto_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, crea una orden
+            let _ = contrato.crear_orden(0, 1);
+
+            // Simula que otro usuario intenta marcar la orden como enviada
+            let otro_usuario = AccountId::from([0x06; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(otro_usuario);
+
+            let resultado = contrato.marcar_orden_como_enviada(0);
+
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn marcar_como_recibida_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, crea y envía una orden
+            let orden_id = contrato.crear_orden(0, 1).unwrap();
+            contrato.marcar_orden_como_enviada(orden_id).unwrap();
+
+            let resultado = contrato.marcar_como_recibida(orden_id);
+
+            assert!(resultado.is_ok());
+            let orden = &contrato.ordenes[0];
+            assert_eq!(orden.estado, EstadoOrden::Recibida);
+        }
+
+        #[ink::test]
+        fn marcar_como_recibida_usuario_incorrecto_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, crea y envía una orden
+            let orden_id = contrato.crear_orden(0, 1).unwrap();
+            contrato.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Simula que otro usuario intenta marcar la orden como recibida
+            let otro_usuario = AccountId::from([0x07; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(otro_usuario);
+
+            let resultado = contrato.marcar_como_recibida(orden_id);
+
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn transicion_estado_invalida_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Primero, crea una orden
+            let orden_id = contrato.crear_orden(0, 1).unwrap();
+
+            // Marca la orden como enviada
+            contrato.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Intento de marcar como recibida sin ser el comprador
+            let vendedor = contrato.ordenes[0].vendedor;
+            test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+
+            let resultado = contrato.marcar_como_recibida(orden_id);
+
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        // --- Errores y validaciones ---
+        #[ink::test]
+        fn acceder_orden_inexistente_falla() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            let resultado = contrato.obtener_orden_mut(999); // ID que no existe
+
+            assert!(matches!(resultado, Err(SistemaError::OrdenNoExiste)));
+        }
+
+        #[ink::test]
+        fn acceder_producto_inexistente_falla() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            let resultado = contrato.obtener_producto_mut(999); // ID que no existe
+
+            assert!(matches!(resultado, Err(SistemaError::ProductosVacios)));
+        }
     } // <-- cierre del mod tests
 } // <-- cierre del mod marketplace_principal
