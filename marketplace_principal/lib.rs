@@ -4,14 +4,11 @@
 mod marketplace_principal {
 
     use ink::prelude::string::String;
-    use ink::scale;
     use ink::prelude::vec::Vec;
     use ink::storage::Mapping;
-    use ink::storage::traits::Packed;
-    use ink::storage::traits::StorableHint;
-    use ink::storage::traits::AutoStorableHint;
+    use ink::storage::traits::StorageLayout; // Agrega este import
     use parity_scale_codec::{Encode, Decode};
-    use ink::parity_scale_codec::WrapperTypeDecode;
+    use scale_info::TypeInfo;
 
 
         #[ink(storage)]
@@ -37,13 +34,13 @@ mod marketplace_principal {
                 self.registrar_usuario_interno(rol)
             }
 
-            
             fn registrar_usuario_interno(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
                 let usuario_llamador = self.env().caller();
                 // Verifica si el usuario es existente
-                self.verificar_usuario_existente(usuario_llamador)?;
+                if self.usuarios.contains(&usuario_llamador) { // Cambia contains_key por contains
+                    return Err(SistemaError::UsuarioExistente);
+                }
                 // Si no existe, crea un nuevo usuario
-                // y lo inserta en el mapeo de usuarios.
                 let nuevo_usuario = Usuario {
                     direccion: usuario_llamador,
                     rol,
@@ -154,7 +151,7 @@ mod marketplace_principal {
 
 
     //         fn verificar_registro(&self, usuario: AccountId) -> Result<(), SistemaError> {
-    //             if !self.usuarios.contains_key(&usuario) {
+    //             if !self.usuarios.contains(&usuario) { // Cambia contains_key por contains
     //                 Err(SistemaError::UsuarioNoRegistrado)
     //             } else {
     //                 Ok(())
@@ -162,7 +159,7 @@ mod marketplace_principal {
     //         }
 
     //         fn verificar_usuario_existente(&self, usuario: AccountId) -> Result<(), SistemaError> {
-    //             if self.usuarios.contains_key(&usuario) {
+    //             if self.usuarios.contains(&usuario) { // Cambia contains_key por contains
     //                 Err(SistemaError::UsuarioExistente)
     //             } else {
     //                 Ok(())
@@ -276,16 +273,14 @@ mod marketplace_principal {
     // ENUMS
     // ────────────────
 
-    #[derive(Debug, Clone, PartialEq, Eq, ink::storage::traits::Packed, ink::storage::traits::StorableHint<()>, ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>, ink::parity_scale_codec::Encode, Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
     pub enum RolUsuario {
         Comprador,
         Vendedor,
         Ambos,
     }
 
-    #[derive(Debug, Clone, PartialEq, Eq, ink::storage::traits::Packed, ink::storage::traits::StorableHint<()>, ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>, ink::parity_scale_codec::Encode, Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub enum EstadoOrden {
         Pendiente,
         Enviada,
@@ -299,8 +294,7 @@ mod marketplace_principal {
     // ────────────────
 
 
-    #[derive(Debug, scale::Encode, scale::Decode, Clone, PartialEq, Eq)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    #[derive(Debug, Encode, Decode, Clone, PartialEq, Eq, TypeInfo)]
     pub enum SistemaError {
         CantidadInsuficiente,
         UsuarioNoRegistrado,
@@ -332,9 +326,7 @@ mod marketplace_principal {
     // ────────────────
 
 
-    #[derive(Debug, Clone, PartialEq, Eq, ink::storage::traits::Packed, ink::storage::traits::StorableHint<()>, ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>, ink::parity_scale_codec::Encode, Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-
+    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
     pub struct Usuario {
         pub direccion: AccountId,
         pub rol: RolUsuario,
@@ -343,8 +335,7 @@ mod marketplace_principal {
     }
 
  
-    #[derive(Debug, Clone, PartialEq, Eq, ink::storage::traits::Packed, ink::storage::traits::StorableHint<()>, ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>, ink::parity_scale_codec::Encode, Decode, ink::parity_scale_codec::WrapperTypeDecode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub struct Producto {
         pub id: u32,
         pub nombre: String,
@@ -368,8 +359,7 @@ mod marketplace_principal {
         }
     }
 
-    #[derive(Debug, Clone, PartialEq, Eq, ink::storage::traits::Packed, ink::storage::traits::StorableHint<()>, ink::storage::traits::AutoStorableHint<ink::storage::traits::ManualKey<2402775017>>, ink::parity_scale_codec::Encode, Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
     pub struct Orden {
         pub id: u32,
         pub comprador: AccountId,
