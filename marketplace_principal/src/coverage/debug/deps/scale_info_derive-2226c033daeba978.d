@@ -1,0 +1,8 @@
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\scale_info_derive-2226c033daeba978.dll: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\attr.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\trait_bounds.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\utils.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\scale_info_derive-2226c033daeba978.d: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\attr.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\trait_bounds.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\utils.rs
+
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src/lib.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\attr.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\trait_bounds.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\scale-info-derive-2.11.6\src\utils.rs:

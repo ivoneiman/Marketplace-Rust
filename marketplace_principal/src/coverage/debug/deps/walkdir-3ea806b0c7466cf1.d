@@ -1,0 +1,10 @@
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libwalkdir-3ea806b0c7466cf1.rmeta: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\dent.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\error.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\util.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libwalkdir-3ea806b0c7466cf1.rlib: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\dent.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\error.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\util.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\walkdir-3ea806b0c7466cf1.d: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\dent.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\error.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\util.rs
+
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\lib.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\dent.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\error.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\walkdir-2.5.0\src\util.rs:

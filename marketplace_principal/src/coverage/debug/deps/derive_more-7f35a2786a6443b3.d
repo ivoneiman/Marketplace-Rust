@@ -1,0 +1,10 @@
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\derive_more-7f35a2786a6443b3.dll: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\derive_more-7f35a2786a6443b3.d: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs
+
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs:

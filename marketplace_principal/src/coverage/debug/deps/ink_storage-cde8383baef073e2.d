@@ -1,0 +1,10 @@
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libink_storage-cde8383baef073e2.rmeta: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\libink_storage-cde8383baef073e2.rlib: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\Noxi-PC\Documents\GitHub\Grupo2-Marketplace-con-Rust\marketplace_principal\src\coverage\debug\deps\ink_storage-cde8383baef073e2.d: C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs:
+C:\Users\Noxi-PC\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs:
