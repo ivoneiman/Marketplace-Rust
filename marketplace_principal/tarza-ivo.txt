@@ -1,411 +1,130 @@
  [==] Checking clippy linting rules
-warning: unused imports: `None`, `Some`
-  --> marketplace_principal\lib.rs:13:32
-   |
-13 |     use core::option::Option::{Some, None};
-   |                                ^^^^  ^^^^
-   |
-   = note: `#[warn(unused_imports)]` on by default
-
-warning: unused imports: `Formatter`, `Result as FmtResult`
-  --> marketplace_principal\lib.rs:14:28
-   |
-14 |     use core::fmt::{Debug, Formatter, Result as FmtResult};
-   |                            ^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^
-
-warning: unused import: `ink::prelude::*`
-  --> marketplace_principal\lib.rs:19:9
-   |
-19 |     use ink::prelude::*; // opcional: trae String, Vec, Box, etc.
-   |         ^^^^^^^^^^^^^^^
-
-warning: variable `comprador` is assigned to, but never used
-   --> marketplace_principal\lib.rs:159:18
-    |
-159 |             let (comprador, vendedor, estado_actual);
-    |                  ^^^^^^^^^
-    |
-    = note: consider using `_comprador` instead
-    = note: `#[warn(unused_variables)]` on by default
-
-warning: variable `vendedor` is assigned to, but never used
-   --> marketplace_principal\lib.rs:159:29
-    |
-159 |             let (comprador, vendedor, estado_actual);
-    |                             ^^^^^^^^
-    |
-    = note: consider using `_vendedor` instead
-
-warning: variable `estado_actual` is assigned to, but never used
-   --> marketplace_principal\lib.rs:159:39
-    |
-159 |             let (comprador, vendedor, estado_actual);
-    |                                       ^^^^^^^^^^^^^
-    |
-    = note: consider using `_estado_actual` instead
-
-warning: value assigned to `comprador` is never read
-   --> marketplace_principal\lib.rs:162:17
-    |
-162 |                 comprador = orden.comprador;
-    |                 ^^^^^^^^^
-    |
-    = help: maybe it is overwritten before being read?
-    = note: `#[warn(unused_assignments)]` on by default
-
-warning: value assigned to `vendedor` is never read
-   --> marketplace_principal\lib.rs:163:17
-    |
-163 |                 vendedor = orden.vendedor;
-    |                 ^^^^^^^^
-    |
-    = help: maybe it is overwritten before being read?
-
-warning: value assigned to `estado_actual` is never read
-   --> marketplace_principal\lib.rs:164:17
-    |
-164 |                 estado_actual = orden.estado.clone();
-    |                 ^^^^^^^^^^^^^
-    |
-    = help: maybe it is overwritten before being read?
-
-warning: method `verificar_usuario_existente` is never used
-   --> marketplace_principal\lib.rs:193:12
-    |
-35  |     impl MarketplacePrincipal {
-    |     ------------------------- method in this implementation
-...
-193 |         fn verificar_usuario_existente(&self, usuario: AccountId) -> Result<(), SistemaError> {
-    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` on by default
-
 warning: you should consider adding a `Default` implementation for `MarketplacePrincipal`
-  --> marketplace_principal\lib.rs:38:9
-   |
-38 | /         pub fn new() -> Self {
-39 | |             Self {
-40 | |                 usuarios: Mapping::default(),
-41 | |                 productos: Vec::new(),
-42 | |                 ordenes: Vec::new(),
-43 | |             }
-44 | |         }
-   | |_________^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#new_without_default
-   = note: `#[warn(clippy::new_without_default)]` on by default
-help: try adding this
-   |
-35 ~     impl Default for MarketplacePrincipal {
-36 +         fn default() -> Self {
-37 +             Self::new()
-38 +         }
-39 +     }
-40 + 
-41 ~     impl MarketplacePrincipal {
-   |
-
-warning: the borrowed expression implements the required traits
-  --> marketplace_principal\lib.rs:54:39
-   |
-54 |             if self.usuarios.contains(&usuario_llamador) { // Cambia contains_key por contains
-   |                                       ^^^^^^^^^^^^^^^^^ help: change this to: `usuario_llamador`
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
-   = note: `#[warn(clippy::needless_borrows_for_generic_args)]` on by default
-
-warning: the borrowed expression implements the required traits
-   --> marketplace_principal\lib.rs:186:40
+   --> marketplace_principal\lib.rs:109:9
     |
-186 |             if !self.usuarios.contains(&usuario) { // Cambia contains_key por contains
+109 | /         /// Crea una nueva instancia vac├¡a del marketplace.
+110 | |         #[ink(constructor)]
+111 | |         pub fn new() -> Self {
+112 | |             Self {
+...   |
+116 | |             }
+117 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#new_without_default
+    = note: `#[warn(clippy::new_without_default)]` on by default
+help: try adding this
+    |
+108 ~     impl Default for MarketplacePrincipal {
+109 +         fn default() -> Self {
+110 +             Self::new()
+111 +         }
+112 +     }
+113 + 
+114 ~     impl MarketplacePrincipal {
+    |
+
+warning: the borrowed expression implements the required traits
+   --> marketplace_principal\lib.rs:135:36
+    |
+135 |             self.usuarios.contains(&usuario)
+    |                                    ^^^^^^^^ help: change this to: `usuario`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
+    = note: `#[warn(clippy::needless_borrows_for_generic_args)]` on by default
+
+warning: the borrowed expression implements the required traits
+   --> marketplace_principal\lib.rs:145:31
+    |
+145 |             self.usuarios.get(&usuario)
+    |                               ^^^^^^^^ help: change this to: `usuario`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
+
+warning: the borrowed expression implements the required traits
+   --> marketplace_principal\lib.rs:152:39
+    |
+152 |             if self.usuarios.contains(&usuario_llamador) { // Cambia contains_key por contains
+    |                                       ^^^^^^^^^^^^^^^^^ help: change this to: `usuario_llamador`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
+
+warning: the borrowed expression implements the required traits
+   --> marketplace_principal\lib.rs:292:40
+    |
+292 |             if !self.usuarios.contains(&usuario) { // Cambia contains_key por contains
     |                                        ^^^^^^^^ help: change this to: `usuario`
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
 
 warning: the borrowed expression implements the required traits
-   --> marketplace_principal\lib.rs:194:39
+   --> marketplace_principal\lib.rs:301:50
     |
-194 |             if self.usuarios.contains(&usuario) { // Cambia contains_key por contains
-    |                                       ^^^^^^^^ help: change this to: `usuario`
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
-
-warning: the borrowed expression implements the required traits
-   --> marketplace_principal\lib.rs:202:50
-    |
-202 |             let usuario_data = self.usuarios.get(&usuario)
+301 |             let usuario_data = self.usuarios.get(&usuario)
     |                                                  ^^^^^^^^ help: change this to: `usuario`
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
 
-warning: non-local `impl` definition, they should be avoided as they go against expectation
-  --> marketplace_principal\lib.rs:29:5
-   |
-29 | /     pub struct MarketplacePrincipal {
-30 | |         usuarios: Mapping<AccountId, Usuario>,
-31 | |         productos: Vec<Producto>,
-32 | |         ordenes: Vec<Orden>,
-33 | |     }
-   | |_____^
-   |
-   = help: move this `impl` block outside the of the current constant `_` and up 2 bodies
-   = note: an `impl` definition is non-local if it is nested inside an item and may impact type checking outside of that item. This can be the case if neither the trait or the self type are at the same nesting level as the `impl`
-   = note: one exception to the rule are anon-const (`const _: () = { ... }`) at top-level module and anon-const at the same nesting as the trait or type
-   = note: this lint may become deny-by-default in the edition 2024 and higher, see the tracking issue <https://github.com/rust-lang/rust/issues/120363>
-   = note: `#[warn(non_local_definitions)]` on by default
+warning: the borrowed expression implements the required traits
+   --> marketplace_principal\lib.rs:319:50
+    |
+319 |             let usuario_data = self.usuarios.get(&usuario)
+    |                                                  ^^^^^^^^ help: change this to: `usuario`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrows_for_generic_args
 
-warning: `marketplace_principal` (lib) generated 16 warnings (run `cargo clippy --fix --lib -p marketplace_principal` to apply 8 suggestions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.83s
+warning: `marketplace_principal` (lib) generated 7 warnings (run `cargo clippy --fix --lib -p marketplace_principal` to apply 7 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.45s
  [==] Building cargo project
     Updating crates.io index
-     Locking 697 packages to latest compatible versions
-      Adding addr2line v0.24.2 (latest: v0.25.0)
-      Adding ahash v0.7.8 (latest: v0.8.12)
-      Adding allocator-api2 v0.2.21 (latest: v0.3.0)
-      Adding aquamarine v0.5.0 (latest: v0.6.0)
-      Adding ark-bls12-377 v0.4.0 (latest: v0.5.0)
-      Adding ark-bls12-381 v0.4.0 (latest: v0.5.0)
-      Adding ark-ec v0.4.2 (latest: v0.5.0)
-      Adding ark-ff v0.4.2 (latest: v0.5.0)
-      Adding ark-ff-asm v0.4.2 (latest: v0.5.0)
-      Adding ark-ff-macros v0.4.2 (latest: v0.5.0)
-      Adding ark-poly v0.4.2 (latest: v0.5.0)
-      Adding ark-serialize v0.4.2 (latest: v0.5.0)
-      Adding ark-serialize-derive v0.4.2 (latest: v0.5.0)
-      Adding ark-std v0.4.0 (latest: v0.5.0)
+     Locking 171 packages to latest compatible versions
       Adding array-bytes v6.2.3 (latest: v9.3.0)
-      Adding arrayvec v0.4.12 (latest: v0.7.6)
-      Adding base64 v0.13.1 (latest: v0.22.1)
-      Adding base64 v0.21.7 (latest: v0.22.1)
-      Adding bitcoin-internals v0.2.0 (latest: v0.4.0)
-      Adding bitcoin_hashes v0.13.0 (latest: v0.16.0)
       Adding bitflags v1.3.2 (latest: v2.9.1)
-      Adding block-buffer v0.9.0 (latest: v0.10.4)
-      Adding bollard v0.18.1 (latest: v0.19.1)
       Adding bounded-collections v0.2.4 (latest: v0.3.2)
-      Adding cargo-platform v0.1.9 (latest: v0.3.0)
-      Adding cargo_metadata v0.18.1 (latest: v0.21.0)
-      Adding cargo_metadata v0.19.2 (latest: v0.21.0)
-      Adding cfg-expr v0.15.8 (latest: v0.20.1)
-      Adding colored v2.2.0 (latest: v3.0.0)
-      Adding const-oid v0.9.6 (latest: v0.10.1)
       Adding const_env_impl v0.1.2 (latest: v0.1.3)
-      Adding constant_time_eq v0.1.5 (latest: v0.4.2)
-      Adding constant_time_eq v0.3.1 (latest: v0.4.2)
-      Adding convert_case v0.4.0 (latest: v0.8.0)
-      Adding core-foundation v0.9.4 (latest: v0.10.1)
-      Adding crossterm v0.28.1 (latest: v0.29.0)
-      Adding crypto-bigint v0.5.5 (latest: v0.6.1)
-      Adding crypto-mac v0.8.0 (latest: v0.11.1)
-      Adding curve25519-dalek v3.2.0 (latest: v4.2.0)
-      Adding curve25519-dalek v4.1.3 (latest: v4.2.0)
       Adding darling v0.14.4 (latest: v0.21.0)
-      Adding darling v0.20.11 (latest: v0.21.0)
       Adding darling_core v0.14.4 (latest: v0.21.0)
-      Adding darling_core v0.20.11 (latest: v0.21.0)
       Adding darling_macro v0.14.4 (latest: v0.21.0)
-      Adding darling_macro v0.20.11 (latest: v0.21.0)
       Adding derive_more v0.99.20 (latest: v2.0.1)
       Adding derive_more v1.0.0 (latest: v2.0.1)
       Adding derive_more-impl v1.0.0 (latest: v2.0.1)
-      Adding digest v0.9.0 (latest: v0.10.7)
       Adding docify v0.2.9 (latest: v0.4.1)
       Adding docify_macros v0.2.9 (latest: v0.4.1)
-      Adding downcast-rs v1.2.1 (latest: v2.0.1)
-      Adding duct v0.13.7 (latest: v1.0.0)
-      Adding ed25519-zebra v3.1.0 (latest: v4.0.3)
-      Adding event-listener v4.0.3 (latest: v5.4.0)
-      Adding fiat-crypto v0.2.9 (latest: v0.3.0)
-      Adding frame-benchmarking v32.0.0 (latest: v41.0.0)
-      Adding frame-election-provider-solution-type v13.0.0 (latest: v16.1.1)
-      Adding frame-election-provider-support v32.0.0 (latest: v41.0.0)
-      Adding frame-metadata v15.1.0 (latest: v23.0.0)
-      Adding frame-metadata v16.0.0 (latest: v23.0.0)
-      Adding frame-support v32.0.0 (latest: v41.0.0)
-      Adding frame-support-procedural v27.0.0 (latest: v34.0.0)
-      Adding frame-support-procedural-tools v11.0.1 (latest: v13.0.1)
-      Adding frame-system v32.0.0 (latest: v41.0.0)
-      Adding fs-err v2.11.0 (latest: v3.1.1)
       Adding generic-array v0.14.7 (latest: v1.2.0)
       Adding getrandom v0.2.16 (latest: v0.3.3)
-      Adding gimli v0.31.1 (latest: v0.32.0)
-      Adding h2 v0.3.27 (latest: v0.4.11)
-      Adding hashbrown v0.12.3 (latest: v0.15.4)
-      Adding hashbrown v0.13.2 (latest: v0.15.4)
-      Adding hashbrown v0.14.5 (latest: v0.15.4)
-      Adding heck v0.4.1 (latest: v0.5.0)
-      Adding hex-conservative v0.1.2 (latest: v1.0.0)
-      Adding hex-literal v0.4.1 (latest: v1.0.0)
-      Adding hmac v0.8.1 (latest: v0.12.1)
-      Adding http v0.2.12 (latest: v1.3.1)
-      Adding http-body v0.4.6 (latest: v1.0.1)
-      Adding hyper v0.14.32 (latest: v1.6.0)
-      Adding hyper-rustls v0.24.2 (latest: v0.27.7)
-      Adding impl-codec v0.6.0 (latest: v0.7.1)
       Adding impl-serde v0.4.0 (latest: v0.5.0)
-      Adding indexmap v1.9.3 (latest: v2.10.0)
-      Adding itertools v0.10.5 (latest: v0.14.0)
       Adding itertools v0.12.1 (latest: v0.14.0)
-      Adding jsonrpsee v0.22.5 (latest: v0.25.1)
-      Adding jsonrpsee-client-transport v0.22.5 (latest: v0.25.1)
-      Adding jsonrpsee-core v0.22.5 (latest: v0.25.1)
-      Adding jsonrpsee-http-client v0.22.5 (latest: v0.25.1)
-      Adding jsonrpsee-types v0.22.5 (latest: v0.25.1)
-      Adding jsonrpsee-ws-client v0.22.5 (latest: v0.25.1)
-      Adding linux-raw-sys v0.4.15 (latest: v0.10.0)
-      Adding linux-raw-sys v0.9.4 (latest: v0.10.0)
-      Adding lru v0.12.5 (latest: v0.16.0)
-      Adding macro_magic v0.5.1 (latest: v0.6.0)
-      Adding macro_magic_core v0.5.1 (latest: v0.6.0)
-      Adding macro_magic_core_macros v0.5.1 (latest: v0.6.0)
-      Adding macro_magic_macros v0.5.1 (latest: v0.6.0)
-      Adding matchers v0.1.0 (latest: v0.2.0)
-      Adding memory-db v0.32.0 (latest: v0.34.0)
-      Adding nom v7.1.3 (latest: v8.0.0)
-      Adding nu-ansi-term v0.46.0 (latest: v0.50.1)
-      Adding object v0.36.7 (latest: v0.37.1)
-      Adding pallet-assets v33.0.0 (latest: v43.0.0)
-      Adding pallet-authority-discovery v32.0.0 (latest: v41.0.0)
-      Adding pallet-authorship v32.0.0 (latest: v41.0.0)
-      Adding pallet-babe v32.0.0 (latest: v41.0.0)
-      Adding pallet-balances v33.0.0 (latest: v42.0.0)
-      Adding pallet-broker v0.10.0 (latest: v0.20.0)
-      Adding pallet-contracts v31.0.0 (latest: v41.0.0)
-      Adding pallet-contracts-mock-network v7.0.0 (latest: v18.0.0)
-      Adding pallet-contracts-proc-macro v21.0.0 (latest: v23.0.3)
       Adding pallet-contracts-uapi v9.0.0 (latest: v14.0.0)
-      Adding pallet-insecure-randomness-collective-flip v20.0.0 (latest: v29.0.0)
-      Adding pallet-message-queue v35.0.0 (latest: v44.0.0)
-      Adding pallet-proxy v32.0.0 (latest: v41.0.0)
-      Adding pallet-session v32.0.0 (latest: v41.0.0)
-      Adding pallet-staking v32.0.0 (latest: v41.0.0)
-      Adding pallet-timestamp v31.0.0 (latest: v40.0.0)
-      Adding pallet-transaction-payment v32.0.0 (latest: v41.0.0)
-      Adding pallet-utility v32.0.0 (latest: v41.0.0)
-      Adding pallet-vesting v32.0.0 (latest: v41.0.0)
-      Adding pallet-xcm v11.0.0 (latest: v20.1.0)
-      Adding polkadot-core-primitives v11.0.0 (latest: v18.0.0)
-      Adding polkadot-parachain-primitives v10.0.0 (latest: v17.0.0)
-      Adding polkadot-primitives v11.0.0 (latest: v19.0.0)
-      Adding polkadot-runtime-metrics v11.0.0 (latest: v21.0.0)
-      Adding polkadot-runtime-parachains v11.0.0 (latest: v20.0.1)
       Adding polkavm-common v0.9.0 (latest: v0.26.0)
       Adding polkavm-derive v0.9.1 (latest: v0.26.0)
       Adding polkavm-derive-impl v0.9.0 (latest: v0.26.0)
       Adding polkavm-derive-impl-macro v0.9.0 (latest: v0.26.0)
-      Adding primitive-types v0.12.2 (latest: v0.13.1)
       Adding proc-macro-crate v1.3.1 (latest: v3.3.0)
       Adding radium v0.7.0 (latest: v1.1.1)
       Adding rand v0.8.5 (latest: v0.9.1)
       Adding rand_chacha v0.3.1 (latest: v0.9.0)
-      Adding rand_core v0.5.1 (latest: v0.9.3)
       Adding rand_core v0.6.4 (latest: v0.9.3)
-      Adding regex-automata v0.1.10 (latest: v0.4.9)
-      Adding regex-syntax v0.6.29 (latest: v0.8.5)
-      Adding rustc-hash v1.1.0 (latest: v2.1.1)
-      Adding rustc_version v0.2.3 (latest: v0.4.1)
-      Adding rustix v0.38.44 (latest: v1.0.8)
-      Adding rustls v0.21.12 (latest: v0.23.29)
-      Adding rustls v0.22.4 (latest: v0.23.29)
-      Adding rustls-native-certs v0.6.3 (latest: v0.8.1)
-      Adding rustls-native-certs v0.7.3 (latest: v0.8.1)
-      Adding rustls-pemfile v1.0.4 (latest: v2.2.0)
-      Adding rustls-webpki v0.101.7 (latest: v0.103.4)
-      Adding rustls-webpki v0.102.8 (latest: v0.103.4)
-      Adding ruzstd v0.5.0 (latest: v0.8.1)
       Adding scale-bits v0.5.0 (latest: v0.7.0)
       Adding scale-decode v0.11.1 (latest: v0.16.0)
       Adding scale-decode-derive v0.11.1 (latest: v0.16.0)
       Adding scale-encode v0.6.0 (latest: v0.10.0)
       Adding scale-encode-derive v0.6.0 (latest: v0.10.0)
       Adding scale-type-resolver v0.1.1 (latest: v0.2.0)
-      Adding scale-typegen v0.2.1 (latest: v0.11.1)
-      Adding scale-value v0.14.1 (latest: v0.18.0)
       Adding schemars v0.8.22 (latest: v1.0.4)
-      Adding schemars v0.9.0 (latest: v1.0.4)
       Adding schemars_derive v0.8.22 (latest: v1.0.4)
       Adding secp256k1 v0.28.2 (latest: v0.31.1)
       Adding secp256k1-sys v0.9.2 (latest: v0.11.0)
-      Adding secrecy v0.8.0 (latest: v0.10.3)
-      Adding security-framework v2.11.1 (latest: v3.2.0)
-      Adding semver v0.9.0 (latest: v1.0.26)
-      Adding semver-parser v0.7.0 (latest: v0.10.3)
       Adding serde_spanned v0.6.9 (latest: v1.0.0)
-      Adding serdect v0.2.0 (latest: v0.3.0)
-      Adding sha-1 v0.9.8 (latest: v0.10.1)
-      Adding sha2 v0.9.9 (latest: v0.10.9)
-      Adding simple-mermaid v0.1.1 (latest: v0.2.0)
-      Adding smoldot v0.16.0 (latest: v0.19.4)
-      Adding smoldot-light v0.14.0 (latest: v0.17.2)
-      Adding socket2 v0.5.10 (latest: v0.6.0)
-      Adding soketto v0.7.1 (latest: v0.8.1)
-      Adding sp-api v30.0.0 (latest: v37.0.0)
-      Adding sp-api-proc-macro v18.0.0 (latest: v23.0.0)
-      Adding sp-application-crypto v34.0.0 (latest: v41.0.0)
       Adding sp-arithmetic v26.1.0 (latest: v27.0.0)
-      Adding sp-authority-discovery v30.0.0 (latest: v37.0.0)
-      Adding sp-consensus-babe v0.36.0 (latest: v0.43.0)
-      Adding sp-consensus-slots v0.36.0 (latest: v0.43.0)
-      Adding sp-core v32.0.0 (latest: v37.0.0)
-      Adding sp-externalities v0.28.0 (latest: v0.30.0)
-      Adding sp-genesis-builder v0.11.0 (latest: v0.18.0)
-      Adding sp-inherents v30.0.0 (latest: v37.0.0)
-      Adding sp-io v34.0.0 (latest: v41.0.0)
-      Adding sp-keyring v35.0.0 (latest: v42.0.0)
-      Adding sp-keystore v0.38.0 (latest: v0.43.0)
-      Adding sp-metadata-ir v0.7.0 (latest: v0.11.0)
-      Adding sp-npos-elections v30.0.0 (latest: v37.0.0)
-      Adding sp-runtime v35.0.0 (latest: v42.0.0)
-      Adding sp-runtime-interface v27.0.0 (latest: v30.0.0)
-      Adding sp-runtime-interface-proc-macro v18.0.0 (latest: v19.0.0)
-      Adding sp-session v31.0.0 (latest: v39.0.0)
-      Adding sp-staking v30.0.0 (latest: v39.0.0)
-      Adding sp-state-machine v0.39.0 (latest: v0.46.0)
-      Adding sp-storage v21.0.0 (latest: v22.0.0)
-      Adding sp-timestamp v30.0.0 (latest: v37.0.0)
-      Adding sp-trie v33.0.0 (latest: v40.0.0)
-      Adding sp-version v33.0.0 (latest: v40.0.0)
-      Adding sp-version-proc-macro v14.0.0 (latest: v15.0.0)
-      Adding sp-wasm-interface v21.0.1 (latest: v22.0.0)
       Adding sp-weights v31.1.0 (latest: v32.0.0)
-      Adding spin v0.9.8 (latest: v0.10.0)
       Adding staging-xcm v11.0.0 (latest: v17.0.0)
-      Adding staging-xcm-builder v11.0.0 (latest: v21.0.0)
-      Adding staging-xcm-executor v11.0.0 (latest: v20.0.0)
       Adding strsim v0.10.0 (latest: v0.11.1)
-      Adding strum v0.24.1 (latest: v0.27.1)
-      Adding strum v0.26.3 (latest: v0.27.1)
-      Adding strum_macros v0.24.3 (latest: v0.27.1)
-      Adding strum_macros v0.26.4 (latest: v0.27.1)
-      Adding subxt v0.35.3 (latest: v0.42.1)
-      Adding subxt-codegen v0.35.3 (latest: v0.42.1)
-      Adding subxt-lightclient v0.35.3 (latest: v0.42.1)
-      Adding subxt-macro v0.35.3 (latest: v0.42.1)
-      Adding subxt-metadata v0.35.3 (latest: v0.42.1)
-      Adding subxt-signer v0.35.3 (latest: v0.42.1)
       Adding syn v1.0.109 (latest: v2.0.104)
-      Adding thiserror v1.0.69 (latest: v2.0.12)
-      Adding thiserror-impl v1.0.69 (latest: v2.0.12)
-      Adding tokio-rustls v0.24.1 (latest: v0.26.2)
-      Adding tokio-rustls v0.25.0 (latest: v0.26.2)
       Adding toml v0.8.23 (latest: v0.9.2)
       Adding toml_datetime v0.6.11 (latest: v0.7.0)
       Adding toml_edit v0.19.15 (latest: v0.23.1)
       Adding toml_edit v0.22.27 (latest: v0.23.1)
-      Adding tower v0.4.13 (latest: v0.5.2)
-      Adding trie-db v0.28.0 (latest: v0.30.0)
-      Adding twox-hash v1.6.3 (latest: v2.1.1)
-      Adding uint v0.9.5 (latest: v0.10.0)
-      Adding unicode-normalization v0.1.22 (latest: v0.1.24)
       Adding wasi v0.11.1+wasi-snapshot-preview1 (latest: v0.14.2+wasi-0.2.4)
-      Adding wasm-encoder v0.220.1 (latest: v0.235.0)
-      Adding wasmi v0.31.2 (latest: v0.47.0)
-      Adding wasmi_arena v0.4.1 (latest: v0.5.0)
-      Adding wasmi_core v0.13.0 (latest: v0.47.0)
-      Adding wasmparser v0.220.1 (latest: v0.235.0)
-      Adding which v6.0.3 (latest: v8.0.0)
-      Adding which v7.0.3 (latest: v8.0.0)
-      Adding windows-sys v0.52.0 (latest: v0.60.2)
       Adding windows-sys v0.59.0 (latest: v0.60.2)
       Adding windows-targets v0.52.6 (latest: v0.53.2)
       Adding windows_aarch64_gnullvm v0.52.6 (latest: v0.53.0)
@@ -417,19 +136,12 @@ warning: `marketplace_principal` (lib) generated 16 warnings (run `cargo clippy 
       Adding windows_x86_64_gnullvm v0.52.6 (latest: v0.53.0)
       Adding windows_x86_64_msvc v0.52.6 (latest: v0.53.0)
       Adding winnow v0.5.40 (latest: v0.7.12)
-      Adding winsafe v0.0.19 (latest: v0.0.25)
-      Adding wit-bindgen-rt v0.39.0 (latest: v0.43.0)
       Adding wyz v0.5.1 (latest: v0.6.1)
-      Adding xcm-fee-payment-runtime-api v0.1.0 (latest: v0.4.0)
       Adding xcm-procedural v8.0.0 (latest: v11.0.2)
-      Adding xcm-simulator v11.0.0 (latest: v21.0.0)
-      Adding yap v0.11.0 (latest: v0.12.0)
-      Adding zip v2.4.2 (latest: v4.3.0)
-   Compiling byte-slice-cast v1.2.3
    Compiling serde v1.0.219
-   Compiling parity-scale-codec-derive v3.7.5
-   Compiling scale-info-derive v2.11.6
-   Compiling docify_macros v0.2.9
+   Compiling byte-slice-cast v1.2.3
+   Compiling proc-macro-crate v3.3.0
+   Compiling toml v0.8.23
 error[E0463]: can't find crate for `std`
   |
   = note: the `wasm32-unknown-unknown` target may not support the standard library
@@ -733,6 +445,12 @@ help: consider importing this macro
 66  + use core::stringify;
     |
 
+error[E0463]: can't find crate for `std`
+  |
+  = note: the `wasm32-unknown-unknown` target may not support the standard library
+  = note: `std` is required by `serde` because it does not declare `#![no_std]`
+  = help: consider building the standard library from source with `cargo build -Zbuild-std`
+
 error: cannot find macro `stringify` in this scope
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\byte-slice-cast-1.2.3\src/lib.rs:258:45
     |
@@ -897,12 +615,6 @@ help: consider importing this macro
     |
 66  + use core::stringify;
     |
-
-error[E0463]: can't find crate for `std`
-  |
-  = note: the `wasm32-unknown-unknown` target may not support the standard library
-  = note: `std` is required by `serde` because it does not declare `#![no_std]`
-  = help: consider building the standard library from source with `cargo build -Zbuild-std`
 
 error[E0463]: can't find crate for `std`
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\serde-1.0.219\src/lib.rs:174:17
@@ -1692,6 +1404,9 @@ help: consider importing this macro
 1    + use core::concat;
      |
 
+   Compiling parity-scale-codec-derive v3.7.5
+   Compiling scale-info-derive v2.11.6
+   Compiling docify_macros v0.2.9
 error: cannot find macro `stringify` in this scope
    --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\serde-1.0.219\src\de\impls.rs:507:39
     |
@@ -3144,8 +2859,6 @@ help: consider importing this attribute macro
 24 + use core::prelude::rust_2024::derive;
    |
 
-   Compiling docify v0.2.9
-   Compiling parity-scale-codec v3.7.5
 error[E0412]: cannot find type `Result` in this scope
   --> C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\byte-slice-cast-1.2.3\src/lib.rs:91:46
    |
