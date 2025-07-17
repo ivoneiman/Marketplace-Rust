@@ -82,7 +82,6 @@ Simulación de pagos.
 */
 
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
-#![allow(non_local_definitions)]
 
 #[ink::contract]
 mod marketplace_principal {
@@ -420,7 +419,9 @@ mod marketplace_principal {
     // ────────────────
 
     /// Enum para los roles posibles de un usuario.
-    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]
     pub enum RolUsuario {
         Comprador,
         Vendedor,
@@ -428,8 +429,9 @@ mod marketplace_principal {
     }
 
     /// Enum para los posibles estados de una orden.
-    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
-    pub enum EstadoOrden {
+#[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub enum EstadoOrden {
         Pendiente,
         Enviada,
         Recibida,
@@ -441,8 +443,9 @@ mod marketplace_principal {
     // ────────────────
 
     /// Enum para los posibles errores del sistema.
-    #[derive(Debug, Encode, Decode, Clone, PartialEq, Eq, TypeInfo)]
-    pub enum SistemaError {
+#[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub enum SistemaError {
         CantidadInsuficiente,
         UsuarioNoRegistrado,
         ProductosVacios,
@@ -472,8 +475,10 @@ mod marketplace_principal {
     // ────────────────
 
     /// Representa un usuario del marketplace.
-    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo, StorageLayout)]
-    pub struct Usuario {
+    
+#[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub struct Usuario {
         /// Dirección de la cuenta del usuario.
         pub direccion: AccountId,
         /// Rol asignado al usuario.
@@ -485,8 +490,9 @@ mod marketplace_principal {
     }
 
     /// Representa un producto publicado en el marketplace.
-    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
-    pub struct Producto {
+#[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub struct Producto {
         /// Identificador único del producto.
         pub id: u32,
         /// Nombre del producto.
@@ -518,7 +524,9 @@ mod marketplace_principal {
     }
 
     /// Representa una orden de compra.
-    #[derive(Debug, Clone, PartialEq, Eq, Encode, Decode, TypeInfo)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    #[ink::scale_derive(Encode, Decode, TypeInfo)]
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
     pub struct Orden {
         /// Identificador único de la orden.
         pub id: u32,

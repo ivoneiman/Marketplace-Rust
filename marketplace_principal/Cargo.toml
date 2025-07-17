@@ -6,9 +6,9 @@ edition = "2021"
 
 [dependencies]
 ink = { version = "5.1.1", default-features = false }
-parity-scale-codec = { version = "3.6", features = ["derive"] }
-scale-info = { version = "2.11", features = ["derive"] }
-serde = { version = "1.0", default-features = false, features = ["derive"], optional = true }
+parity-scale-codec = { version = "3.6", features = ["derive"], default-features = false }
+scale-info = { version = "2.11", features = ["derive"], default-features = false }
+
 
 [dev-dependencies]
 # ink_e2e = { version = "5.0.0" } # Asegúrate de que esta línea esté comentada o eliminada
@@ -19,7 +19,6 @@ path = "lib.rs"
 [features]
 default = ["std"]
 std = [
-    "serde/std",             # ✅ activa `std` solo si lo pedís
     "ink/std",
     "parity-scale-codec/std",
     "scale-info/std"
