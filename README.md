@@ -10,19 +10,13 @@ Trabajo Práctico Final para la materia Seminario de Lenguajes - Rust
 - Sistema de reputación basado en transacciones
 
 🛍️ Sistema de Productos
- Publicación de artículos con:
- - 📝 Descripciones detalladas
- - 📸 Imágenes (almacenamiento IPFS)
- - 🏷️ Categorización múltiple
-Búsqueda y filtrado avanzado
+ Publicación de artículos
 
 💰 Transacciones Seguras
 Sistema de órdenes con estados:
 - ⏳ Pendiente
 - 🚚 Enviado
 - ✅ Recibido
-Pagos mediante tokens nativos
-Escrow automático para protección de compradores
 
 🌐 Despliegue
 - Contrato desplegado en Shibuya Testnet (Polkadot)
