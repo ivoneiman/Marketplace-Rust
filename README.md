@@ -1,7 +1,7 @@
 # 🛒 Marketplace Descentralizado en Rust + Ink!
 
 Trabajo Práctico Final para la materia Seminario de Lenguajes - Rust
-## 🚀 Implementación de un marketplace descentralizado tipo MercadoLibre sobre blockchain
+## Implementación de un marketplace descentralizado tipo MercadoLibre sobre blockchain
 
 ### 🌟 Características principales
 👥 Gestión de Usuarios
