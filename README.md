@@ -1,7 +1,4 @@
 # 🛒 Marketplace Descentralizado en Rust + Ink!
-https://img.shields.io/badge/Rust-1.80.0_nightly-orange?logo=rust
-https://img.shields.io/badge/Ink!-5.1.1-blueviolet
-https://img.shields.io/badge/Substrate-3.0.0-5C4EE6?logo=parity-substrate
 
 Trabajo Práctico Final para la materia Seminario de Lenguajes - Rust
 ## 🚀 Implementación de un marketplace descentralizado tipo MercadoLibre sobre blockchain
