@@ -162,6 +162,44 @@ mod marketplace_principal {
             Ok(())
         }
 
+        /// Modifica el rol de un usuario registrado.
+        /// # Errores
+        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
+        /// - `NoEsRolCorrecto` si el usuario no puede cambiar a ese rol.
+        /// - `NoEsRolCorrecto` si el usuario ya está registrado con ese rol.
+        #[ink(message)]
+        pub fn modificar_rol_usuario(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
+            let usuario_llamador = self.env().caller();
+            // Verifica que el usuario esté registrado
+            self.verificar_registro(usuario_llamador)?;
+            
+            // Verifica que el usuario quiere cambiar a un rol que no es el actual
+            self.verificar_puede_cambiar_rol(usuario_llamador, nuevo_rol.clone())?;
+
+            // Actualiza el rol del usuario
+            let mut usuario = self.usuarios.get(&usuario_llamador)
+                .ok_or(SistemaError::UsuarioNoRegistrado)?;
+            usuario.rol = nuevo_rol;
+            self.usuarios.insert(usuario_llamador, &usuario);
+            Ok(())
+        }
+
+        fn modificar_rol_usuario_interno(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
+            let usuario_llamador = self.env().caller();
+            // Verifica que el usuario esté registrado
+            self.verificar_registro(usuario_llamador)?;
+            
+            // Verifica que el usuario quiere cambiar a un rol que no es el actual
+            self.verificar_puede_cambiar_rol(usuario_llamador, nuevo_rol.clone())?;
+
+            // Actualiza el rol del usuario
+            let mut usuario = self.usuarios.get(&usuario_llamador)
+                .ok_or(SistemaError::UsuarioNoRegistrado)?;
+            usuario.rol = nuevo_rol;
+            self.usuarios.insert(usuario_llamador, &usuario);
+            Ok(())
+        }
+
         /// Permite a un usuario con rol de Vendedor publicar un producto.
         ///
         /// # Errores
@@ -306,6 +344,21 @@ mod marketplace_principal {
                 // Solo usuarios con rol Vendedor pueden publicar productos
                 (RolUsuario::Vendedor, RolUsuario::Vendedor) => Ok(()),
                 // Usuarios con rol Ambos pueden hacer ambas acciones
+                (RolUsuario::Ambos, _) => Ok(()),
+                _ => Err(SistemaError::NoEsRolCorrecto),
+            }
+        }
+
+        fn verificar_puede_cambiar_rol(&self, usuario:AccountId, rol_solicitado: RolUsuario) -> Result<(), SistemaError> {
+            let usuario_data = self.usuarios.get(&usuario)
+                .ok_or(SistemaError::UsuarioNoRegistrado)?;
+
+            match (usuario_data.rol, rol_solicitado) {
+                // Solo usuarios con rol Vendedor pueden cambiar a Comprador
+                (RolUsuario::Vendedor, RolUsuario::Comprador) => Ok(()),
+                // Solo usuarios con rol Comprador pueden cambiar a Vendedor
+                (RolUsuario::Comprador, RolUsuario::Vendedor) => Ok(()),
+                // Usuarios con rol Ambos pueden cambiar a cualquier rol
                 (RolUsuario::Ambos, _) => Ok(()),
                 _ => Err(SistemaError::NoEsRolCorrecto),
             }
@@ -676,6 +729,116 @@ mod marketplace_principal {
             // Segundo registro debería fallar porque ya está registrado
             let resultado = contrato.registrar_usuario(RolUsuario::Vendedor);
             assert_eq!(resultado, Err(SistemaError::UsuarioExistente));
+        }
+
+        // --- Modificación de roles ---
+        #[ink::test]
+        fn modificar_rol_usuario_comprador_a_vendedor_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Comprador
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
+
+            // Modifica el rol a Vendedor
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(resultado.is_ok());
+
+            // Verifica que el rol se haya actualizado correctamente
+            let usuario = contrato.obtener_usuario(accounts.alice).unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Vendedor);
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_vendedor_a_comprador_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Vendedor
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+            let _ = contrato.registrar_usuario(RolUsuario::Vendedor);
+
+            // Modifica el rol a Comprador
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(resultado.is_ok());
+
+            // Verifica que el rol se haya actualizado correctamente
+            let usuario = contrato.obtener_usuario(accounts.bob).unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Comprador);
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_ambos_a_comprador_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Ambos
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.charlie);
+            let _ = contrato.registrar_usuario(RolUsuario::Ambos);
+
+            // Modifica el rol a Comprador
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(resultado.is_ok());
+
+            // Verifica que el rol se haya actualizado correctamente
+            let usuario = contrato.obtener_usuario(accounts.charlie).unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Comprador);
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_no_registrado_falla() {
+            let mut contrato = MarketplacePrincipal::new();
+
+            // Cambia el caller a un usuario no registrado
+            let caller = AccountId::from([0x05; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(caller);
+
+            // Intenta modificar el rol
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_mismo_rol_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Comprador
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
+
+            // Intenta cambiar a Comprador nuevamente
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_no_puede_cambiar_a_vendedor_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Vendedor
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+            let _ = contrato.registrar_usuario(RolUsuario::Vendedor);
+
+            // Intenta cambiar a Vendedor, lo cual no es permitido
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_no_puede_cambiar_a_comprador_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+
+            // Cambia el caller a un usuario registrado como Comprador
+            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
+
+            // Intenta cambiar a Comprador, lo cual no es permitido
+            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
         }
 
         // --- Publicación de productos ---
