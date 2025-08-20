@@ -169,19 +169,7 @@ mod marketplace_principal {
         /// - `NoEsRolCorrecto` si el usuario ya está registrado con ese rol.
         #[ink(message)]
         pub fn modificar_rol_usuario(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
-            let usuario_llamador = self.env().caller();
-            // Verifica que el usuario esté registrado
-            self.verificar_registro(usuario_llamador)?;
-            
-            // Verifica que el usuario quiere cambiar a un rol que no es el actual
-            self.verificar_puede_cambiar_rol(usuario_llamador, nuevo_rol.clone())?;
-
-            // Actualiza el rol del usuario
-            let mut usuario = self.usuarios.get(&usuario_llamador)
-                .ok_or(SistemaError::UsuarioNoRegistrado)?;
-            usuario.rol = nuevo_rol;
-            self.usuarios.insert(usuario_llamador, &usuario);
-            Ok(())
+            self.modificar_rol_usuario_interno(nuevo_rol)
         }
 
         fn modificar_rol_usuario_interno(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
@@ -189,7 +177,7 @@ mod marketplace_principal {
             // Verifica que el usuario esté registrado
             self.verificar_registro(usuario_llamador)?;
             
-            // Verifica que el usuario quiere cambiar a un rol que no es el actual
+            // Verifica que el usuario quiera cambiar a un rol que no es el rol actual
             self.verificar_puede_cambiar_rol(usuario_llamador, nuevo_rol.clone())?;
 
             // Actualiza el rol del usuario
@@ -199,6 +187,7 @@ mod marketplace_principal {
             self.usuarios.insert(usuario_llamador, &usuario);
             Ok(())
         }
+
 
         /// Permite a un usuario con rol de Vendedor publicar un producto.
         ///
@@ -236,6 +225,42 @@ mod marketplace_principal {
             // Agrega el producto al marketplace
             self.agregar_producto(nombre, descripcion, precio, cantidad, categoria, vendedor)
         }
+
+        
+        /// Lista todos los productos publicados por el caller (debe ser Vendedor o Ambos).
+        ///
+        /// Verifica que el caller esté registrado y tenga rol de Vendedor (o Ambos),
+        /// luego devuelve sus productos.
+        /// # Errors
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `NoEsRolCorrecto` si el caller no es Vendedor/Ambos.
+        /// - `ProductosVacios` si no tiene productos publicados.
+        #[ink(message)]
+        pub fn listar_mis_productos(&self) -> Result<Vec<Producto>, SistemaError> {
+            let yo = self.env().caller();
+            self.listar_productos_interno(yo)
+        }
+
+        /// Interna: valida que `vendedor` exista y tenga rol de Vendedor/Ambos,
+        /// y devuelve la lista de sus productos o un error específico.
+        fn listar_productos_interno(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
+            // Valida registro + rol; verificar rol ya devuelve UsuarioNoRegistrado o NoEsRolCorrecto
+            self.verificar_rol(vendedor, RolUsuario::Vendedor)?;
+
+            // Filtra los productos pertenecientes al vendedor
+            let productos_vendedor: Vec<Producto> = self
+                .productos
+                .iter()
+                .filter(|p| p.vendedor == vendedor)
+                .cloned()
+                .collect();
+
+            if productos_vendedor.is_empty() {
+                return Err(SistemaError::ProductosVacios);
+            }
+            Ok(productos_vendedor)
+        }
+
 
         /// Permite a un usuario con rol de Comprador crear una orden de compra.
         ///
@@ -839,7 +864,7 @@ mod marketplace_principal {
             // Intenta cambiar a Comprador, lo cual no es permitido
             let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
             assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-        }
+        }   
 
         // --- Publicación de productos ---
         #[ink::test]
@@ -920,6 +945,55 @@ mod marketplace_principal {
 
             assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
         }
+
+        // --- Listar productos ---
+         #[ink::test]
+        fn listar_interno_ok_para_vendedor() {
+            let mut c = setup_contract_con_vendedor();
+
+            // El caller ya está registrado como Vendedor por el helper
+            c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+            c.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
+
+            let caller = ink::env::caller();
+            let v = c.listar_productos_interno(caller).unwrap();
+            assert_eq!(v.len(), 2, "Debe devolver exactamente 2 productos del seller");
+            assert!(v.iter().all(|p| p.vendedor == caller), "Todos los productos deben pertenecer al seller");
+        }
+
+        /// Error: usuario no registrado intenta listar.
+        #[ink::test]
+        fn listar_interno_falla_si_no_registrado() {
+            let c = MarketplacePrincipal::new();
+            let no_reg = AccountId::from([9u8; 32]);
+
+            let res = c.listar_productos_interno(no_reg);
+            assert!(matches!(res, Err(SistemaError::UsuarioNoRegistrado)));
+        }
+
+        /// Error: registrado como Comprador (no Vendedor/Ambos) intenta listar.
+        #[ink::test]
+        fn listar_interno_falla_si_no_es_vendedor() {
+            let mut c = MarketplacePrincipal::new();
+
+            let buyer = AccountId::from([2u8; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(buyer);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            let res = c.listar_productos_interno(buyer);
+            assert!(matches!(res, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        /// Error: vendedor válido pero sin productos publicados.
+        #[ink::test]
+        fn listar_interno_falla_si_no_tiene_productos() {
+            let c = setup_contract_con_vendedor();
+
+            let caller = ink::env::caller();
+            let res = c.listar_productos_interno(caller);
+            assert!(matches!(res, Err(SistemaError::ProductosVacios)));
+        }
+
 
         // --- Compra y órdenes ---
         #[ink::test]
