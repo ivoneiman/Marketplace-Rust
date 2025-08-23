@@ -117,6 +117,22 @@ mod marketplace_principal {
 
         /// Registra un usuario con un rol específico (Comprador, Vendedor o Ambos).
         ///
+        /// # Ejemplo
+        /// ```
+        /// use ink::env::test;
+        /// let mut contrato = MarketplacePrincipal::new();
+        /// let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+        ///
+        /// // Simulamos que Alice es el caller
+        /// test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+        ///
+        /// // Registrar a Alice como compradora
+        /// assert!(contrato.registrar_usuario(RolUsuario::Comprador).is_ok());
+        ///
+        /// // Verificamos que ahora está registrada
+        /// assert!(contrato.esta_registrado(accounts.alice));
+        /// ```
+        ///
         /// # Errores
         /// - Retorna `UsuarioExistente` si la dirección ya está registrada.
         #[ink(message)]
@@ -162,11 +178,28 @@ mod marketplace_principal {
             Ok(())
         }
 
-        /// Modifica el rol de un usuario registrado.
+        /// Permite que un usuario registrado cambie su propio rol (Comprador, Vendedor o Ambos).
+        ///
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = MarketplacePrincipal::new();
+        /// let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+        ///
+        /// // Registramos a Alice como Comprador
+        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        ///
+        /// // Ahora cambia su rol a Vendedor
+        /// let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+        /// assert!(resultado.is_ok());
+        ///
+        /// let usuario = contrato.obtener_usuario(accounts.alice).unwrap();
+        /// assert_eq!(usuario.rol, RolUsuario::Vendedor);
+        /// ```
+        ///
         /// # Errores
-        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
-        /// - `NoEsRolCorrecto` si el usuario no puede cambiar a ese rol.
-        /// - `NoEsRolCorrecto` si el usuario ya está registrado con ese rol.
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `NoEsRolCorrecto` si el rol recibido no es válido.
         #[ink(message)]
         pub fn modificar_rol_usuario(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
             self.modificar_rol_usuario_interno(nuevo_rol)
@@ -189,11 +222,29 @@ mod marketplace_principal {
         }
 
 
-        /// Permite a un usuario con rol de Vendedor publicar un producto.
+        /// Permite a un usuario con rol de Vendedor publicar un producto en el marketplace.
+        ///
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = setup_contract_con_vendedor();
+        /// 
+        /// let resultado = contrato.publicar_producto(
+        ///     "Celular".to_string(),
+        ///     "Un buen celular".to_string(),
+        ///     1000,
+        ///     5,
+        ///     "Tecnología".to_string(),
+        /// );
+        /// assert!(resultado.is_ok());
+        /// assert_eq!(contrato.productos.len(), 1);
+        /// let producto = &contrato.productos[0];
+        /// assert_eq!(producto.nombre, "Celular");
+        /// assert_eq!(producto.precio, 1000);
+        /// ```
         ///
         /// # Errores
-        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
-        /// - `NoEsRolCorrecto` si el usuario no es vendedor.
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `NoEsRolCorrecto` si el caller no es Vendedor.
         /// - `CantidadInsuficiente` si la cantidad es 0.
         #[ink(message)]
         pub fn publicar_producto(
@@ -227,14 +278,26 @@ mod marketplace_principal {
         }
 
         
-        /// Lista todos los productos publicados por el caller (debe ser Vendedor o Ambos).
+        /// Lista todos los productos del usuario caller (debe ser Vendedor o Ambos).
         ///
-        /// Verifica que el caller esté registrado y tenga rol de Vendedor (o Ambos),
-        /// luego devuelve sus productos.
-        /// # Errors
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = setup_contract_con_vendedor();
+        /// 
+        /// // Publicamos algunos productos
+        /// contrato.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+        /// contrato.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
+        ///
+        /// // Llamada para listar los productos del caller
+        /// let productos = contrato.listar_mis_productos().unwrap();
+        /// assert_eq!(productos.len(), 2);
+        /// assert!(productos.iter().all(|p| p.vendedor == ink::env::caller()));
+        /// ```
+        ///
+        /// # Errores
         /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no es Vendedor/Ambos.
-        /// - `ProductosVacios` si no tiene productos publicados.
+        /// - `NoEsRolCorrecto` si el caller no tiene rol de Vendedor/Ambos.
+        /// - `ProductosVacios` si el caller no tiene productos publicados.
         #[ink(message)]
         pub fn listar_mis_productos(&self) -> Result<Vec<Producto>, SistemaError> {
             let yo = self.env().caller();
@@ -262,20 +325,36 @@ mod marketplace_principal {
         }
 
 
-        /// Permite a un usuario con rol de Comprador crear una orden de compra.
+        /// Permite a un usuario comprador crear una orden de compra.
+        ///
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = setup_contract_con_vendedor();
+        ///
+        /// // Publicamos un producto
+        /// contrato.publicar_producto("Laptop".into(), "Una laptop potente".into(), 2000, 10, "Tecnología".into()).unwrap();
+        ///
+        /// // Cambiamos el caller a un comprador y lo registramos
+        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        ///
+        /// // Crear una orden por 2 unidades del producto con id 0
+        /// let orden_id = contrato.crear_orden(0, 2).unwrap();
+        ///
+        /// // Verificamos que la orden se haya creado correctamente
+        /// let orden = &contrato.ordenes[0];
+        /// assert_eq!(orden.id, orden_id);
+        /// assert_eq!(orden.cantidad, 2);
+        /// assert_eq!(orden.estado, EstadoOrden::Pendiente);
+        /// ```
         ///
         /// # Errores
-        /// - `UsuarioNoRegistrado` si el usuario no está registrado.
-        /// - `NoEsRolCorrecto` si el usuario no es comprador.
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `NoEsRolCorrecto` si el caller no tiene rol de Comprador/Ambos.
         /// - `ProductosVacios` si el producto no existe.
         /// - `CantidadInsuficiente` si la cantidad solicitada es 0.
         /// - `StockInsuficiente` si no hay suficiente stock disponible.
-        /// 
-        /// # Nota
-        /// Esta función requiere que el usuario esté previamente registrado como Comprador o Ambos.
-        /// Si no está registrado, debe llamar primero a `registrar_usuario()`.
-        /// La función verifica el stock disponible antes de crear la orden y descuenta automáticamente
-        /// el stock del producto una vez confirmada la compra.
         #[ink(message)]
         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             self.crear_nueva_orden(producto_id, cantidad)
@@ -312,9 +391,30 @@ mod marketplace_principal {
 
         /// Permite al vendedor marcar una orden como enviada.
         ///
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = setup_contract_con_vendedor();
+        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        ///
+        /// // Registrar comprador y crear orden
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        /// let orden_id = contrato.crear_orden(0, 1).unwrap();
+        ///
+        /// // Cambiar caller al vendedor y marcar la orden como enviada
+        /// let vendedor = AccountId::from([0x01; 32]);
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+        /// contrato.marcar_orden_como_enviada(orden_id).unwrap();
+        ///
+        /// let orden = &contrato.ordenes[orden_id as usize];
+        /// assert_eq!(orden.estado, EstadoOrden::Enviada);
+        /// ```
+        ///
         /// # Errores
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
         /// - `NoEsRolCorrecto` si el caller no es el vendedor de la orden.
         /// - `EstadoInvalido` si la transición de estado no es válida.
+        /// - `OrdenNoExiste` si el ID de orden no existe.
         #[ink(message)]
         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
@@ -322,9 +422,34 @@ mod marketplace_principal {
 
         /// Permite al comprador marcar una orden como recibida.
         ///
+        /// # Ejemplo
+        /// ```
+        /// let mut contrato = setup_contract_con_vendedor();
+        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        ///
+        /// // Registrar comprador y crear orden
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        /// let orden_id = contrato.crear_orden(0, 1).unwrap();
+        ///
+        /// // Cambiar caller al vendedor y marcar como enviada
+        /// let vendedor = AccountId::from([0x01; 32]);
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+        /// contrato.marcar_orden_como_enviada(orden_id).unwrap();
+        ///
+        /// // Cambiar caller al comprador y marcar como recibida
+        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+        /// contrato.marcar_como_recibida(orden_id).unwrap();
+        ///
+        /// let orden = &contrato.ordenes[orden_id as usize];
+        /// assert_eq!(orden.estado, EstadoOrden::Recibida);
+        /// ```
+        ///
         /// # Errores
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
         /// - `NoEsRolCorrecto` si el caller no es el comprador de la orden.
         /// - `EstadoInvalido` si la transición de estado no es válida.
+        /// - `OrdenNoExiste` si el ID de orden no existe.
         #[ink(message)]
         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
