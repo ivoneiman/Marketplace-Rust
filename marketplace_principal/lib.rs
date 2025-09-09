@@ -336,6 +336,36 @@ mod marketplace_principal {
             Ok(productos_vendedor)
         }
 
+        /// Lista todos los productos publicados por un vendedor específico.
+        /// 
+        /// # Ejemplo
+        /// ```
+        /// let mut c = setup_contract_con_vendedor();
+        /// c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+        /// c.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
+        /// let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// let v = c.listar_productos_por_vendedor(acc.alice).unwrap();
+        /// assert_eq!(v.len(), 2);
+        /// assert_eq!(v[0].nombre, "P1");
+        /// assert_eq!(v[1].nombre, "P2");
+        /// ```
+        /// 
+        /// # Errores
+        /// - `ProductosVacios` si el vendedor no tiene productos publicados.
+        #[ink(message)]
+        pub fn listar_productos_por_vendedor(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
+            self.listar_productos_por_vendedor_interno(vendedor)
+        }
+
+        pub fn listar_productos_por_vendedor_interno(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
+            let productos: Vec<Producto> = self.productos.iter().filter(|p| p.vendedor == vendedor).cloned().collect();
+            if productos.is_empty() {
+                return Err(SistemaError::ProductosVacios);
+            }
+            Ok(productos)
+        }
+
+
 
         /// Permite a un usuario comprador crear una orden de compra.
         ///
@@ -568,10 +598,16 @@ mod marketplace_principal {
             vendedor: AccountId,
         ) -> Result<(), SistemaError> {
             let id = self.productos.len() as u32;
-            let nuevo_producto = Producto::new(id, nombre, descripcion, precio, cantidad, categoria, vendedor);
-            self.productos.push(nuevo_producto);
+            let nuevo = Producto::new(id, nombre, descripcion, precio, cantidad, categoria, vendedor);
+            self.productos.push(nuevo);
+
+            // Evento de publicación
+            self.env().emit_event(ProductoPublicado { vendedor, producto_id: id });
+
             Ok(())
         }
+
+
         /// Obtiene un producto mutable por su id.
         fn obtener_producto_mut(&mut self, id: u32) -> Result<&mut Producto, SistemaError> {
             self.productos
@@ -787,9 +823,6 @@ mod marketplace_principal {
         rol_anterior: RolUsuario,
         rol_nuevo: RolUsuario,
     }
-
-
-
 
 
 
