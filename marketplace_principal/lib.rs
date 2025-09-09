@@ -824,7 +824,8 @@ mod marketplace_principal {
         rol_nuevo: RolUsuario,
     }
 
-
+    // probando
+    //probando
 
 
     #[cfg(test)]
@@ -1197,6 +1198,30 @@ mod marketplace_principal {
 
             let caller = ink::env::caller();
             let res = c.listar_productos_interno(caller);
+            assert!(matches!(res, Err(SistemaError::ProductosVacios)));
+        }
+
+        // --- Listar productos por vendedor ---
+        #[ink::test]
+        fn listar_productos_por_vendedor_ok() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+            c.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
+
+            let productos = c.listar_productos_por_vendedor(acc.alice).unwrap();
+            assert_eq!(productos.len(), 2);
+            assert_eq!(productos[0].nombre, "P1");
+            assert_eq!(productos[1].nombre, "P2");
+        }
+
+        #[ink::test]
+        fn listar_productos_por_vendedor_vacio_falla() {
+            let c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            let res = c.listar_productos_por_vendedor(acc.alice);
             assert!(matches!(res, Err(SistemaError::ProductosVacios)));
         }
 
