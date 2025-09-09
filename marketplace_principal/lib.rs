@@ -200,6 +200,9 @@ mod marketplace_principal {
         /// # Errores
         /// - `UsuarioNoRegistrado` si el caller no está registrado.
         /// - `NoEsRolCorrecto` si el rol recibido no es válido.
+        /// 
+        /// # Nota
+        /// Emite un evento `RolActualizado` con la cuenta, el rol anterior y el nuevo rol.
         #[ink(message)]
         pub fn modificar_rol_usuario(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
             self.modificar_rol_usuario_interno(nuevo_rol)
@@ -216,8 +219,17 @@ mod marketplace_principal {
             // Actualiza el rol del usuario
             let mut usuario = self.usuarios.get(&usuario_llamador)
                 .ok_or(SistemaError::UsuarioNoRegistrado)?;
-            usuario.rol = nuevo_rol;
+            let rol_anterior = usuario.rol.clone(); // Guarda para el evento
+            usuario.rol = nuevo_rol.clone();
             self.usuarios.insert(usuario_llamador, &usuario);
+
+            //Evento
+            self.env().emit_event(RolActualizado {
+                cuenta: usuario_llamador,
+                rol_anterior,
+                rol_nuevo: nuevo_rol,
+            });
+
             Ok(())
         }
 
@@ -764,6 +776,24 @@ mod marketplace_principal {
         }
     }
 
+    // ────────────────
+    // EVENTOS
+    // ────────────────
+
+    #[ink(event)]
+    pub struct RolActualizado {
+        #[ink(topic)]
+        cuenta: AccountId,
+        rol_anterior: RolUsuario,
+        rol_nuevo: RolUsuario,
+    }
+
+
+
+
+
+
+
     #[cfg(test)]
     mod tests {
         use super::*;
@@ -935,6 +965,24 @@ mod marketplace_principal {
             let usuario = contrato.obtener_usuario(accounts.charlie).unwrap();
             assert_eq!(usuario.rol, RolUsuario::Comprador);
         }
+
+        #[ink::test]
+        fn emite_evento_rol_actualizado() {
+            let mut c = MarketplacePrincipal::new();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            // Grabamos eventos durante la llamada que cambia el rol
+            ink::env::test::record_events(|| {
+                c.modificar_rol_usuario(RolUsuario::Vendedor).unwrap();
+            });
+
+            let eventos = ink::env::test::recorded_events().collect::<Vec<_>>();
+            assert!(!eventos.is_empty(), "Debe emitirse al menos un evento");
+        }
+
 
         #[ink::test]
         fn modificar_rol_usuario_no_registrado_falla() {
