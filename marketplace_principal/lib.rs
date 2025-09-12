@@ -168,6 +168,10 @@ mod marketplace_principal {
         }
 
         /// Lógica interna para registrar un usuario.
+        /// 
+        /// - **Valida:** que el caller no esté ya registrado; de lo contrario `UsuarioExistente`.
+        /// - **Efectos:** inserta en `usuarios` con reputaciones inicializadas en 0.
+        /// - **Errores:** `UsuarioExistente`.
         fn registrar_usuario_interno(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
             let usuario_llamador = self.env().caller();
             // Verifica si el usuario es existente
@@ -280,6 +284,10 @@ mod marketplace_principal {
         }
 
         /// Lógica interna para validar y agregar un producto.
+        /// 
+        /// - **Valida:** caller registrado (`UsuarioNoRegistrado`), rol Vendedor/Ambos (`NoEsRolCorrecto`), `cantidad > 0` (`CantidadInsuficiente`).
+        /// - **Efectos:** llama a `agregar_producto(...)`.
+        /// - **Errores:** `UsuarioNoRegistrado`, `NoEsRolCorrecto`, `CantidadInsuficiente`.
         fn crear_producto_seguro(
             &mut self,
             nombre: String,
@@ -326,7 +334,9 @@ mod marketplace_principal {
         }
 
         /// Interna: valida que `vendedor` exista y tenga rol de Vendedor/Ambos,
-        /// y devuelve la lista de sus productos o un error específico.
+        /// 
+        /// - **Valida:** `verificar_rol(vendedor, Vendedor)` (propaga `UsuarioNoRegistrado` o `NoEsRolCorrecto`).
+        /// - **Retorna:** productos del vendedor o `ProductosVacios` si no tiene publicaciones.
         fn listar_productos_interno(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
             // Valida registro + rol; verificar rol ya devuelve UsuarioNoRegistrado o NoEsRolCorrecto
             self.verificar_rol(vendedor, RolUsuario::Vendedor)?;
@@ -366,6 +376,10 @@ mod marketplace_principal {
             self.listar_productos_por_vendedor_interno(vendedor)
         }
 
+        /// Interna usada por el mensaje público de lectura abierta.
+        /// 
+        /// - **No** valida rol ni registro del `vendedor` (consulta pública).
+        /// - **Retorna:** todos los productos del `vendedor` o `ProductosVacios` si no hay.
         pub fn listar_productos_por_vendedor_interno(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
             let productos: Vec<Producto> = self.productos.iter().filter(|p| p.vendedor == vendedor).cloned().collect();
             if productos.is_empty() {
@@ -411,7 +425,12 @@ mod marketplace_principal {
             self.crear_nueva_orden(producto_id, cantidad)
         }
         
-        /// Lógica interna para crear una nueva orden de compra.
+        /// Crea una orden de compra descontando stock de forma segura.
+        /// 
+        /// - **Valida:** caller registrado y con permiso de compra (`UsuarioNoRegistrado`, `NoEsRolCorrecto`), `cantidad > 0` (`CantidadInsuficiente`), existencia del producto (`ProductosVacios`), stock suficiente (`StockInsuficiente`).
+        /// - **Efectos:** descuenta `cantidad` del producto y pushea una nueva `Orden` en estado `Pendiente`.
+        /// - **Notas:** usa un borrow inmutable breve para leer/validar y luego uno mutable para descontar stock.
+        /// - **Errores:** ver arriba.
         fn crear_nueva_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             let comprador = self.env().caller();
             
@@ -517,7 +536,11 @@ mod marketplace_principal {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
         }
 
-        /// Lógica interna para actualizar el estado de una orden.
+        /// Actualiza el estado de una orden aplicando permisos y reglas de transición.
+        /// 
+        /// - **Valida:** caller registrado, pertenencia/permiso según `nuevo_estado` (vendedor para `Enviada`, comprador para `Recibida`), existencia de la orden, y transición válida (`Pendiente→Enviada`, `Enviada→Recibida`).
+        /// - **Efectos:** cambia `orden.estado` al `nuevo_estado`.
+        /// - **Errores:** `UsuarioNoRegistrado`, `OrdenNoExiste`, `NoEsRolCorrecto`, `EstadoInvalido`.
         fn actualizar_estado_orden(&mut self, orden_id: u32, nuevo_estado: EstadoOrden) -> Result<(), SistemaError> {
             let caller = self.env().caller();
             self.verificar_registro(caller)?;
@@ -532,6 +555,9 @@ mod marketplace_principal {
             orden.estado = nuevo_estado;
             Ok(())
         }
+
+
+
 
 
         // --- Funciones auxiliares ---
