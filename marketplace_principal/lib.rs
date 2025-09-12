@@ -18,20 +18,25 @@ Se espera que las entregas incluyan una implementación funcional, correctamente
 
 Contrato 1 – MarketplacePrincipal (Core funcional + reputación)
 Funcionalidades
+
 👤 Registro y gestión de usuarios
 Registro de usuario con rol: Comprador, Vendedor o ambos.
 Posibilidad de modificar roles posteriores.
+
 📦 Publicación de productos
 Publicar producto con nombre, descripción, precio, cantidad y categoría.
 Solo disponible para usuarios con rol Vendedor.
 Visualización de productos propios.
+
 🛒 Compra y órdenes
 Crear orden de compra (solo Compradores).
 Al comprar: se crea la orden y se descuenta stock.
 Estados de orden: pendiente, enviado, recibido, cancelada.
 Solo el Vendedor puede marcar como enviado.
 Solo el Comprador puede marcar como recibido o cancelada si aún está pendiente.
+
 Cancelación requiere consentimiento mutuo.
+
 ⭐ Reputación bidireccional
 Cuando la orden esté recibida, ambas partes pueden calificar:
 El Comprador califica al Vendedor.
@@ -41,8 +46,9 @@ Solo una calificación por parte y por orden.
 Reputación acumulada pública:
 reputacion_como_comprador
 reputacion_como_vendedor
+
 Contrato 2 – ReportesView (solo lectura)
-Funcionalidades
+Funcionalidades:
 Consultar top 5 vendedores con mejor reputación.
 Consultar top 5 compradores con mejor reputación.
 Ver productos más vendidos.
@@ -68,6 +74,7 @@ Gestión básica de órdenes (pendiente, enviado, recibido).
 Todo documentado segun lo visto en clase de como documentar en Rust
 Tests con cobertura ≥ 85%.
 Address del contrato desplegado en Shibuya Testnet.
+
 🌟 Entrega Final – Fin de año
 Incluye:
 
@@ -150,7 +157,7 @@ mod marketplace_principal {
             self.usuarios.contains(&usuario)
         }
 
-        /// Obtiene la información de un usuario registrado.
+        /// Obtiene la información de un usuario en caso de este estar registrado.
         ///
         /// # Retorna
         /// - `Some(Usuario)` si el usuario está registrado.
@@ -164,7 +171,7 @@ mod marketplace_principal {
         fn registrar_usuario_interno(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
             let usuario_llamador = self.env().caller();
             // Verifica si el usuario es existente
-            if self.usuarios.contains(&usuario_llamador) { // Cambia contains_key por contains
+            if self.usuarios.contains(&usuario_llamador) { 
                 return Err(SistemaError::UsuarioExistente);
             }
             // Si no existe, crea un nuevo usuario
@@ -219,7 +226,9 @@ mod marketplace_principal {
             // Actualiza el rol del usuario
             let mut usuario = self.usuarios.get(&usuario_llamador)
                 .ok_or(SistemaError::UsuarioNoRegistrado)?;
-            let rol_anterior = usuario.rol.clone(); // Guarda para el evento
+
+            let rol_anterior = usuario.rol.clone(); // Guarda el rol viejo para el evento
+            
             usuario.rol = nuevo_rol.clone();
             self.usuarios.insert(usuario_llamador, &usuario);
 
@@ -413,21 +422,32 @@ mod marketplace_principal {
             // Validar que la cantidad solicitada sea válida
             self.verificar_cantidad(cantidad)?;
             
-            // Obtén el vendedor antes del mutable borrow
+            // Buscar el producto en modo inmutable (solo lectura)
+            //    Usamos un bloque para que el borrow inmutable dure poco
             let vendedor = {
+                // Buscar el producto por id en el vector de productos
                 let producto_ref = self.productos.iter().find(|p| p.id == producto_id)
-                    .ok_or(SistemaError::ProductosVacios)?;
-                
-                // Verificar stock disponible antes de proceder
+                    .ok_or(SistemaError::ProductosVacios)?;   // Error si no existe ese id
+
+                // Validar que el stock alcanzaba para la cantidad pedida
                 self.verificar_stock_disponible(producto_ref, cantidad)?;
-                
+
+                // Guardar el vendedor en una variable independiente
+                // (copiamos el AccountId, no un borrow)
                 producto_ref.vendedor
             };
             
-            // Ahora sí obtener el producto mutable y descontar stock
+            // 👉 En este punto, el borrow inmutable de producto_ref ya terminó
+            //    porque el bloque {...} cerró. Esto libera el préstamo inmutable
+            //    y nos permite pedir ahora un préstamo mutable.
+
+            // Obtener el producto en modo mutable para descontar stock
             let producto = self.obtener_producto_mut(producto_id)?;
             producto.cantidad = producto.cantidad.saturating_sub(cantidad);
+            // `saturating_sub` asegura que nunca va a dar underflow (siempre >= 0).
+            //Igual ya validamos stock antes, pero esto es más seguro.
             
+            // 4) Crear la orden con todos los datos (comprador, vendedor, producto, cantidad)
             self.crear_y_emitir_orden(comprador, vendedor, producto_id, cantidad)
         }
 
