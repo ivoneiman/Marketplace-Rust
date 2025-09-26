@@ -18,6 +18,9 @@ Sistema de órdenes con estados:
 - 🚚 Enviado
 - ✅ Recibido
 
+📃 Diagrama de clases <br>
+[diagrama-readme.pdf](https://github.com/user-attachments/files/22568051/diagrama-readme.pdf)
+
 🌐 Despliegue
 - Contrato desplegado en Shibuya Testnet (Polkadot)
 - Interfaz web compatible con wallets como Polkadot.js
@@ -71,6 +74,8 @@ cargo contract upload --suri //Alice --url wss://shibuya-rpc.dwellir.com
 Localmente:
 substrate-contracts-node --dev
 cargo contract instantiate --constructor new --args false --suri //Alice
+
+
 
 ## 📚 Documentación Adicional
 📄 Documentación técnica
