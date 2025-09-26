@@ -634,6 +634,8 @@ mod marketplace_principal {
         }
 
         /// Agrega un producto a la lista de productos.
+        /// # Nota
+        /// Emite un evento `ProductoPublicado` con el `vendedor` y el `producto_id`.   
         fn agregar_producto(
             &mut self,
             nombre: String,
@@ -728,7 +730,8 @@ mod marketplace_principal {
     /// Enum para los posibles estados de una orden.
 #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
-    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub enum EstadoOrden {
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]
+    pub enum EstadoOrden {
         Pendiente,
         Enviada,
         Recibida,
@@ -870,8 +873,13 @@ mod marketplace_principal {
         rol_nuevo: RolUsuario,
     }
 
-    // probando
-    //probando
+    #[ink(event)]
+    pub struct ProductoPublicado {
+        #[ink(topic)]
+        vendedor: AccountId,
+        #[ink(topic)]
+        producto_id: u32,
+    }
 
 
     #[cfg(test)]
@@ -879,20 +887,36 @@ mod marketplace_principal {
         use super::*;
         use ink::env::test;
 
-        // Función auxiliar para crear un contrato con un vendedor registrado y caller seteado
+        // Vendedor = alice
         fn setup_contract_con_vendedor() -> MarketplacePrincipal {
             let mut contrato = MarketplacePrincipal::new();
-            let caller = AccountId::from([0x01; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(caller);
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
             let usuario = Usuario {
-                direccion: caller,
+                direccion: acc.alice,
                 rol: RolUsuario::Vendedor,
                 reputacion_como_comprador: 0,
                 reputacion_como_vendedor: 0,
             };
-            contrato.usuarios.insert(caller, &usuario);
+            contrato.usuarios.insert(acc.alice, &usuario);
             contrato
         }
+
+        // Comprador = bob
+        fn setup_contract_con_comprador() -> MarketplacePrincipal {
+            let mut contrato = MarketplacePrincipal::new();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            let usuario = Usuario {
+                direccion: acc.bob,
+                rol: RolUsuario::Comprador,
+                reputacion_como_comprador: 0,
+                reputacion_como_vendedor: 0,
+            };
+            contrato.usuarios.insert(acc.bob, &usuario);
+            contrato
+        }
+
         
         // --- Registro de usuarios ---
         #[ink::test]
@@ -994,57 +1018,87 @@ mod marketplace_principal {
         // --- Modificación de roles ---
         #[ink::test]
         fn modificar_rol_usuario_comprador_a_vendedor_ok() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut contrato = setup_contract_con_vendedor(); // alice = vendedor
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Cambia el caller a un usuario registrado como Comprador
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
-            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
 
-            // Modifica el rol a Vendedor
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
-            assert!(resultado.is_ok());
-
-            // Verifica que el rol se haya actualizado correctamente
-            let usuario = contrato.obtener_usuario(accounts.alice).unwrap();
-            assert_eq!(usuario.rol, RolUsuario::Vendedor);
+            let r = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(r.is_ok());
+            assert_eq!(contrato.obtener_usuario(acc.bob).unwrap().rol, RolUsuario::Vendedor);
         }
 
         #[ink::test]
         fn modificar_rol_usuario_vendedor_a_comprador_ok() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut contrato = setup_contract_con_vendedor(); // alice = vendedor
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Cambia el caller a un usuario registrado como Vendedor
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-            let _ = contrato.registrar_usuario(RolUsuario::Vendedor);
+            // usar charlie como vendedor propio para no interferir con alice
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            contrato.registrar_usuario(RolUsuario::Vendedor).unwrap();
 
-            // Modifica el rol a Comprador
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
-            assert!(resultado.is_ok());
-
-            // Verifica que el rol se haya actualizado correctamente
-            let usuario = contrato.obtener_usuario(accounts.bob).unwrap();
-            assert_eq!(usuario.rol, RolUsuario::Comprador);
+            let r = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(r.is_ok());
+            assert_eq!(contrato.obtener_usuario(acc.charlie).unwrap().rol, RolUsuario::Comprador);
         }
 
         #[ink::test]
         fn modificar_rol_usuario_ambos_a_comprador_ok() {
             let mut contrato = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Cambia el caller a un usuario registrado como Ambos
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.charlie);
-            let _ = contrato.registrar_usuario(RolUsuario::Ambos);
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            contrato.registrar_usuario(RolUsuario::Ambos).unwrap();
 
-            // Modifica el rol a Comprador
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
-            assert!(resultado.is_ok());
-
-            // Verifica que el rol se haya actualizado correctamente
-            let usuario = contrato.obtener_usuario(accounts.charlie).unwrap();
-            assert_eq!(usuario.rol, RolUsuario::Comprador);
+            let r = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(r.is_ok());
+            assert_eq!(contrato.obtener_usuario(acc.charlie).unwrap().rol, RolUsuario::Comprador);
         }
+
+        #[ink::test]
+        fn modificar_rol_usuario_ambos_a_vendedor_ok() {
+            let mut contrato = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Registramos a Charlie como Ambos
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            contrato.registrar_usuario(RolUsuario::Ambos).unwrap();
+
+            // Cambiamos su rol a Vendedor
+            let r = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(r.is_ok());
+
+            // Verificamos que el cambio se aplicó correctamente
+            let usuario = contrato.obtener_usuario(acc.charlie).unwrap();
+            assert_eq!(usuario.rol, RolUsuario::Vendedor);
+        }
+
+
+        #[ink::test]
+        fn modificar_rol_usuario_mismo_rol_falla() {
+            let mut contrato = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+
+            let r = contrato.modificar_rol_usuario(RolUsuario::Comprador);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn modificar_rol_usuario_no_registrado_falla() {
+            let mut contrato = MarketplacePrincipal::new();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // caller no registrado
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            let r = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
+            assert!(matches!(r, Err(SistemaError::UsuarioNoRegistrado)));
+        }
+
+
 
         #[ink::test]
         fn emite_evento_rol_actualizado() {
@@ -1054,70 +1108,14 @@ mod marketplace_principal {
 
             c.registrar_usuario(RolUsuario::Comprador).unwrap();
 
-            // Grabamos eventos durante la llamada que cambia el rol
-            ink::env::test::record_events(|| {
-                c.modificar_rol_usuario(RolUsuario::Vendedor).unwrap();
-            });
+            // Ejecutamos la acción que debería emitir el evento
+            c.modificar_rol_usuario(RolUsuario::Vendedor).unwrap();
 
+            // Recolectamos todos los eventos emitidos hasta ahora
             let eventos = ink::env::test::recorded_events().collect::<Vec<_>>();
             assert!(!eventos.is_empty(), "Debe emitirse al menos un evento");
         }
 
-
-        #[ink::test]
-        fn modificar_rol_usuario_no_registrado_falla() {
-            let mut contrato = MarketplacePrincipal::new();
-
-            // Cambia el caller a un usuario no registrado
-            let caller = AccountId::from([0x05; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(caller);
-
-            // Intenta modificar el rol
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
-            assert!(matches!(resultado, Err(SistemaError::UsuarioNoRegistrado)));
-        }
-
-        #[ink::test]
-        fn modificar_rol_usuario_mismo_rol_falla() {
-            let mut contrato = setup_contract_con_vendedor();
-
-            // Cambia el caller a un usuario registrado como Comprador
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
-            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
-
-            // Intenta cambiar a Comprador nuevamente
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
-            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-        }
-
-        #[ink::test]
-        fn modificar_rol_usuario_no_puede_cambiar_a_vendedor_falla() {
-            let mut contrato = setup_contract_con_vendedor();
-
-            // Cambia el caller a un usuario registrado como Vendedor
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-            let _ = contrato.registrar_usuario(RolUsuario::Vendedor);
-
-            // Intenta cambiar a Vendedor, lo cual no es permitido
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
-            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-        }
-
-        #[ink::test]
-        fn modificar_rol_usuario_no_puede_cambiar_a_comprador_falla() {
-            let mut contrato = setup_contract_con_vendedor();
-
-            // Cambia el caller a un usuario registrado como Comprador
-            let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-            test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
-            let _ = contrato.registrar_usuario(RolUsuario::Comprador);
-
-            // Intenta cambiar a Comprador, lo cual no es permitido
-            let resultado = contrato.modificar_rol_usuario(RolUsuario::Comprador);
-            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
-        }   
 
         // --- Publicación de productos ---
         #[ink::test]
@@ -1199,19 +1197,40 @@ mod marketplace_principal {
             assert!(matches!(resultado, Err(SistemaError::CantidadInsuficiente)));
         }
 
+        #[ink::test]
+        fn emite_evento_producto_publicado_con_campos_correctos() {
+            use parity_scale_codec::Decode;
+
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+
+            let eventos: Vec<_> = ink::env::test::recorded_events().collect();
+            assert!(!eventos.is_empty(), "Debe emitirse ProductoPublicado");
+
+            let ultimo = eventos.last().unwrap();
+            let mut bytes = ultimo.data.as_slice();
+            let e: ProductoPublicado = Decode::decode(&mut bytes).expect("decode evento");
+            assert_eq!(e.producto_id, 0);
+            assert_eq!(e.vendedor, acc.alice); // vendedor del helper
+        }
+
+
+
+
         // --- Listar productos ---
-         #[ink::test]
+        #[ink::test]
         fn listar_interno_ok_para_vendedor() {
             let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // El caller ya está registrado como Vendedor por el helper
             c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
             c.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
 
-            let caller = ink::env::caller();
-            let v = c.listar_productos_interno(caller).unwrap();
-            assert_eq!(v.len(), 2, "Debe devolver exactamente 2 productos del seller");
-            assert!(v.iter().all(|p| p.vendedor == caller), "Todos los productos deben pertenecer al seller");
+            let v = c.listar_productos_interno(acc.alice).unwrap();
+            assert_eq!(v.len(), 2);
+            assert!(v.iter().all(|p| p.vendedor == acc.alice));
         }
 
         /// Error: usuario no registrado intenta listar.
@@ -1228,12 +1247,12 @@ mod marketplace_principal {
         #[ink::test]
         fn listar_interno_falla_si_no_es_vendedor() {
             let mut c = MarketplacePrincipal::new();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            let buyer = AccountId::from([2u8; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(buyer);
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
             c.registrar_usuario(RolUsuario::Comprador).unwrap();
 
-            let res = c.listar_productos_interno(buyer);
+            let res = c.listar_productos_interno(acc.bob);
             assert!(matches!(res, Err(SistemaError::NoEsRolCorrecto)));
         }
 
@@ -1241,9 +1260,9 @@ mod marketplace_principal {
         #[ink::test]
         fn listar_interno_falla_si_no_tiene_productos() {
             let c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            let caller = ink::env::caller();
-            let res = c.listar_productos_interno(caller);
+            let res = c.listar_productos_interno(acc.alice);
             assert!(matches!(res, Err(SistemaError::ProductosVacios)));
         }
 
@@ -1270,6 +1289,11 @@ mod marketplace_principal {
             let res = c.listar_productos_por_vendedor(acc.alice);
             assert!(matches!(res, Err(SistemaError::ProductosVacios)));
         }
+
+
+
+
+
 
 
         // --- Compra y órdenes ---
@@ -1487,82 +1511,106 @@ mod marketplace_principal {
         
 
         // --- Gestión de órdenes ---
-        /* ESTOS QUE ESTAN COMENTADOS FALLAN
         #[ink::test]
         fn marcar_orden_como_enviada_ok() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Primero, crea una orden
-            let orden_id = contrato.crear_orden(0, 1).unwrap();
+            // Publica y crea orden: comprador = Bob, vendedor = Alice(0x01... helper)
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
 
-            // Marca la orden como enviada
-            let resultado = contrato.marcar_orden_como_enviada(orden_id);
-
-            assert!(resultado.is_ok());
-            let orden = &contrato.ordenes[0];
-            assert_eq!(orden.estado, EstadoOrden::Enviada);
+            // Vendedor marca enviada
+            let vendedor = AccountId::from([0x01; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+            let r = c.marcar_orden_como_enviada(id);
+            assert!(r.is_ok());
+            assert_eq!(c.ordenes[id as usize].estado, EstadoOrden::Enviada);
         }
 
         #[ink::test]
         fn marcar_orden_como_enviada_usuario_incorrecto_falla() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Primero, crea una orden
-            let orden_id = contrato.crear_orden(0, 1).unwrap();
+            // Publica y crea orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
 
-            // Simula que otro usuario intenta marcar la orden como enviada
-            let otro_usuario = AccountId::from([0x06; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(otro_usuario);
-
-            let resultado = contrato.marcar_orden_como_enviada(orden_id);
-
-            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+            // Otro usuario (no vendedor de la orden) intenta marcar enviada
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Vendedor).unwrap();
+            let r = c.marcar_orden_como_enviada(id);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
         }
 
         #[ink::test]
         fn marcar_como_recibida_ok() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Primero, crea y envía una orden
-            let orden_id = contrato.crear_orden(0, 1).unwrap();
-            contrato.marcar_orden_como_enviada(orden_id).unwrap();
+            // Publica y crea orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
 
-            let resultado = contrato.marcar_como_recibida(orden_id);
+            // Vendedor marca enviada
+            let vendedor = AccountId::from([0x01; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+            c.marcar_orden_como_enviada(id).unwrap();
 
-            assert!(resultado.is_ok());
-            let orden = &contrato.ordenes[0];
-            assert_eq!(orden.estado, EstadoOrden::Recibida);
+            // Comprador marca recibida
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            let r = c.marcar_como_recibida(id);
+            assert!(r.is_ok());
+            assert_eq!(c.ordenes[id as usize].estado, EstadoOrden::Recibida);
         }
 
         #[ink::test]
         fn marcar_como_recibida_usuario_incorrecto_falla() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Primero, crea y envía una orden
-            let orden_id = contrato.crear_orden(0, 1).unwrap();
-            contrato.marcar_orden_como_enviada(orden_id).unwrap();
+            // Publica y crea orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
 
-            // Simula que otro usuario intenta marcar la orden como recibida
-            let otro_usuario = AccountId::from([0x07; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(otro_usuario);
+            // Vendedor marca enviada
+            let vendedor = AccountId::from([0x01; 32]);
+            test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+            c.marcar_orden_como_enviada(id).unwrap();
 
-            let resultado = contrato.marcar_como_recibida(orden_id);
-
-            assert!(matches!(resultado, Err(SistemaError::NoEsRolCorrecto)));
+            // Un tercero (no comprador) intenta marcar recibida
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let r = c.marcar_como_recibida(id);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
         }
 
         #[ink::test]
         fn transicion_estado_invalida_falla() {
-            let mut contrato = setup_contract_con_vendedor();
+            let mut c = setup_contract_con_vendedor();
+            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
 
-            // Primero, crea una orden
-            let orden_id = contrato.crear_orden(0, 1).unwrap();
+            // Publica y crea orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
 
-            // Simula que el vendedor intenta marcar la orden como recibida directamente
-            let resultado = contrato.marcar_como_recibida(orden_id);
+            // Comprador intenta marcar recibida directamente desde PENDIENTE
+            // (según verificar_permiso_orden, primero falla por EstadoInvalido)
+            let r = c.marcar_como_recibida(id);
+            assert!(matches!(r, Err(SistemaError::EstadoInvalido)));
+        }
 
-            assert!(matches!(resultado, Err(SistemaError::EstadoInvalido)));
-        }*/
 
         // --- Errores y validaciones ---
         #[ink::test]
