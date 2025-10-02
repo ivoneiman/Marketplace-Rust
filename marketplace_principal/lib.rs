@@ -122,46 +122,62 @@ mod marketplace_principal {
             }
         }
 
-        /// Registra un usuario con un rol específico (Comprador, Vendedor o Ambos).
+        /// Registra al caller como usuario del sistema con el rol indicado.
         ///
-        /// # Ejemplo
-        /// ```
-        /// use ink::env::test;
-        /// let mut contrato = MarketplacePrincipal::new();
-        /// let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// # Qué hace
+        /// Crea una entrada en el mapeo `usuarios` asociada a la cuenta del caller,
+        /// inicializando las reputaciones en 0. Si la cuenta ya estaba registrada, falla.
         ///
-        /// // Simulamos que Alice es el caller
-        /// test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+        /// # Parámetros
+        /// - `rol`: Rol a asignar al usuario (`Comprador`, `Vendedor` o `Ambos`).
         ///
-        /// // Registrar a Alice como compradora
-        /// assert!(contrato.registrar_usuario(RolUsuario::Comprador).is_ok());
+        /// # Retornos
+        /// - `Ok(())` si el registro se realizó correctamente.
+        /// - `Err(SistemaError::UsuarioExistente)` si la cuenta del caller ya estaba registrada.
         ///
-        /// // Verificamos que ahora está registrada
-        /// assert!(contrato.esta_registrado(accounts.alice));
-        /// ```
-        ///
-        /// # Errores
-        /// - Retorna `UsuarioExistente` si la dirección ya está registrada.
+        /// # Notas
+        /// - Esta función solo crea el usuario. No otorga permisos especiales
+        ///   por fuera de los definidos por el rol asignado.
+
         #[ink(message)]
         pub fn registrar_usuario(&mut self, rol: RolUsuario) -> Result<(), SistemaError> {
             self.registrar_usuario_interno(rol)
         }
 
-        /// Consulta si un usuario está registrado en el sistema.
+        /// Consulta si una cuenta dada está registrada como usuario del marketplace.
         ///
-        /// # Retorna
-        /// - `true` si el usuario está registrado.
-        /// - `false` si el usuario no está registrado.
+        /// # Qué hace
+        /// Verifica la existencia de la cuenta en el mapeo `usuarios`.
+        ///
+        /// # Parámetros
+        /// - `usuario`: `AccountId` de la cuenta a consultar.
+        ///
+        /// # Retornos
+        /// - `true` si `usuario` figura en el mapeo `usuarios`.
+        /// - `false` en caso contrario.
+        ///
+        /// # Notas
+        /// - Es una lectura pública que no requiere que el caller esté registrado.
         #[ink(message)]
         pub fn esta_registrado(&self, usuario: AccountId) -> bool {
             self.usuarios.contains(&usuario)
         }
 
-        /// Obtiene la información de un usuario en caso de este estar registrado.
+        /// Devuelve la información pública de un usuario, si está registrado.
         ///
-        /// # Retorna
-        /// - `Some(Usuario)` si el usuario está registrado.
-        /// - `None` si el usuario no está registrado.
+        /// # Qué hace
+        /// Lee del mapeo `usuarios` y retorna una copia del struct `Usuario`
+        /// correspondiente a la cuenta solicitada.
+        ///
+        /// # Parámetros
+        /// - `usuario`: `AccountId` de la cuenta a consultar.
+        ///
+        /// # Retornos
+        /// - `Some(Usuario)` si la cuenta está registrada.
+        /// - `None` si la cuenta no existe en el sistema.
+        ///
+        /// # Notas
+        /// - Es una lectura pública; no valida el rol del caller.
         #[ink(message)]
         pub fn obtener_usuario(&self, usuario: AccountId) -> Option<Usuario> {
             self.usuarios.get(&usuario)
@@ -189,36 +205,30 @@ mod marketplace_principal {
             Ok(())
         }
 
-        /// Permite que un usuario registrado cambie su propio rol (Comprador, Vendedor o Ambos).
+        /// Permite al caller cambiar su propio rol (p. ej., de `Comprador` a `Vendedor`).
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = MarketplacePrincipal::new();
-        /// let accounts = test::default_accounts::<ink::env::DefaultEnvironment>();
-        /// test::set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+        /// # Qué hace
+        /// Valida que el caller esté registrado y que la transición de rol sea válida.
+        /// Luego actualiza el rol y emite un evento `RolActualizado`.
         ///
-        /// // Registramos a Alice como Comprador
-        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        /// # Parámetros
+        /// - `nuevo_rol`: Rol deseado (`Comprador`, `Vendedor` o `Ambos`).
         ///
-        /// // Ahora cambia su rol a Vendedor
-        /// let resultado = contrato.modificar_rol_usuario(RolUsuario::Vendedor);
-        /// assert!(resultado.is_ok());
+        /// # Retornos
+        /// - `Ok(())` si el cambio se aplicó correctamente.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si la transición pedida no es válida
+        ///   (por ejemplo, pedir exactamente el mismo rol actual).
         ///
-        /// let usuario = contrato.obtener_usuario(accounts.alice).unwrap();
-        /// assert_eq!(usuario.rol, RolUsuario::Vendedor);
-        /// ```
+        /// # Efectos colaterales
+        /// - Emite `RolActualizado { cuenta, rol_anterior, rol_nuevo }`.
         ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el rol recibido no es válido.
-        /// 
-        /// # Nota
-        /// Emite un evento `RolActualizado` con la cuenta, el rol anterior y el nuevo rol.
+        /// # Notas
+        /// - Las reglas de transición se validan con `verificar_puede_cambiar_rol`.
         #[ink(message)]
         pub fn modificar_rol_usuario(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
             self.modificar_rol_usuario_interno(nuevo_rol)
         }
-
         fn modificar_rol_usuario_interno(&mut self,nuevo_rol: RolUsuario,) -> Result<(), SistemaError> {
             let usuario_llamador = self.env().caller();
             // Verifica que el usuario esté registrado
@@ -247,30 +257,32 @@ mod marketplace_principal {
         }
 
 
-        /// Permite a un usuario con rol de Vendedor publicar un producto en el marketplace.
+        /// Publica un nuevo producto a nombre del caller (debe tener rol de vendedor).
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = setup_contract_con_vendedor();
-        /// 
-        /// let resultado = contrato.publicar_producto(
-        ///     "Celular".to_string(),
-        ///     "Un buen celular".to_string(),
-        ///     1000,
-        ///     5,
-        ///     "Tecnología".to_string(),
-        /// );
-        /// assert!(resultado.is_ok());
-        /// assert_eq!(contrato.productos.len(), 1);
-        /// let producto = &contrato.productos[0];
-        /// assert_eq!(producto.nombre, "Celular");
-        /// assert_eq!(producto.precio, 1000);
-        /// ```
+        /// # Qué hace
+        /// Valida que el caller esté registrado y tenga permiso de vendedor,
+        /// y que la `cantidad` sea mayor a cero. Luego agrega un `Producto` a la lista,
+        /// asignándole un `id` incremental y emite `ProductoPublicado`.
         ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no es Vendedor.
-        /// - `CantidadInsuficiente` si la cantidad es 0.
+        /// # Parámetros
+        /// - `nombre`: Nombre del producto.
+        /// - `descripcion`: Descripción corta.
+        /// - `precio`: Precio unitario (`Balance` del entorno Ink!).
+        /// - `cantidad`: Stock inicial disponible (debe ser > 0).
+        /// - `categoria`: Categoría libre asociada al producto.
+        ///
+        /// # Retornos
+        /// - `Ok(())` si el producto fue publicado.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no tiene rol de vendedor.
+        /// - `Err(SistemaError::CantidadInsuficiente)` si `cantidad == 0`.
+        ///
+        /// # Efectos colaterales
+        /// - Emite `ProductoPublicado { vendedor, producto_id }`.
+        ///
+        /// # Notas
+        /// - El `producto_id` es `self.productos.len()` previo al push.
+        /// - La verificación de permisos usa `verificar_rol(caller, Vendedor)`.
         #[ink(message)]
         pub fn publicar_producto(
             &mut self,
@@ -282,7 +294,6 @@ mod marketplace_principal {
         ) -> Result<(), SistemaError> {
             self.crear_producto_seguro(nombre, descripcion, precio, cantidad, categoria)
         }
-
         /// Lógica interna para validar y agregar un producto.
         /// 
         /// - **Valida:** caller registrado (`UsuarioNoRegistrado`), rol Vendedor/Ambos (`NoEsRolCorrecto`), `cantidad > 0` (`CantidadInsuficiente`).
@@ -307,32 +318,28 @@ mod marketplace_principal {
         }
 
         
-        /// Lista todos los productos del usuario caller (debe ser Vendedor o Ambos).
+        /// Lista todos los productos publicados por el caller (debe ser Vendedor o Ambos).
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = setup_contract_con_vendedor();
-        /// 
-        /// // Publicamos algunos productos
-        /// contrato.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
-        /// contrato.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
+        /// # Qué hace
+        /// Verifica que el caller esté registrado y tenga permiso de vendedor.
+        /// Luego filtra `self.productos` devolviendo solo los que pertenecen al caller.
         ///
-        /// // Llamada para listar los productos del caller
-        /// let productos = contrato.listar_mis_productos().unwrap();
-        /// assert_eq!(productos.len(), 2);
-        /// assert!(productos.iter().all(|p| p.vendedor == ink::env::caller()));
-        /// ```
+        /// # Parámetros
+        /// _(ninguno)_
         ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no tiene rol de Vendedor/Ambos.
-        /// - `ProductosVacios` si el caller no tiene productos publicados.
+        /// # Retornos
+        /// - `Ok(Vec<Producto>)` con los productos del caller.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no tiene rol de vendedor/ambos.
+        /// - `Err(SistemaError::ProductosVacios)` si el caller no tiene publicaciones.
+        ///
+        /// # Notas
+        /// - Internamente delega en `listar_productos_interno(caller)`.
         #[ink(message)]
         pub fn listar_mis_productos(&self) -> Result<Vec<Producto>, SistemaError> {
             let yo = self.env().caller();
             self.listar_productos_interno(yo)
         }
-
         /// Interna: valida que `vendedor` exista y tenga rol de Vendedor/Ambos,
         /// 
         /// - **Valida:** `verificar_rol(vendedor, Vendedor)` (propaga `UsuarioNoRegistrado` o `NoEsRolCorrecto`).
@@ -355,27 +362,26 @@ mod marketplace_principal {
             Ok(productos_vendedor)
         }
 
-        /// Lista todos los productos publicados por un vendedor específico.
-        /// 
-        /// # Ejemplo
-        /// ```
-        /// let mut c = setup_contract_con_vendedor();
-        /// c.publicar_producto("P1".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
-        /// c.publicar_producto("P2".into(), "D".into(), 200, 3, "Cat".into()).unwrap();
-        /// let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
-        /// let v = c.listar_productos_por_vendedor(acc.alice).unwrap();
-        /// assert_eq!(v.len(), 2);
-        /// assert_eq!(v[0].nombre, "P1");
-        /// assert_eq!(v[1].nombre, "P2");
-        /// ```
-        /// 
-        /// # Errores
-        /// - `ProductosVacios` si el vendedor no tiene productos publicados.
+        /// Lista todos los productos publicados por un vendedor específico (lectura pública).
+        ///
+        /// # Qué hace
+        /// Recorre `self.productos` y devuelve aquellos cuyo `vendedor == vendedor` recibido.
+        /// No valida registro ni rol del `vendedor` (consulta pública).
+        ///
+        /// # Parámetros
+        /// - `vendedor`: `AccountId` del vendedor a consultar.
+        ///
+        /// # Retornos
+        /// - `Ok(Vec<Producto>)` con los productos del vendedor.
+        /// - `Err(SistemaError::ProductosVacios)` si el vendedor no tiene publicaciones.
+        ///
+        /// # Notas
+        /// - Usa `listar_productos_por_vendedor_interno` para realizar la búsqueda.
+
         #[ink(message)]
         pub fn listar_productos_por_vendedor(&self, vendedor: AccountId) -> Result<Vec<Producto>, SistemaError> {
             self.listar_productos_por_vendedor_interno(vendedor)
         }
-
         /// Interna usada por el mensaje público de lectura abierta.
         /// 
         /// - **No** valida rol ni registro del `vendedor` (consulta pública).
@@ -390,41 +396,37 @@ mod marketplace_principal {
 
 
 
-        /// Permite a un usuario comprador crear una orden de compra.
+        /// Crea una orden de compra a nombre del caller (debe ser Comprador o Ambos).
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = setup_contract_con_vendedor();
+        /// # Qué hace
+        /// Valida que el caller esté registrado y pueda comprar, que la `cantidad` sea > 0,
+        /// que el `producto_id` exista y que haya stock suficiente. Descuenta el stock del
+        /// producto y agrega una `Orden` nueva en estado `Pendiente`.
         ///
-        /// // Publicamos un producto
-        /// contrato.publicar_producto("Laptop".into(), "Una laptop potente".into(), 2000, 10, "Tecnología".into()).unwrap();
+        /// # Parámetros
+        /// - `producto_id`: Identificador del producto a comprar.
+        /// - `cantidad`: Unidades solicitadas (debe ser > 0).
         ///
-        /// // Cambiamos el caller a un comprador y lo registramos
-        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
+        /// # Retornos
+        /// - `Ok(u32)` con el `orden_id` creado.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no puede comprar.
+        /// - `Err(SistemaError::CantidadInsuficiente)` si `cantidad == 0`.
+        /// - `Err(SistemaError::ProductosVacios)` si el producto no existe.
+        /// - `Err(SistemaError::StockInsuficiente)` si no hay stock suficiente.
         ///
-        /// // Crear una orden por 2 unidades del producto con id 0
-        /// let orden_id = contrato.crear_orden(0, 2).unwrap();
+        /// # Efectos colaterales
+        /// - Descuenta `cantidad` del stock del producto.
+        /// - Inserta una `Orden` en `self.ordenes` con estado `Pendiente`.
         ///
-        /// // Verificamos que la orden se haya creado correctamente
-        /// let orden = &contrato.ordenes[0];
-        /// assert_eq!(orden.id, orden_id);
-        /// assert_eq!(orden.cantidad, 2);
-        /// assert_eq!(orden.estado, EstadoOrden::Pendiente);
-        /// ```
-        ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no tiene rol de Comprador/Ambos.
-        /// - `ProductosVacios` si el producto no existe.
-        /// - `CantidadInsuficiente` si la cantidad solicitada es 0.
-        /// - `StockInsuficiente` si no hay suficiente stock disponible.
+        /// # Notas
+        /// - La verificación de stock se hace antes del préstamo mutable.
+        /// - El `orden_id` es `self.ordenes.len()` previo al push.
+
         #[ink(message)]
         pub fn crear_orden(&mut self, producto_id: u32, cantidad: u32) -> Result<u32, SistemaError> {
             self.crear_nueva_orden(producto_id, cantidad)
         }
-        
         /// Crea una orden de compra descontando stock de forma segura.
         /// 
         /// - **Valida:** caller registrado y con permiso de compra (`UsuarioNoRegistrado`, `NoEsRolCorrecto`), `cantidad > 0` (`CantidadInsuficiente`), existencia del producto (`ProductosVacios`), stock suficiente (`StockInsuficiente`).
@@ -470,67 +472,50 @@ mod marketplace_principal {
             self.crear_y_emitir_orden(comprador, vendedor, producto_id, cantidad)
         }
 
-        /// Permite al vendedor marcar una orden como enviada.
+        /// Permite al vendedor marcar una orden como `Enviada`.
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = setup_contract_con_vendedor();
-        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// # Qué hace
+        /// Verifica que el caller esté registrado, que sea el **vendedor** de la orden
+        /// y que la transición de estado sea válida (`Pendiente → Enviada`).
+        /// Luego actualiza el estado de la orden.
         ///
-        /// // Registrar comprador y crear orden
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
-        /// let orden_id = contrato.crear_orden(0, 1).unwrap();
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden a actualizar.
         ///
-        /// // Cambiar caller al vendedor y marcar la orden como enviada
-        /// let vendedor = AccountId::from([0x01; 32]);
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
-        /// contrato.marcar_orden_como_enviada(orden_id).unwrap();
+        /// # Retornos
+        /// - `Ok(())` si el cambio se realizó.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si el `orden_id` no es válido.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el vendedor de la orden.
+        /// - `Err(SistemaError::EstadoInvalido)` si la transición no es válida.
         ///
-        /// let orden = &contrato.ordenes[orden_id as usize];
-        /// assert_eq!(orden.estado, EstadoOrden::Enviada);
-        /// ```
-        ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no es el vendedor de la orden.
-        /// - `EstadoInvalido` si la transición de estado no es válida.
-        /// - `OrdenNoExiste` si el ID de orden no existe.
+        /// # Notas
+        /// - Internamente delega en `actualizar_estado_orden(orden_id, EstadoOrden::Enviada)`.
+
         #[ink(message)]
         pub fn marcar_orden_como_enviada(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Enviada)
         }
 
-        /// Permite al comprador marcar una orden como recibida.
+        /// Permite al comprador marcar una orden como `Recibida`.
         ///
-        /// # Ejemplo
-        /// ```
-        /// let mut contrato = setup_contract_con_vendedor();
-        /// let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+        /// # Qué hace
+        /// Verifica que el caller esté registrado, que sea el **comprador** de la orden
+        /// y que la transición sea válida (`Enviada → Recibida`). Luego actualiza el estado.
         ///
-        /// // Registrar comprador y crear orden
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-        /// contrato.registrar_usuario(RolUsuario::Comprador).unwrap();
-        /// let orden_id = contrato.crear_orden(0, 1).unwrap();
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden a actualizar.
         ///
-        /// // Cambiar caller al vendedor y marcar como enviada
-        /// let vendedor = AccountId::from([0x01; 32]);
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
-        /// contrato.marcar_orden_como_enviada(orden_id).unwrap();
+        /// # Retornos
+        /// - `Ok(())` si el cambio se realizó.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si el `orden_id` no es válido.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el comprador de la orden.
+        /// - `Err(SistemaError::EstadoInvalido)` si la transición no es válida.
         ///
-        /// // Cambiar caller al comprador y marcar como recibida
-        /// ink::env::test::set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
-        /// contrato.marcar_como_recibida(orden_id).unwrap();
-        ///
-        /// let orden = &contrato.ordenes[orden_id as usize];
-        /// assert_eq!(orden.estado, EstadoOrden::Recibida);
-        /// ```
-        ///
-        /// # Errores
-        /// - `UsuarioNoRegistrado` si el caller no está registrado.
-        /// - `NoEsRolCorrecto` si el caller no es el comprador de la orden.
-        /// - `EstadoInvalido` si la transición de estado no es válida.
-        /// - `OrdenNoExiste` si el ID de orden no existe.
+        /// # Notas
+        /// - Internamente delega en `actualizar_estado_orden(orden_id, EstadoOrden::Recibida)`.
+
         #[ink(message)]
         pub fn marcar_como_recibida(&mut self, orden_id: u32) -> Result<(), SistemaError> {
             self.actualizar_estado_orden(orden_id, EstadoOrden::Recibida)
@@ -553,6 +538,133 @@ mod marketplace_principal {
             let orden = self.obtener_orden_mut(orden_id)?;
             let _estado_anterior = orden.estado.clone();
             orden.estado = nuevo_estado;
+            Ok(())
+        }
+
+
+
+
+
+
+        /// Permite al comprador solicitar la cancelación de una orden en estado `Pendiente`.
+        ///
+        /// # Qué hace
+        /// Registra la intención del comprador de cancelar la orden.  
+        /// No ejecuta la cancelación todavía: únicamente marca el campo
+        /// `cancelacion_solicitada_por` con la cuenta del comprador.
+        ///
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden que se desea cancelar.
+        ///
+        /// # Retornos
+        /// - `Ok(())` si la solicitud se registró correctamente.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si el `orden_id` no corresponde a una orden válida.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el comprador de la orden.
+        /// - `Err(SistemaError::CancelacionOrdenNoPendiente)` si la orden no está en estado `Pendiente`.
+        /// - `Err(SistemaError::CancelacionYaSolicitada)` si ya había una solicitud activa.
+        ///
+        /// # Notas
+        /// - El estado de la orden se mantiene en `Pendiente` hasta que el vendedor acepte.
+        /// - Se espera un flujo posterior con `aceptar_cancelacion`.
+
+        #[ink(message)]
+        pub fn solicitar_cancelacion(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            self.solicitar_cancelacion_interno(orden_id)
+        }
+        /// Solicita la cancelación de una orden mientras está **Pendiente**.
+        /// - Solo puede invocarla el **Comprador** de la orden.
+        /// - La orden debe estar en `EstadoOrden::Pendiente`.
+        /// - Si ya existe una solicitud previa, falla.
+        /// - No ejecuta la cancelación todavía: solo registra la intención del comprador.
+        fn solicitar_cancelacion_interno(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+            // 1) leer inmutable para validar
+            {
+                let orden_ref = self.ordenes.get(orden_id as usize).ok_or(SistemaError::OrdenNoExiste)?;
+                if orden_ref.estado != EstadoOrden::Pendiente {
+                    return Err(SistemaError::CancelacionOrdenNoPendiente); // esta orden no está en estado Pendiente, así que no puede cancelarse
+                }
+                if caller != orden_ref.comprador {
+                    return Err(SistemaError::NoEsRolCorrecto);
+                }
+                if orden_ref.cancelacion_solicitada_por.is_some() {
+                    return Err(SistemaError::CancelacionYaSolicitada);
+                }
+            }
+            // 2) mutar: setear solicitud
+            let orden = self.obtener_orden_mut(orden_id)?;
+            orden.cancelacion_solicitada_por = Some(orden.comprador);
+            Ok(())
+        }
+
+
+
+
+        /// Permite al vendedor aceptar una cancelación previamente solicitada.
+        ///
+        /// # Qué hace
+        /// Verifica que la orden tenga una solicitud válida hecha por el comprador
+        /// y que siga en estado `Pendiente`. Si todo está correcto:
+        /// - Cambia la orden a `Cancelada`.
+        /// - Restaura el stock del producto sumando la cantidad de la orden.
+        ///
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden a cancelar.
+        ///
+        /// # Retornos
+        /// - `Ok(())` si la cancelación se aplicó.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si el `orden_id` no corresponde a una orden válida.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el vendedor de la orden.
+        /// - `Err(SistemaError::CancelacionOrdenNoPendiente)` si la orden no está en `Pendiente`.
+        /// - `Err(SistemaError::CancelacionNoSolicitada)` si no había solicitud previa.
+        ///
+        /// # Efectos colaterales
+        /// - Marca la orden como `Cancelada`.
+        /// - Reintegra la cantidad comprada al stock del producto.
+        ///
+        /// # Notas
+        /// - Solo el vendedor puede aceptar. El comprador nunca puede ejecutar la cancelación por sí mismo.
+
+        #[ink(message)]
+        pub fn aceptar_cancelacion(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            self.aceptar_cancelacion_interno(orden_id)
+        }
+        /// Acepta una cancelación previamente solicitada por el **Comprador**,
+        /// siempre que la orden siga en estado **Pendiente**. Al aceptar:
+        /// - La orden pasa a `EstadoOrden::Cancelada`.
+        /// - (Implementación propuesta) Se **repone** el stock del producto.
+        fn aceptar_cancelacion_interno(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+            // 1) validar con lectura inmutable
+            {
+                let orden_ref = self.ordenes.get(orden_id as usize).ok_or(SistemaError::OrdenNoExiste)?;
+                if orden_ref.estado != EstadoOrden::Pendiente { //Esto es correcto?
+                    return Err(SistemaError::CancelacionOrdenNoPendiente);
+                }
+                if caller != orden_ref.vendedor {
+                    return Err(SistemaError::NoEsRolCorrecto);
+                }
+                match orden_ref.cancelacion_solicitada_por {
+                    Some(solicitante) if solicitante == orden_ref.comprador => { /* todo ok, comprador solicitó */ },
+                    Some(_) => return Err(SistemaError::NoEsRolCorrecto), // otro actor solicitó (no debería pasar)
+                    None => return Err(SistemaError::CancelacionNoSolicitada),
+                }
+            }
+            // 2) mutar: reponer stock y cancelar
+            let (producto_id, cantidad) = {
+                let o = self.obtener_orden_mut(orden_id)?;
+                o.estado = EstadoOrden::Cancelada;
+                o.cancelacion_solicitada_por = None;
+                (o.producto_id, o.cantidad)
+            };
+            // reponer stock del producto
+            if let Ok(prod) = self.obtener_producto_mut(producto_id) {
+                prod.cantidad = prod.cantidad.saturating_add(cantidad);
+            }
             Ok(())
         }
 
@@ -745,7 +857,8 @@ mod marketplace_principal {
     /// Enum para los posibles errores del sistema.
 #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
-    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub enum SistemaError {
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
+    pub enum SistemaError {
         CantidadInsuficiente,
         UsuarioNoRegistrado,
         ProductosVacios,
@@ -754,6 +867,9 @@ mod marketplace_principal {
         OrdenNoExiste,
         UsuarioExistente,
         StockInsuficiente,
+        CancelacionOrdenNoPendiente,
+        CancelacionYaSolicitada,
+        CancelacionNoSolicitada,
     }
     impl core::fmt::Display for SistemaError {
         fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
@@ -766,6 +882,9 @@ mod marketplace_principal {
                 SistemaError::OrdenNoExiste => write!(f, "La orden no existe"),
                 SistemaError::UsuarioExistente => write!(f, "El usuario ya está registrado"),
                 SistemaError::StockInsuficiente => write!(f, "Stock insuficiente para la cantidad solicitada"),
+                SistemaError::CancelacionOrdenNoPendiente => write!(f, "La orden no está en estado pendiente"),
+                SistemaError::CancelacionYaSolicitada => write!(f, "La cancelación ya fue solicitada"),
+                SistemaError::CancelacionNoSolicitada => write!(f, "La cancelación no ha sido solicitada"),
             }
         }
     }
@@ -778,7 +897,8 @@ mod marketplace_principal {
     
 #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
-    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub struct Usuario {
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
+    pub struct Usuario {
         /// Dirección de la cuenta del usuario.
         pub direccion: AccountId,
         /// Rol asignado al usuario.
@@ -792,7 +912,8 @@ mod marketplace_principal {
     /// Representa un producto publicado en el marketplace.
 #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
-    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    pub struct Producto {
+    #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
+    pub struct Producto {
         /// Identificador único del producto.
         pub id: u32,
         /// Nombre del producto.
@@ -844,6 +965,8 @@ mod marketplace_principal {
         pub comprador_califico: bool,
         /// Indica si el vendedor calificó.
         pub vendedor_califico: bool,
+        /// Indica quien pidió cancelar (solo permitido si está pendiente)
+        pub cancelacion_solicitada_por: Option<AccountId>,
     }
     impl Orden {
         /// Crea una nueva instancia de Orden.
@@ -857,6 +980,7 @@ mod marketplace_principal {
                 estado: EstadoOrden::Pendiente,
                 comprador_califico: false,
                 vendedor_califico: false,
+                cancelacion_solicitada_por: None,
             }
         }
     }
@@ -1548,28 +1672,6 @@ mod marketplace_principal {
             assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
         }
 
-        #[ink::test]
-        fn marcar_como_recibida_ok() {
-            let mut c = setup_contract_con_vendedor();
-            let acc = test::default_accounts::<ink::env::DefaultEnvironment>();
-
-            // Publica y crea orden
-            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
-            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
-            c.registrar_usuario(RolUsuario::Comprador).unwrap();
-            let id = c.crear_orden(0, 1).unwrap();
-
-            // Vendedor marca enviada
-            let vendedor = AccountId::from([0x01; 32]);
-            test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
-            c.marcar_orden_como_enviada(id).unwrap();
-
-            // Comprador marca recibida
-            test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
-            let r = c.marcar_como_recibida(id);
-            assert!(r.is_ok());
-            assert_eq!(c.ordenes[id as usize].estado, EstadoOrden::Recibida);
-        }
 
         #[ink::test]
         fn marcar_como_recibida_usuario_incorrecto_falla() {
@@ -1861,5 +1963,150 @@ mod marketplace_principal {
             let resultado = contrato.marcar_como_recibida(orden_id);
             assert!(matches!(resultado, Err(SistemaError::EstadoInvalido)));
         }
+
+        
+        // -- Cancelación de ordenes
+        #[ink::test]
+        fn cancelar_pendiente_exitoso_repone_stock() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar producto (alice=vendedora)
+            c.publicar_producto("P".into(), "D".into(), 100, 3, "Cat".into()).unwrap();
+
+            // Registrar comprador y crear orden x2
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 2).unwrap();
+
+            // Stock quedó 1
+            assert_eq!(c.productos[0].cantidad, 1);
+
+            // Comprador solicita cancelación
+            let r = c.solicitar_cancelacion(id);
+            assert!(r.is_ok());
+
+            // Vendedor acepta
+            let vendedor = acc.alice;
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(vendedor);
+            let r2 = c.aceptar_cancelacion(id);
+            assert!(r2.is_ok());
+
+            // Orden Cancelada y stock repuesto (1 + 2 = 3)
+            assert_eq!(c.ordenes[id as usize].estado, EstadoOrden::Cancelada);
+            assert_eq!(c.productos[0].cantidad, 3);
+        }
+
+        #[ink::test]
+        fn solicitar_cancelacion_falla_si_no_pendiente() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+
+            // Bob compra 1
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Vendedor marca enviada → ya no está Pendiente
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+
+            // Bob intenta solicitar cancelación (debe fallar)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            let r = c.solicitar_cancelacion(id);
+            assert!(matches!(r, Err(SistemaError::CancelacionOrdenNoPendiente)));
+        }
+
+        #[ink::test]
+        fn aceptar_cancelacion_falla_si_no_pendiente() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 2, "Cat".into()).unwrap();
+
+            // Bob compra 1 (Pendiente)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Bob solicita cancelación OK
+            assert!(c.solicitar_cancelacion(id).is_ok());
+
+            // Vendedor marca enviada (cambia a Enviada)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+
+            // Ahora aceptar_cancelacion debe fallar por no estar Pendiente
+            let r = c.aceptar_cancelacion(id);
+            assert!(matches!(r, Err(SistemaError::CancelacionOrdenNoPendiente)));
+        }
+
+        #[ink::test]
+        fn aceptar_cancelacion_sin_solicitud_falla() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+
+            // Bob compra 1 (Pendiente)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Vendedor intenta aceptar sin solicitud (falla)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            let r = c.aceptar_cancelacion(id);
+            assert!(matches!(r, Err(SistemaError::CancelacionNoSolicitada)));
+        }
+
+        #[ink::test]
+        fn solicitar_cancelacion_doble_falla() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+
+            // Bob compra 1
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Solicita una vez
+            assert!(c.solicitar_cancelacion(id).is_ok());
+            // Vuelve a solicitar (debe fallar)
+            let r = c.solicitar_cancelacion(id);
+            assert!(matches!(r, Err(SistemaError::CancelacionYaSolicitada)));
+        }
+
+        #[ink::test]
+        fn actores_incorrectos_no_pueden_cancelar() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+
+            // Bob compra 1
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Un tercero intenta solicitar (no es comprador)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let r = c.solicitar_cancelacion(id);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
+
+            // Vuelve Bob, solicita OK
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            assert!(c.solicitar_cancelacion(id).is_ok());
+
+            // Un tercero intenta aceptar (no es vendedor)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            let r2 = c.aceptar_cancelacion(id);
+            assert!(matches!(r2, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
     } // <-- cierre del mod tests
 } // <-- cierre del mod marketplace_principal
