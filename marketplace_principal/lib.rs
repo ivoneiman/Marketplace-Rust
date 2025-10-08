@@ -668,6 +668,242 @@ mod marketplace_principal {
             Ok(())
         }
 
+        // --- Reputación ---
+        /// Califica al vendedor cuando la orden está `Recibida` (solo el comprador).
+        ///
+        /// # Qué hace
+        /// Valida que el caller sea el comprador de la orden, que la orden esté en
+        /// `Recibida`, que el `puntaje` ∈ 1..=5 y que no haya calificado antes.
+        /// Suma el puntaje a `reputacion_como_vendedor` del vendedor y marca la orden
+        /// como ya calificada por el comprador.
+        ///
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden recibida.
+        /// - `puntaje`: Entero entre 1 y 5.
+        ///
+        /// # Retornos
+        /// - `Ok(())` si se aplicó la calificación.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si `orden_id` es inválido.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el comprador.
+        /// - `Err(SistemaError::EstadoInvalido)` si la orden no está `Recibida`.
+        /// - `Err(SistemaError::PuntajeInvalido)` si `puntaje` no está en 1..=5.
+        /// - `Err(SistemaError::OrdenYaCalificada)` si el comprador ya calificó antes.
+        ///
+        /// # Efectos
+        /// - Emite `CompradorCalifico { orden_id, comprador, puntaje }`.
+        #[ink(message)]
+        pub fn calificar_vendedor(&mut self, orden_id: u32, puntaje: u8) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+            self.verificar_puntaje(puntaje)?;
+
+            // Validación inmutable
+            { //obtenemos la orden de forma inmutable para validar
+                let o = self.ordenes.get(orden_id as usize).ok_or(SistemaError::OrdenNoExiste)?;
+                if o.estado != EstadoOrden::Recibida { 
+                    return Err(SistemaError::EstadoInvalido);
+                }
+                if caller != o.comprador {
+                    return Err(SistemaError::NoEsRolCorrecto);
+                }
+                if o.comprador_califico {
+                    return Err(SistemaError::OrdenYaCalificada);
+                }
+            }
+
+            // Mutación: actualizar reputación y marcar orden como calificada
+            // actualiza la orden
+            let vendedor = {
+                let o = self.obtener_orden_mut(orden_id)?;
+                o.comprador_califico = true;
+                o.vendedor
+            };
+            // actualiza la reputación del vendedor
+            if let Some(mut u) = self.usuarios.get(&vendedor) {
+                u.reputacion_como_vendedor = u.reputacion_como_vendedor.saturating_add(puntaje as u32); // tengo que usar saturating_add para evitar overflow
+                self.usuarios.insert(vendedor, &u); // actualizo el usuario en el mapping
+            }
+
+            // Emite evento de calificación del comprador al vendedor 
+            self.env().emit_event(CompradorCalifico { orden_id, comprador: caller, puntaje });
+            Ok(())
+        }
+
+
+
+
+
+
+        /// Califica al comprador cuando la orden está `Recibida` (solo el vendedor).
+        ///
+        /// # Qué hace
+        /// Valida que el caller sea el vendedor de la orden, que la orden esté en
+        /// `Recibida`, que el `puntaje` ∈ 1..=5 y que no haya calificado antes.
+        /// Suma el puntaje a `reputacion_como_comprador` del comprador y marca la orden
+        /// como ya calificada por el vendedor.
+        ///
+        /// # Parámetros
+        /// - `orden_id`: Identificador de la orden recibida.
+        /// - `puntaje`: Entero entre 1 y 5.
+        ///
+        /// # Retornos
+        /// - `Ok(())` si se aplicó la calificación.
+        /// - `Err(SistemaError::UsuarioNoRegistrado)` si el caller no está registrado.
+        /// - `Err(SistemaError::OrdenNoExiste)` si `orden_id` es inválido.
+        /// - `Err(SistemaError::NoEsRolCorrecto)` si el caller no es el vendedor.
+        /// - `Err(SistemaError::EstadoInvalido)` si la orden no está `Recibida`.
+        /// - `Err(SistemaError::PuntajeInvalido)` si `puntaje` no está en 1..=5.
+        /// - `Err(SistemaError::OrdenYaCalificada)` si el vendedor ya calificó antes.
+        ///
+        /// # Efectos
+        /// - Emite `VendedorCalifico { orden_id, vendedor, puntaje }`.
+        #[ink(message)]
+        pub fn calificar_comprador(&mut self, orden_id: u32, puntaje: u8) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+            self.verificar_puntaje(puntaje)?;
+
+            // Validación inmutable
+            {
+                let o = self.ordenes.get(orden_id as usize).ok_or(SistemaError::OrdenNoExiste)?;
+                if o.estado != EstadoOrden::Recibida {
+                    return Err(SistemaError::EstadoInvalido);
+                }
+                if caller != o.vendedor {
+                    return Err(SistemaError::NoEsRolCorrecto);
+                }
+                if o.vendedor_califico {
+                    return Err(SistemaError::OrdenYaCalificada); // ya calificó
+                }
+            }
+
+            // Mutación: actualizar reputación y marcar orden como calificada
+            // actualiza la orden
+            let comprador = {
+                let o = self.obtener_orden_mut(orden_id)?;
+                o.vendedor_califico = true;
+                o.comprador
+            };
+            // actualiza reputación del comprador
+            if let Some(mut u) = self.usuarios.get(&comprador) {
+                u.reputacion_como_comprador = u.reputacion_como_comprador.saturating_add(puntaje as u32);
+                self.usuarios.insert(comprador, &u);
+            }
+
+            self.env().emit_event(VendedorCalifico { orden_id, vendedor: caller, puntaje });
+            Ok(())
+        }
+
+
+
+
+        // --- Funciones de lectura pública ---
+        /// Devuelve una copia de la orden si existe.
+        #[ink(message)]
+        pub fn obtener_orden_pub(&self, orden_id: u32) -> Option<Orden> {
+            self.ordenes.get(orden_id as usize).cloned()
+        }
+
+        /// Devuelve una copia del producto si existe.
+        #[ink(message)]
+        pub fn obtener_producto_pub(&self, producto_id: u32) -> Option<Producto> {
+            self.productos.iter().find(|p| p.id == producto_id).cloned()
+        }
+
+        /// Devuelve las reputaciones acumuladas del usuario, si está registrado.
+        /// (rep_como_comprador, rep_como_vendedor)
+        #[ink(message)]
+        pub fn obtener_reputaciones(&self, usuario: AccountId) -> Option<(u32, u32)> {
+            self.usuarios.get(&usuario).map(|u: Usuario| {
+                (u.reputacion_como_comprador, u.reputacion_como_vendedor)
+            })
+        }
+
+        /// Lista copias de todas las órdenes donde `usuario` es comprador o vendedor.
+        #[ink(message)]
+        pub fn listar_ordenes_por_usuario(&self, usuario: AccountId) -> Vec<Orden> {
+            self.ordenes
+                .iter()
+                .filter(|o| o.comprador == usuario || o.vendedor == usuario)
+                .cloned()
+                .collect()
+        }
+
+        // --- Sistema de disputas (opcional) ---
+        // Cómo funciona? funciona así:
+        /// Abre una disputa sobre una orden en estado Enviada.
+        /// 
+        /// Solo puede hacerlo el **Comprador**. Una vez abierta, la orden no puede
+        /// ser marcada como recibida o cancelada hasta que el vendedor la resuelva.
+        /// 
+        /// # Errores
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `OrdenNoExiste` si la orden no existe.
+        /// - `NoEsRolCorrecto` si el caller no es el comprador.
+        /// - `EstadoInvalido` si la orden no está Enviada.
+        /// - `DisputaAbierta` si ya existe una disputa activa.
+        #[ink(message)]
+        pub fn abrir_disputa(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            self.abrir_disputa_interno(orden_id)
+        }
+        fn abrir_disputa_interno(&mut self, orden_id: u32) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+
+            let orden = self.obtener_orden_mut(orden_id)?;
+            if orden.estado != EstadoOrden::Enviada {
+                return Err(SistemaError::EstadoInvalido);
+            }
+            if caller != orden.comprador {
+                return Err(SistemaError::NoEsRolCorrecto);
+            }
+            if orden.disputa_abierta {
+                return Err(SistemaError::DisputaAbierta);
+            }
+
+            orden.disputa_abierta = true;
+            Ok(())
+        }
+
+        /// Resuelve una disputa abierta sobre una orden.
+        /// 
+        /// Solo puede hacerlo el **Vendedor** de la orden.
+        /// Dependiendo del parámetro `a_favor_del_comprador`, la orden pasa a:
+        /// - `Cancelada` (si `true`)
+        /// - `Recibida` (si `false`)
+        /// 
+        /// # Errores
+        /// - `UsuarioNoRegistrado` si el caller no está registrado.
+        /// - `OrdenNoExiste` si la orden no existe.
+        /// - `NoEsRolCorrecto` si el caller no es el vendedor.
+        /// - `NoHayDisputaAbierta` si la orden no tiene disputa activa.
+        #[ink(message)]
+        pub fn resolver_disputa(&mut self, orden_id: u32, a_favor_del_comprador: bool) -> Result<(), SistemaError> {
+            self.resolver_disputa_interno(orden_id, a_favor_del_comprador)
+        }
+        fn resolver_disputa_interno(&mut self, orden_id: u32, a_favor_del_comprador: bool) -> Result<(), SistemaError> {
+            let caller = self.env().caller();
+            self.verificar_registro(caller)?;
+
+            let orden = self.obtener_orden_mut(orden_id)?;
+            if !orden.disputa_abierta {
+                return Err(SistemaError::NoHayDisputaAbierta);
+            }
+            if caller != orden.vendedor {
+                return Err(SistemaError::NoEsRolCorrecto);
+            }
+
+            orden.disputa_abierta = false;
+            orden.estado = if a_favor_del_comprador {
+                EstadoOrden::Cancelada
+            } else {
+                EstadoOrden::Recibida
+            };
+
+            Ok(())
+        }
+
 
 
 
@@ -823,7 +1059,37 @@ mod marketplace_principal {
                 _ => Err(SistemaError::EstadoInvalido),
             }
         }
-    }
+        
+        /// Verifica que el puntaje esté en 1..=5.
+        fn verificar_puntaje(&self, puntaje: u8) -> Result<(), SistemaError> {
+            if (1..=5).contains(&puntaje) {
+                Ok(())
+            } else {
+                Err(SistemaError::PuntajeInvalido)
+            }
+        }
+
+        // --- Funciones de listado ---
+        /// Lista todos los productos disponibles en el marketplace.
+        #[ink(message)]
+        pub fn listar_productos_por_categoria(&self, categoria: String) -> Vec<Producto> {
+            self.productos.iter().filter(|p| p.categoria == categoria).cloned().collect()
+        }
+
+        // Lista todas las órdenes asociadas a un producto específico.
+        #[ink(message)]
+        pub fn listar_ordenes_por_producto(&self, producto_id: u32) -> Vec<Orden> {
+            self.ordenes.iter().filter(|o| o.producto_id == producto_id).cloned().collect()
+        }
+
+    } // <-- fin del impl Marketplace
+
+    
+
+
+
+
+
 
     // ────────────────
     // ENUMS
@@ -840,7 +1106,7 @@ mod marketplace_principal {
     }
 
     /// Enum para los posibles estados de una orden.
-#[derive(Debug, Clone, PartialEq, Eq)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]
     pub enum EstadoOrden {
@@ -855,7 +1121,7 @@ mod marketplace_principal {
     // ────────────────
 
     /// Enum para los posibles errores del sistema.
-#[derive(Debug, Clone, PartialEq, Eq)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
     pub enum SistemaError {
@@ -870,6 +1136,10 @@ mod marketplace_principal {
         CancelacionOrdenNoPendiente,
         CancelacionYaSolicitada,
         CancelacionNoSolicitada,
+        PuntajeInvalido,
+        OrdenYaCalificada,
+        DisputaAbierta,
+        NoHayDisputaAbierta,
     }
     impl core::fmt::Display for SistemaError {
         fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
@@ -885,6 +1155,10 @@ mod marketplace_principal {
                 SistemaError::CancelacionOrdenNoPendiente => write!(f, "La orden no está en estado pendiente"),
                 SistemaError::CancelacionYaSolicitada => write!(f, "La cancelación ya fue solicitada"),
                 SistemaError::CancelacionNoSolicitada => write!(f, "La cancelación no ha sido solicitada"),
+                SistemaError::PuntajeInvalido => write!(f, "El puntaje debe estar entre 1 y 5"),
+                SistemaError::OrdenYaCalificada => write!(f, "La orden ya ha sido calificada"),
+                SistemaError::DisputaAbierta => write!(f, "Ya existe una disputa abierta para esta orden"),
+                SistemaError::NoHayDisputaAbierta => write!(f, "No hay una disputa abierta para esta orden"),
             }
         }
     }
@@ -895,7 +1169,7 @@ mod marketplace_principal {
 
     /// Representa un usuario del marketplace.
     
-#[derive(Debug, Clone, PartialEq, Eq)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
     pub struct Usuario {
@@ -910,7 +1184,7 @@ mod marketplace_principal {
     }
 
     /// Representa un producto publicado en el marketplace.
-#[derive(Debug, Clone, PartialEq, Eq)]
+    #[derive(Debug, Clone, PartialEq, Eq)]
     #[ink::scale_derive(Encode, Decode, TypeInfo)]
     #[cfg_attr(feature = "std", derive(ink::storage::traits::StorageLayout))]    
     pub struct Producto {
@@ -967,6 +1241,8 @@ mod marketplace_principal {
         pub vendedor_califico: bool,
         /// Indica quien pidió cancelar (solo permitido si está pendiente)
         pub cancelacion_solicitada_por: Option<AccountId>,
+        /// Indica si existe una disputa abierta sobre la orden
+        pub disputa_abierta: bool,
     }
     impl Orden {
         /// Crea una nueva instancia de Orden.
@@ -981,6 +1257,7 @@ mod marketplace_principal {
                 comprador_califico: false,
                 vendedor_califico: false,
                 cancelacion_solicitada_por: None,
+                disputa_abierta: false,
             }
         }
     }
@@ -1004,6 +1281,35 @@ mod marketplace_principal {
         #[ink(topic)]
         producto_id: u32,
     }
+
+    #[ink(event)]
+    pub struct CompradorCalifico {
+        #[ink(topic)]
+        orden_id: u32,
+        #[ink(topic)]
+        comprador: AccountId,
+        puntaje: u8,
+    }
+
+    #[ink(event)]
+    pub struct VendedorCalifico {
+        #[ink(topic)]
+        orden_id: u32,
+        #[ink(topic)]
+        vendedor: AccountId,
+        puntaje: u8,
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     #[cfg(test)]
@@ -2108,5 +2414,352 @@ mod marketplace_principal {
             assert!(matches!(r2, Err(SistemaError::NoEsRolCorrecto)));
         }
 
+
+        // ─────────────────────────────────────────────────────────────
+        // REPUTACIÓN: tests de calificar_vendedor / calificar_comprador
+        // ─────────────────────────────────────────────────────────────
+
+        #[ink::test]
+        fn calificar_vendedor_funciona() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar y generar orden
+            c.publicar_producto("P".into(), "D".into(), 100, 2, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Enviar → Recibir
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.marcar_como_recibida(id).unwrap();
+
+            // Calificar vendedor (caller = comprador)
+            let r = c.calificar_vendedor(id, 5);
+            assert!(r.is_ok());
+
+            // Flag seteado
+            assert!(c.ordenes[id as usize].comprador_califico);
+
+            // Reputación del vendedor subió 5
+            let rep_v = c.obtener_reputaciones(acc.alice).unwrap().1;
+            assert_eq!(rep_v, 5);
+        }
+
+        #[ink::test]
+        fn calificar_vendedor_falla_si_no_recibida() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Aún está Pendiente → debe fallar
+            let r = c.calificar_vendedor(id, 4);
+            assert!(matches!(r, Err(SistemaError::EstadoInvalido)));
+
+            // Enviada pero no Recibida → sigue fallando
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            let r2 = c.calificar_vendedor(id, 4);
+            assert!(matches!(r2, Err(SistemaError::EstadoInvalido)));
+        }
+
+        #[ink::test]
+        fn calificar_vendedor_falla_si_caller_no_es_comprador() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.marcar_como_recibida(id).unwrap();
+
+            // Charlie intenta calificar vendedor (no es comprador de la orden)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let r = c.calificar_vendedor(id, 3);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn calificar_vendedor_falla_puntaje_invalido_y_doble_calificacion() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.marcar_como_recibida(id).unwrap();
+
+            // Puntajes inválidos → PuntajeInvalido
+            assert!(matches!(c.calificar_vendedor(id, 0), Err(SistemaError::PuntajeInvalido)));
+            assert!(matches!(c.calificar_vendedor(id, 6), Err(SistemaError::PuntajeInvalido)));
+
+            // Calificación válida
+            assert!(c.calificar_vendedor(id, 4).is_ok());
+            // Doble calificación del mismo actor → OrdenYaCalificada
+            assert!(matches!(c.calificar_vendedor(id, 5), Err(SistemaError::OrdenYaCalificada)));
+        }
+
+        #[ink::test]
+        fn calificar_comprador_funciona() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 2, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Recibida
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.marcar_como_recibida(id).unwrap();
+
+            // Califica vendedor→comprador (caller = vendedor)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            let r = c.calificar_comprador(id, 5);
+            assert!(r.is_ok());
+
+            // Flag
+            assert!(c.ordenes[id as usize].vendedor_califico);
+
+            // Reputación del comprador subió 5
+            let rep_c = c.obtener_reputaciones(acc.bob).unwrap().0;
+            assert_eq!(rep_c, 5);
+        }
+
+        #[ink::test]
+        fn calificar_comprador_fallas_varias() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id = c.crear_orden(0, 1).unwrap();
+
+            // Aún no recibida → EstadoInvalido
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            assert!(matches!(c.calificar_comprador(id, 4), Err(SistemaError::EstadoInvalido)));
+
+            // Avanza a Recibida
+            c.marcar_orden_como_enviada(id).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.marcar_como_recibida(id).unwrap();
+
+            // Caller incorrecto (comprador intentando calificar comprador) → NoEsRolCorrecto
+            assert!(matches!(c.calificar_comprador(id, 4), Err(SistemaError::NoEsRolCorrecto)));
+
+            // Puntajes inválidos → PuntajeInvalido
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            assert!(matches!(c.calificar_comprador(id, 0), Err(SistemaError::PuntajeInvalido)));
+            assert!(matches!(c.calificar_comprador(id, 9), Err(SistemaError::PuntajeInvalido)));
+
+            // Califica 3 OK y reintenta → OrdenYaCalificada
+            assert!(c.calificar_comprador(id, 3).is_ok());
+            assert!(matches!(c.calificar_comprador(id, 5), Err(SistemaError::OrdenYaCalificada)));
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // GETTERS públicos de solo lectura
+        // ─────────────────────────────────────────────────────────────
+
+        #[ink::test]
+        fn getters_publicos_devuelven_datos_correctos() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar y ordenar dos compras
+            c.publicar_producto("P".into(), "D".into(), 100, 5, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let id1 = c.crear_orden(0, 2).unwrap();
+            let id2 = c.crear_orden(0, 1).unwrap();
+            assert_ne!(id1, id2);
+
+            // obtener_orden_pub
+            let o1 = c.obtener_orden_pub(id1).expect("orden id1 debe existir");
+            assert_eq!(o1.id, id1);
+            assert!(c.obtener_orden_pub(99999).is_none());
+
+            // listar_ordenes_por_usuario (bob participa en 2)
+            let lista_bob = c.listar_ordenes_por_usuario(acc.bob);
+            assert_eq!(lista_bob.len(), 2);
+
+            // obtener_reputaciones (inicialmente 0)
+            let rep_alice = c.obtener_reputaciones(acc.alice).unwrap();
+            assert_eq!(rep_alice, (0, 0));
+
+            // obtener_producto_pub
+            let p0 = c.obtener_producto_pub(0).expect("producto 0 debe existir");
+            assert_eq!(p0.nombre, "P");
+            assert!(c.obtener_producto_pub(777).is_none());
+        }
+
+
+        // ------- Disputas -------
+        #[ink::test]
+        fn abrir_y_resolver_disputa_ok() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar producto y crear orden
+            c.publicar_producto("P".into(), "D".into(), 100, 2, "Cat".into()).unwrap(); 
+            // Sets automatizados para terminar más rápido :)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            // Vendedor la marca enviada
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Comprador abre disputa
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            assert!(c.abrir_disputa(orden_id).is_ok());
+            assert!(c.ordenes[orden_id as usize].disputa_abierta);
+
+            // Vendedor la resuelve a favor del comprador
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            assert!(c.resolver_disputa(orden_id, true).is_ok());
+            assert_eq!(c.ordenes[orden_id as usize].estado, EstadoOrden::Cancelada);
+        }
+
+        #[ink::test]
+        fn abrir_disputa_falla_si_no_es_comprador() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar producto y crear orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            // La orden aún está Pendiente (debe estar Enviada para abrir disputa)
+            let r = c.abrir_disputa(orden_id);
+            assert!(matches!(r, Err(SistemaError::EstadoInvalido)));
+
+            // Vendedor la marca como Enviada
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Un tercero (no comprador) intenta abrir disputa
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let r = c.abrir_disputa(orden_id);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn abrir_disputa_falla_si_ya_existe() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar, comprar, enviar
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Abrir disputa (OK)
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            assert!(c.abrir_disputa(orden_id).is_ok());
+
+            // Intentar abrir nuevamente
+            let r2 = c.abrir_disputa(orden_id);
+            assert!(matches!(r2, Err(SistemaError::DisputaAbierta)));
+        }
+
+        #[ink::test]
+        fn resolver_disputa_falla_si_no_hay_disputa() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar y crear orden
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Intentar resolver sin disputa abierta
+            let r = c.resolver_disputa(orden_id, true);
+            assert!(matches!(r, Err(SistemaError::NoHayDisputaAbierta)));
+        }
+
+        #[ink::test]
+        fn resolver_disputa_falla_si_no_es_vendedor() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar, comprar y enviar
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            // Comprador abre disputa
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            assert!(c.abrir_disputa(orden_id).is_ok());
+
+            // Otro usuario intenta resolver
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.charlie);
+            c.registrar_usuario(RolUsuario::Vendedor).unwrap();
+            let r = c.resolver_disputa(orden_id, true);
+            assert!(matches!(r, Err(SistemaError::NoEsRolCorrecto)));
+        }
+
+        #[ink::test]
+        fn resolver_disputa_a_favor_del_vendedor_ok() {
+            let mut c = setup_contract_con_vendedor();
+            let acc = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Publicar, comprar, enviar y abrir disputa
+            c.publicar_producto("P".into(), "D".into(), 100, 1, "Cat".into()).unwrap();
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            c.registrar_usuario(RolUsuario::Comprador).unwrap();
+            let orden_id = c.crear_orden(0, 1).unwrap();
+
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            c.marcar_orden_como_enviada(orden_id).unwrap();
+
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.bob);
+            assert!(c.abrir_disputa(orden_id).is_ok());
+
+            // Resolver en favor del vendedor
+            ink::env::test::set_caller::<ink::env::DefaultEnvironment>(acc.alice);
+            let r = c.resolver_disputa(orden_id, false);
+            assert!(r.is_ok());
+            assert_eq!(c.ordenes[orden_id as usize].estado, EstadoOrden::Recibida);
+            assert!(!c.ordenes[orden_id as usize].disputa_abierta);
+        }
+
+
     } // <-- cierre del mod tests
 } // <-- cierre del mod marketplace_principal
+pub use self::marketplace_principal::{MarketplacePrincipalRef, Orden, Producto};
