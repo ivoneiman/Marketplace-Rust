@@ -2,12 +2,16 @@
 
 #[ink::contract]
 mod reportes_view {
-    use ink::prelude::vec::Vec;
-    use ink::prelude::string::String;
     use ink::prelude::collections::BTreeMap;
     use ink::env::call::FromAccountId;
     use marketplace_principal::{MarketplacePrincipalRef, Orden, Producto};
-
+    // Importa los derive macros y tipos
+    use parity_scale_codec::{Encode, Decode};
+    use scale_info::TypeInfo;
+    use ink::storage::traits::StorageLayout;
+    use ink::storage::Mapping;
+    use ink::prelude::string::String;
+    use ink::prelude::vec::Vec;
 
 
 
