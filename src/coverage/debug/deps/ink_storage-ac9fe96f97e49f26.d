@@ -1,0 +1,10 @@
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\libink_storage-ac9fe96f97e49f26.rmeta: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\libink_storage-ac9fe96f97e49f26.rlib: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\ink_storage-ac9fe96f97e49f26.d: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs
+
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src/lib.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mod.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\mapping.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ink_storage-5.1.1\src\lazy\vec.rs:

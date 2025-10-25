@@ -20,9 +20,9 @@ path = "lib.rs"
 [features]
 default = ["std"]
 std = [
-    "ink/std",
-    "parity-scale-codec/std",
-    "scale-info/std"
+  "ink/std",
+  "scale-info/std",
+  "marketplace_principal/std",
 ]
 ink-as-dependency = []
 e2e-tests = []

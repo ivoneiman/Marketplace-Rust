@@ -1,0 +1,11 @@
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\libtoml_write-1b55a3c6c5582103.rmeta: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\key.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\string.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\value.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\write.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\libtoml_write-1b55a3c6c5582103.rlib: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\key.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\string.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\value.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\write.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\toml_write-1b55a3c6c5582103.d: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\key.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\string.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\value.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\write.rs
+
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src/lib.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\key.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\string.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\value.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\toml_write-0.1.2\src\write.rs:

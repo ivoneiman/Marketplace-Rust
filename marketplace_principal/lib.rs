@@ -93,8 +93,6 @@ Simulación de pagos.
 #[ink::contract]
 mod marketplace_principal {
     // Importa los derive macros y tipos
-    use parity_scale_codec::{Encode, Decode};
-    use scale_info::TypeInfo;
     use ink::storage::traits::StorageLayout;
     use ink::storage::Mapping;
     use ink::prelude::string::String;
@@ -2762,4 +2760,4 @@ mod marketplace_principal {
 
     } // <-- cierre del mod tests
 } // <-- cierre del mod marketplace_principal
-pub use self::marketplace_principal::{MarketplacePrincipalRef, Orden, Producto};
+pub use self::marketplace_principal::{MarketplacePrincipalRef, Orden, Producto, EstadoOrden};
