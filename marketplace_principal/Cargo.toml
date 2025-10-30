@@ -6,8 +6,8 @@ edition = "2021"
 
 [dependencies]
 ink = { version = "5.1.1", default-features = false }
-parity-scale-codec = { version = "3.6", features = ["derive"], default-features = false }
-scale-info = { version = "2.11", features = ["derive"], default-features = false }
+parity-scale-codec = { version = "3.6.9", features = ["derive"], default-features = false }
+scale-info = { version = "2.10.0", features = ["derive"], default-features = false }
 
 
 [dev-dependencies]
@@ -25,4 +25,3 @@ std = [
 ]
 ink-as-dependency = []
 e2e-tests = []
-

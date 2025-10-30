@@ -1,0 +1,8 @@
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\impl_trait_for_tuples-019a032c467feb9c.dll: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\full_automatic.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\semi_automatic.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\utils.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\impl_trait_for_tuples-019a032c467feb9c.d: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\full_automatic.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\semi_automatic.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\utils.rs
+
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src/lib.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\full_automatic.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\semi_automatic.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\impl-trait-for-tuples-0.2.3\src\utils.rs:

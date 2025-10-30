@@ -1,0 +1,10 @@
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\derive_more-2eab93d2ce06d45f.dll: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\src\coverage\debug\deps\derive_more-2eab93d2ce06d45f.d: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs
+
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src/lib.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\syn_compat.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\utils.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\display.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\from.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\derive_more-0.99.20\src\parsing.rs:

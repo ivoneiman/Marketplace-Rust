@@ -1,0 +1,10 @@
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\reportes_view\src\coverage\debug\deps\xcm_procedural-bb1aa372c8c17228.dll: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\builder_pattern.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v2.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v3.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v4.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\weight_info.rs
+
+C:\Users\ASUS\Dev\Facultad\Segundo\Rust\programas\market-place\v2\Marketplace-Rust\reportes_view\src\coverage\debug\deps\xcm_procedural-bb1aa372c8c17228.d: C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\lib.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\builder_pattern.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v2.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v3.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v4.rs C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\weight_info.rs
+
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\lib.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\builder_pattern.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v2.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v3.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\v4.rs:
+C:\Users\ASUS\.cargo\registry\src\index.crates.io-6f17d22bba15001f\xcm-procedural-8.0.0\src\weight_info.rs:
