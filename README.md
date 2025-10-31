@@ -19,7 +19,7 @@ Sistema de órdenes con estados:
 - ✅ Recibido
 Disputas para cancelar pedidos 
 
-📃 Diagrama de clases <br>
+📃 Diagrama de clases (incompleto y desactualizado) <br>
 [diagrama-readme.pdf](https://github.com/user-attachments/files/22568051/diagrama-readme.pdf)
 
 🌐 Despliegue
