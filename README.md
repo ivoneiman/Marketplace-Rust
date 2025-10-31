@@ -17,6 +17,7 @@ Sistema de órdenes con estados:
 - ⏳ Pendiente
 - 🚚 Enviado
 - ✅ Recibido
+Disputas para cancelar pedidos 
 
 📃 Diagrama de clases <br>
 [diagrama-readme.pdf](https://github.com/user-attachments/files/22568051/diagrama-readme.pdf)
